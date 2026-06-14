@@ -681,7 +681,12 @@
             font-size: 13px;
             color: #777777;
         }
-        .bspline-reset {
+        .bspline-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        .bspline-reset,
+        .bspline-play {
             appearance: none;
             -webkit-appearance: none;
             border: 1px solid rgb(153, 51, 51);
@@ -695,10 +700,16 @@
             cursor: pointer;
         }
         .bspline-reset:hover,
-        .bspline-reset:focus {
+        .bspline-reset:focus,
+        .bspline-play:hover,
+        .bspline-play:focus {
             background: rgb(153, 51, 51);
             color: #ffffff;
             outline: none;
+        }
+        .bspline-play.is-playing {
+            background: rgb(153, 51, 51);
+            color: #ffffff;
         }
         .bspline-svg {
             width: 100%;
@@ -749,7 +760,7 @@
             fill: #cfcfcf;
         }
         .bspline-knot {
-            fill: #f54254;
+            fill: #666666ff;
             stroke: #ffffff;
             stroke-width: 1.8;
             cursor: ew-resize;
@@ -780,6 +791,26 @@
 
         /* ===== Fitting_Diagram (fit-prefixed, isolated) ===== */
         .fit-figure { margin: 0; }
+        .fit-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px 24px;
+            flex-wrap: wrap;
+        }
+        .fit-header h2 { margin: 0; }
+        .fit-toolbar {
+            display: flex;
+            justify-content: flex-end;
+        }
+        .fit-overlay {
+            width: 360px;
+            max-width: 100%;
+            background: #ffffff;
+            border: 1px solid #e4d9d9;
+            border-radius: 6px;
+            padding: 10px 12px;
+        }
         .fit-svg {
             width: 100%;
             height: auto;
@@ -837,11 +868,11 @@
         .fit-status {
             display: flex;
             flex-wrap: wrap;
-            gap: 4px 16px;
+            gap: 4px 14px;
             font-family: "Source Code Pro", monospace;
-            font-size: 13px;
+            font-size: 12px;
             color: #777777;
-            margin-top: 6px;
+            margin: 0;
         }
         .fit-threshold-label { color: rgb(153, 51, 51); font-weight: 600; }
 
@@ -853,11 +884,12 @@
         }
 
         /* Threshold_Control */
-        .fit-control-block { margin-top: 14px; }
+        .fit-control-block { margin-top: 10px; }
         .fit-control-title {
             display: flex;
             justify-content: space-between;
-            font-size: 13px;
+            gap: 8px;
+            font-size: 11px;
             color: #777777;
             margin-bottom: 4px;
         }
@@ -866,7 +898,7 @@
             display: flex;
             justify-content: space-between;
             font-family: "Source Code Pro", monospace;
-            font-size: 11px;
+            font-size: 10px;
             color: #999999;
             margin-top: 2px;
         }
@@ -875,6 +907,10 @@
 
         @media (prefers-reduced-motion: reduce) {
             .fit-knots circle.fit-knot-pop { animation: none; }
+        }
+        @media (max-width: 600px) {
+            .fit-toolbar { justify-content: stretch; }
+            .fit-overlay { width: 100%; }
         }
     </style>
 
@@ -965,7 +1001,7 @@
                     </a>
                     <a class="code-data-tile" href="#" target="_blank" rel="noopener">
                         <img src="assets/logos/github_logo.svg" alt="GitHub" />
-                        <span class="code-data-label">Github</span>
+                        <span class="code-data-label">Github Repo</span>
                     </a>
                     <a class="code-data-tile" href="#" target="_blank" rel="noopener">
                         <img src="assets/logos/colab_logo.svg" alt="Google Colab" />
@@ -1133,7 +1169,7 @@
                             <span class="text-blue">control points</span> and a nondecreasing knot sequence.
                             The curve blends nearby control points through local basis functions, so moving
                             one point changes only a neighborhood of the trajectory. In BSP, the policy predicts
-                            these compact parameters instead of dense action sequences, then executes a smooth
+                            these parameters instead of dense action sequences, then executes a smooth
                             time-continuous action curve.
                         </p>
                     </div>
@@ -1141,7 +1177,10 @@
                     <figure class="bspline-figure" aria-label="Interactive cubic B-spline with draggable control points and knots">
                         <div class="bspline-toolbar">
                             <div class="bspline-status">degree 3 · 7 controls · 3 knots</div>
-                            <button type="button" class="bspline-reset">Reset</button>
+                            <div class="bspline-buttons">
+                                <button type="button" class="bspline-play">Animate</button>
+                                <button type="button" class="bspline-reset">Reset</button>
+                            </div>
                         </div>
                         <svg class="bspline-svg" viewBox="0 0 800 320" role="img"
                              preserveAspectRatio="xMidYMid meet">
@@ -1156,8 +1195,13 @@
                             <text class="bspline-label bspline-knot-label-main" x="58" y="314">knot vector</text>
                         </svg>
                         <p class="text-caption-small bspline-caption">
-                            The red curve is a cubic B-spline. Blue handles are control points;
-                            red handles are internal knots on the parameter axis. The endpoints are clamped.
+                            The <span style="color: rgb(153, 51, 51); font-weight: 600;">red curve</span>
+                            is a cubic B-spline. <span style="color: #598be7; font-weight: 600;">Blue dots</span>
+                            are control points; <span style="color: #666666ff; font-weight: 600;">grey diamonds</span>
+                            are internal knots on the parameter axis.
+                            The endpoints are clamped. Try dragging the
+                            <span style="color: #598be7; font-weight: 600;">control points</span> and
+                            <span style="color: #666666ff; font-weight: 600;">knots</span> yourself!
                         </p>
                     </figure>
                 </div>
@@ -1203,6 +1247,14 @@
                 var knotEnds = svg.querySelector('.bspline-knot-ends');
                 var knotLayer = svg.querySelector('.bspline-knots');
                 var reset = section.querySelector('.bspline-reset');
+                var playBtn = section.querySelector('.bspline-play');
+                var playRaf = null;
+
+                // Auto-animation: drag a single control point along a looping path.
+                var ANIM_INDEX = 3;
+                var ctrlAnim = initialControls.map(function (p) {
+                    return { baseX: p.x, baseY: p.y, ampX: 0.13, ampY: 0.18, w: 1.1 };
+                });
 
                 function cloneControls(points) {
                     return points.map(function (p) { return { x: p.x, y: p.y }; });
@@ -1372,11 +1424,11 @@
                             'data-index': String(i)
                         });
                         hit.addEventListener('pointerdown', startKnotDrag);
-                        var k = makeEl('circle', {
+                        var kx = mapX(u), ks = 8;
+                        var k = makeEl('polygon', {
                             class: 'bspline-knot' + (drag && drag.type === 'knot' && drag.index === i ? ' is-dragging' : ''),
-                            cx: mapX(u),
-                            cy: RAIL_Y,
-                            r: 7,
+                            points: kx + ',' + (RAIL_Y - ks) + ' ' + (kx + ks) + ',' + RAIL_Y + ' ' +
+                                    kx + ',' + (RAIL_Y + ks) + ' ' + (kx - ks) + ',' + RAIL_Y,
                             tabindex: '0',
                             'data-index': String(i),
                             'aria-label': 'Internal knot ' + (i + 1)
@@ -1400,6 +1452,7 @@
                 function startControlDrag(ev) {
                     ev.preventDefault();
                     stopResetAnimation();
+                    stopPlay();
                     drag = { type: 'control', index: parseInt(this.getAttribute('data-index'), 10) };
                     svg.setPointerCapture(ev.pointerId);
                     render();
@@ -1408,6 +1461,7 @@
                 function startKnotDrag(ev) {
                     ev.preventDefault();
                     stopResetAnimation();
+                    stopPlay();
                     drag = { type: 'knot', index: parseInt(this.getAttribute('data-index'), 10) };
                     svg.setPointerCapture(ev.pointerId);
                     render();
@@ -1441,8 +1495,44 @@
                     resetRaf = null;
                 }
 
+                function stopPlay() {
+                    if (playRaf && typeof cancelAnimationFrame === 'function') {
+                        cancelAnimationFrame(playRaf);
+                    }
+                    playRaf = null;
+                    if (playBtn) {
+                        playBtn.classList.remove('is-playing');
+                        playBtn.textContent = 'Animate';
+                    }
+                }
+
+                function startPlay() {
+                    if (typeof requestAnimationFrame !== 'function' || typeof performance === 'undefined') return;
+                    stopResetAnimation();
+                    var start = performance.now();
+                    if (playBtn) {
+                        playBtn.classList.add('is-playing');
+                        playBtn.textContent = 'Pause';
+                    }
+                    function frame(now) {
+                        var t = (now - start) / 1000;
+                        // Animate a single control point up and down only.
+                        var c = ctrlAnim[ANIM_INDEX];
+                        controls[ANIM_INDEX].y = clamp(c.baseY + c.ampY * Math.sin(c.w * t), 0, 1);
+                        render();
+                        playRaf = requestAnimationFrame(frame);
+                    }
+                    playRaf = requestAnimationFrame(frame);
+                }
+
+                function togglePlay() {
+                    if (playRaf) stopPlay();
+                    else startPlay();
+                }
+
                 function resetScene() {
                     stopResetAnimation();
+                    stopPlay();
                     var fromControls = cloneControls(controls);
                     var fromKnots = internalKnots.slice();
                     if (typeof requestAnimationFrame !== 'function' || typeof performance === 'undefined') {
@@ -1473,6 +1563,7 @@
                 svg.addEventListener('pointerup', onPointerUp);
                 svg.addEventListener('pointercancel', onPointerUp);
                 if (reset) reset.addEventListener('click', resetScene);
+                if (playBtn) playBtn.addEventListener('click', togglePlay);
 
                 renderGrid();
                 render();
@@ -1482,7 +1573,27 @@
         <div class="row top30 bottom30" id="fit-section">
             <div class="col-md-12">
                 <hr class="section-line">
-                <h2 id="adaptive-fitting">Fitting a B-spline to the Action Trajectory</h2>
+                <div class="fit-header">
+                    <h2 id="adaptive-fitting">Fitting a B-spline</h2>
+                    <div class="fit-toolbar">
+                        <div class="fit-overlay">
+                            <div class="fit-status">
+                                <span class="fit-threshold-label"></span>
+                                <span class="fit-error-label"></span>
+                                <span class="fit-knots-label"></span>
+                            </div>
+                            <div class="fit-control-block">
+                                <div class="fit-control-title">
+                                    <span>Error threshold</span>
+                                    <span class="fit-control-hint">stricter &rarr; more knots</span>
+                                </div>
+                                <input type="range" class="fit-slider" min="0" max="7" step="1" value="4"
+                                       aria-label="Fitting error threshold" />
+                                <div class="fit-scale" aria-hidden="true"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <figure class="fit-figure" aria-label="Animated B-spline knot-insertion fitting loop">
                     <svg class="fit-svg" viewBox="0 0 800 360" role="img"
@@ -1495,25 +1606,10 @@
                         <g class="fit-worst"></g>
                         <g class="fit-knots"></g>
                     </svg>
-                    <div class="fit-status">
-                        <span class="fit-threshold-label"></span>
-                        <span class="fit-error-label"></span>
-                        <span class="fit-knots-label"></span>
-                    </div>
                     <div class="fit-empty" hidden>
                         The fitting diagram could not load its data. The rest of the page is unaffected.
                     </div>
                 </figure>
-
-                <div class="fit-control-block">
-                    <div class="fit-control-title">
-                        <span>Error threshold</span>
-                        <span class="fit-control-hint">stricter &rarr; more knots</span>
-                    </div>
-                    <input type="range" class="fit-slider" min="0" max="7" step="1" value="4"
-                           aria-label="Fitting error threshold" />
-                    <div class="fit-scale" aria-hidden="true"></div>
-                </div>
 
                 <p class="text-caption-small fit-caption">
                     The policy starts with only the two boundary knots (endpoints) and a coarse
@@ -1696,11 +1792,11 @@
                         this.points = svgEl.querySelector('.fit-points');
                         this.worst = svgEl.querySelector('.fit-worst');
                         this.knots = svgEl.querySelector('.fit-knots');
-                        // Status labels live in the figure (svg's parent).
-                        var fig = svgEl.parentNode;
-                        this.thresholdLabel = fig && fig.querySelector('.fit-threshold-label');
-                        this.errorLabel = fig && fig.querySelector('.fit-error-label');
-                        this.knotsLabel = fig && fig.querySelector('.fit-knots-label');
+                        // Status labels live in the section header (outside the figure).
+                        var root = svgEl.closest('#fit-section') || svgEl.parentNode;
+                        this.thresholdLabel = root && root.querySelector('.fit-threshold-label');
+                        this.errorLabel = root && root.querySelector('.fit-error-label');
+                        this.knotsLabel = root && root.querySelector('.fit-knots-label');
                         this._morphRaf = null;
                     }
 
@@ -1899,7 +1995,7 @@
                         if (this.errorLabel) {
                             var err = typeof it.max_error_achieved === 'number'
                                 ? it.max_error_achieved.toFixed(3) : '\u2014';
-                            this.errorLabel.textContent = 'max err ' + err;
+                            this.errorLabel.textContent = 'max error ' + err;
                         }
                         if (this.knotsLabel) {
                             var knotCount = typeof it.n_knots === 'number'
