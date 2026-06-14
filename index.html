@@ -565,6 +565,54 @@
             list-style: none;
         }
 
+        /* ===== Section divider line ===== */
+        .section-line {
+            border: none;
+            border-top: 1px solid #e2d6d6;
+            margin: 36px 0 22px;
+        }
+
+        /* ===== Code and Data tiles ===== */
+        .code-data-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            gap: 18px 8px;
+            margin: 0.8em 0 0.4em;
+        }
+        .code-data-tile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 10px;
+            width: 130px;
+            color: #333;
+            text-decoration: none;
+            text-align: center;
+            transition: transform 0.15s, color 0.15s;
+        }
+        .code-data-tile:hover,
+        .code-data-tile:focus {
+            transform: translateY(-3px);
+            text-decoration: none;
+            color: rgb(153, 51, 51);
+        }
+        .code-data-tile img {
+            width: 45px;
+            height: 45px;
+            object-fit: contain;
+        }
+        .code-data-label {
+            font-family: 'Asap', roboto, sans-serif;
+            font-weight: 400;
+            line-height: 1.25;
+        }
+        @media screen and (max-width: 575px) {
+            .code-data-tile { width: 120px; }
+            .code-data-tile img { width: 37px; height: 37px; }
+        }
+
         .team-grid li { font-size: 0.95em; }
 
         .top0 { margin-top: 0px; }
@@ -603,6 +651,231 @@
             .text-title { font-size: 44px; }
             h1 { font-size: 40px; }
         }
+
+        /* ===== B_Spline_Intro (bspline-prefixed, isolated) ===== */
+        .bspline-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px 28px;
+            align-items: start;
+        }
+        .bspline-copy p {
+            margin-bottom: 0;
+            font-size: 18px;
+            line-height: 1.42;
+        }
+        .bspline-figure {
+            margin: 0;
+            min-width: 0;
+        }
+        .bspline-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px 12px;
+            flex-wrap: wrap;
+            margin: 6px 0 4px;
+        }
+        .bspline-status {
+            font-family: "Source Code Pro", monospace;
+            font-size: 13px;
+            color: #777777;
+        }
+        .bspline-reset {
+            appearance: none;
+            -webkit-appearance: none;
+            border: 1px solid rgb(153, 51, 51);
+            border-radius: 4px;
+            background: #ffffff;
+            color: rgb(153, 51, 51);
+            font-family: 'Asap', roboto, sans-serif;
+            font-size: 13px;
+            line-height: 1.2;
+            padding: 5px 12px;
+            cursor: pointer;
+        }
+        .bspline-reset:hover,
+        .bspline-reset:focus {
+            background: rgb(153, 51, 51);
+            color: #ffffff;
+            outline: none;
+        }
+        .bspline-svg {
+            width: 100%;
+            height: auto;
+            display: block;
+            background: #ffffff;
+            overflow: visible;
+            touch-action: none;
+            user-select: none;
+        }
+        .bspline-grid line {
+            stroke: #ece3e3;
+            stroke-width: 1;
+        }
+        .bspline-control-poly {
+            fill: none;
+            stroke: #cbbf9f;
+            stroke-width: 1.6;
+            stroke-dasharray: 6 5;
+        }
+        .bspline-curve {
+            fill: none;
+            stroke: rgb(153, 51, 51);
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .bspline-control-point {
+            fill: #598be7;
+            stroke: #ffffff;
+            stroke-width: 1.8;
+            cursor: grab;
+        }
+        .bspline-hit-target {
+            fill: transparent;
+            stroke: transparent;
+            pointer-events: all;
+            cursor: grab;
+        }
+        .bspline-hit-target.bspline-knot-hit { cursor: ew-resize; }
+        .bspline-control-point.is-dragging,
+        .bspline-knot.is-dragging { cursor: grabbing; }
+        .bspline-knot-rail {
+            stroke: #cfcfcf;
+            stroke-width: 2;
+        }
+        .bspline-knot-end {
+            fill: #cfcfcf;
+        }
+        .bspline-knot {
+            fill: #f54254;
+            stroke: #ffffff;
+            stroke-width: 1.8;
+            cursor: ew-resize;
+        }
+        .bspline-knot-label {
+            font-family: "Source Code Pro", monospace;
+            font-size: 10px;
+            fill: #777777;
+            text-anchor: middle;
+            paint-order: stroke;
+            stroke: #ffffff;
+            stroke-width: 4px;
+            stroke-linejoin: round;
+        }
+        .bspline-label {
+            font-family: "Source Code Pro", monospace;
+            font-size: 12px;
+            fill: #777777;
+            paint-order: stroke;
+            stroke: #ffffff;
+            stroke-width: 5px;
+            stroke-linejoin: round;
+        }
+        .bspline-caption { margin-top: 8px; }
+        @media (min-width: 768px) {
+            #bspline-section h2 { margin-bottom: 12px; }
+        }
+
+        /* ===== Fitting_Diagram (fit-prefixed, isolated) ===== */
+        .fit-figure { margin: 0; }
+        .fit-svg {
+            width: 100%;
+            height: auto;
+            display: block;
+            background: #ffffff;
+            overflow: visible;
+        }
+        .fit-axis line { stroke: #ece3e3; stroke-width: 1; }
+
+        /* Optional residual stems (data -> prediction) */
+        .fit-residual line { stroke: #c9bcbc; stroke-width: 1; }
+
+        /* Optional control polygon */
+        .fit-control polyline {
+            fill: none;
+            stroke: #cbbf9f;
+            stroke-width: 1.5;
+            stroke-dasharray: 5 5;
+            opacity: 0.9;
+        }
+        .fit-control circle { fill: #cbbf9f; }
+
+        .fit-curve {
+            stroke: rgb(153, 51, 51);     /* MIT red — primary themed element */
+            stroke-width: 2.5;
+            stroke-linejoin: round;
+            stroke-linecap: round;
+        }
+
+        .fit-points circle { fill: #999999; }
+
+        .fit-knots circle {
+            fill: #598be7;                /* .text-blue accent */
+            stroke: #ffffff;
+            stroke-width: 1.5;
+            transform-box: fill-box;
+            transform-origin: center;
+        }
+        .fit-knots circle.fit-knot-pop {        /* knot insertion "pop" */
+            animation: fit-pop 520ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        @keyframes fit-pop {
+            0%   { transform: scale(0);   opacity: 0; }
+            60%  { transform: scale(1.6); opacity: 1; }
+            100% { transform: scale(1);   opacity: 1; }
+        }
+
+        .fit-worst circle {
+            fill: none;
+            stroke: #f54254;              /* .text-red accent */
+            stroke-width: 2;
+        }
+        .fit-worst line { stroke: #f54254; stroke-width: 1.5; }
+
+        .fit-status {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px 16px;
+            font-family: "Source Code Pro", monospace;
+            font-size: 13px;
+            color: #777777;
+            margin-top: 6px;
+        }
+        .fit-threshold-label { color: rgb(153, 51, 51); font-weight: 600; }
+
+        .fit-empty {
+            font-family: "Source Code Pro", monospace;
+            font-size: 13px;
+            color: #777777;
+            padding: 16px 0;
+        }
+
+        /* Threshold_Control */
+        .fit-control-block { margin-top: 14px; }
+        .fit-control-title {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #777777;
+            margin-bottom: 4px;
+        }
+        .fit-slider { width: 100%; accent-color: rgb(153, 51, 51); }  /* MIT red track/thumb */
+        .fit-scale {
+            display: flex;
+            justify-content: space-between;
+            font-family: "Source Code Pro", monospace;
+            font-size: 11px;
+            color: #999999;
+            margin-top: 2px;
+        }
+        .fit-scale span { cursor: pointer; }
+        .fit-scale span.fit-scale-active { color: rgb(153, 51, 51); font-weight: 700; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .fit-knots circle.fit-knot-pop { animation: none; }
+        }
     </style>
 
     <title>B-Spline Policy</title>
@@ -637,26 +910,17 @@
                 </ul>
                 <div style="margin-top: 12px; font-size: 0.8em; color: #777777; line-height: 1.5;">
                     <div><sup><span style="font-size: 20px;">*</span></sup>Equal contribution</div>
-                    <div style="margin-top: 12px;">
+                    <div style="margin-top: 12px; margin-bottom: 28px;">
                         <span style="display: inline-flex; align-items: center; vertical-align: middle; margin: 0 8px;"><img src="assets/logos/harvard.jpg" alt="Harvard logo" style="display: inline-block; height: 28px; width: auto; margin: 0 8px 0 0;"><sup>1</sup>Harvard</span>
                         <span style="display: inline-flex; align-items: center; vertical-align: middle; margin: 0 8px;"><img src="assets/logos/mit.jpg" alt="MIT logo" style="display: inline-block; height: 28px; width: auto; margin: 0 8px 0 0;"><sup>2</sup>MIT</span>
                         <span style="display: inline-flex; align-items: center; vertical-align: middle; margin: 0 8px;"><img src="assets/logos/utaustin.svg" alt="UT Austin logo" style="display: inline-block; height: 28px; width: auto; margin: 0 8px 0 0;"><sup>3</sup>UT Austin</span>
                     </div>
-                </div>
-                <div class="hero-links">
-                    <a class="hero-link" href="https://proceedings.mlr.press/v205/xiong23a/xiong23a.pdf">Paper</a>
-                    <a class="hero-link" href="https://github.com/haoyu-x/b-spline-policy">GitHub</a>
-                    <a class="hero-link" href="#">Colab</a>
                 </div>
             </div>
         </div>
 
         <div class="row" style="margin-top: 12px;">
             <div class="col-md-12">
-                <p style="text-align: center; margin-bottom: 1.2em;">
-                    <span style="color: rgb(153, 51, 51); font-weight: 700;">TL;DR:</span>
-                    Replace discrete action chunks with continuous B-spline curves, <br>for faster, smoother visuomotor policy.
-                </p>
                 <video id="main-demo-video" controls autoplay muted playsinline
                     style="width: 100%; border-radius: 8px; display: block; background: #ffffff;">
                     <source src="assets/main-demo.mp4" type="video/mp4">
@@ -683,61 +947,38 @@
         <div class="row top20 bottom30">
             <div class="col-md-12">
                 <p>
+                    <span style="color: rgb(153, 51, 51); font-weight: 700;">TL;DR:</span>
+                    Replace discrete action chunks with B-spline curves,
+                    for faster visuomotor policy.
+                </p>
+                <p>
                     <span style="color: rgb(153, 51, 51); font-weight: 700;">Abstract:</span>
                     In this work, we present B-spline Policy (BSP), an action representation designed for accelerating robot manipulation policies. Rather than predicting discrete-time action chunks, BSP parameterizes actions as continuous B-spline curves defined by a set of knots and control points. This representation yields smooth, time-continuous trajectories that can be temporally scaled and executed by low-level controllers at higher frequencies and speeds. We show that B-spline–parameterized actions can be seamlessly integrated into standard policy learning pipelines by directly predicting B-spline parameters. Experiments on simulated and real-world tasks demonstrate that BSP significantly reduces task completion time, achieving substantial improvements over baseline methods while maintaining strong success rates.
                 </p>
-                <h2 id="dataset">Manipulation Policies are Slow</h2>
                 <p>
-                    sss
+                    <span style="color: rgb(153, 51, 51); font-weight: 700;">Paper and Code:</span>
                 </p>
-                <ul style="line-height: 1.6;">
-                    <li><i>Successful</i> and <i>failure</i> videos</li>
-                    <li><i>First-person</i> and <i>third-person</i> views</li>
-                    <li><i>RGB</i> and <i>depth</i></li>
-                    <li><i>Structured table-top</i> and <i>in-the-wild</i> scenes</li>
-                </ul>
-                <p>
-                    You can download from Hugging Face: <a href="https://huggingface.co/datasets/haoyux/b-spline-policy_human_videos">b-spline-policy_human_videos</a>
-                </p>
-                <h2 id="digital-twins">Simulated Digital Twins</h2>
-                <p>
-                    We construct a suite of simulated digital twins for the objects in the human videos. These digital twins enable fair comparisons with baseline methods, and can validate algorithms convincingly and efficiently before conducting more complex experiments on real robots.
-                </p>
-                <p>
-                    You can find the digital twins at GitHub: <a href="https://github.com/haoyu-x/b-spline-policy">b-spline-policy</a>
-                </p>
-                <h2>Citation</h2>
-                <p>
-                    To cite this work, please use the following BibTeX entry:
-                </p>
-                <div style="position: relative;">
-                    <button type="button" onclick="copyCite(this)"
-                        style="position: absolute; top: 8px; right: 8px; padding: 4px 10px; font-size: 13px; background: #f5f5f5; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; color: #333;">
-                        Copy
-                    </button>
-                    <pre class="codebox-pre"><code id="cite-bibtex">@inproceedings{xiong2022b-spline-policy,
-  title={b-spline-policy: Learning Household Manipulation from Human Videos
-         with Simulated Twin Environments},
-  author={Haoyu Xiong and Haoyuan Fu and Jieyi Zhang and Chen Bao
-          and Qiang Zhang and Yongxi Huang and Wenqiang Xu
-          and Animesh Garg and Cewu Lu},
-  booktitle={6th Annual Conference on Robot Learning},
-  year={2022},
-  url={https://openreview.net/forum?id=VD0nXUG5Qk}
-}</code></pre>
+                <div class="code-data-grid">
+                    <a class="code-data-tile" href="#" target="_blank" rel="noopener">
+                        <img src="assets/logos/paper.svg" alt="Paper" />
+                        <span class="code-data-label">Paper</span>
+                    </a>
+                    <a class="code-data-tile" href="#" target="_blank" rel="noopener">
+                        <img src="assets/logos/github_logo.svg" alt="GitHub" />
+                        <span class="code-data-label">Github</span>
+                    </a>
+                    <a class="code-data-tile" href="#" target="_blank" rel="noopener">
+                        <img src="assets/logos/colab_logo.svg" alt="Google Colab" />
+                        <span class="code-data-label">Quick Start</span>
+                    </a>
                 </div>
 
-                <script>
-                    function copyCite(btn) {
-                        const text = document.getElementById('cite-bibtex').innerText;
-                        navigator.clipboard.writeText(text).then(() => {
-                            const original = btn.innerText;
-                            btn.innerText = 'Copied!';
-                            setTimeout(() => { btn.innerText = original; }, 1500);
-                        });
-                    }
-                </script>
-
+                <hr class="section-line">
+                <h2 id="dataset">Visuomotor policies were often slow</h2>
+                <p>
+                    write your motivation here.
+                </p>
+                
                 <!--
                   Scrubbable video player (kept from the reference layout).
                   To use it, replace a `.teleop-placeholder` with:
@@ -878,6 +1119,1065 @@
                     })();
                 </script>
 
+            </div>
+        </div>
+
+        <div class="row top30 bottom30" id="bspline-section">
+            <div class="col-md-12">
+                <hr class="section-line">
+                <h2 id="what-are-b-splines">What are B-splines?</h2>
+                <div class="bspline-layout">
+                    <div class="bspline-copy">
+                        <p>
+                            A B-spline represents a continuous trajectory with a small set of
+                            <span class="text-blue">control points</span> and a nondecreasing knot sequence.
+                            The curve blends nearby control points through local basis functions, so moving
+                            one point changes only a neighborhood of the trajectory. In BSP, the policy predicts
+                            these compact parameters instead of dense action sequences, then executes a smooth
+                            time-continuous action curve.
+                        </p>
+                    </div>
+
+                    <figure class="bspline-figure" aria-label="Interactive cubic B-spline with draggable control points and knots">
+                        <div class="bspline-toolbar">
+                            <div class="bspline-status">degree 3 · 7 controls · 3 knots</div>
+                            <button type="button" class="bspline-reset">Reset</button>
+                        </div>
+                        <svg class="bspline-svg" viewBox="0 0 800 320" role="img"
+                             preserveAspectRatio="xMidYMid meet">
+                            <g class="bspline-grid"></g>
+                            <polyline class="bspline-control-poly"></polyline>
+                            <polyline class="bspline-curve"></polyline>
+                            <g class="bspline-control-points"></g>
+                            <line class="bspline-knot-rail"></line>
+                            <g class="bspline-knot-ends"></g>
+                            <g class="bspline-knots"></g>
+                            <text class="bspline-label bspline-control-label" x="58" y="24">control polygon</text>
+                            <text class="bspline-label bspline-knot-label-main" x="58" y="314">knot vector</text>
+                        </svg>
+                        <p class="text-caption-small bspline-caption">
+                            The red curve is a cubic B-spline. Blue handles are control points;
+                            red handles are internal knots on the parameter axis. The endpoints are clamped.
+                        </p>
+                    </figure>
+                </div>
+            </div>
+        </div>
+
+        <!-- B_Spline_Intro controller (interactive, no dependencies) -->
+        <script>
+            (function () {
+                var SVG_NS = 'http://www.w3.org/2000/svg';
+                var section = document.querySelector('#bspline-section');
+                var svg = section && section.querySelector('.bspline-svg');
+                if (!svg) return;
+
+                var VIEW_W = 800, VIEW_H = 320;
+                var PAD = { left: 44, right: 26, top: 36, bottom: 72 };
+                var DEGREE = 3;
+                var RAIL_Y = 280;
+                var RESET_MS = 420;
+                var MIN_KNOT_GAP = 0.045;
+                var CURVE_SAMPLES = 220;
+
+                var initialControls = [
+                    { x: 0.06, y: 0.66 },
+                    { x: 0.18, y: 0.25 },
+                    { x: 0.34, y: 0.18 },
+                    { x: 0.48, y: 0.78 },
+                    { x: 0.63, y: 0.70 },
+                    { x: 0.78, y: 0.29 },
+                    { x: 0.94, y: 0.48 }
+                ];
+                var initialKnots = [0.22, 0.43, 0.68];
+                var controls = cloneControls(initialControls);
+                var internalKnots = initialKnots.slice();
+                var drag = null;
+                var resetRaf = null;
+
+                var grid = svg.querySelector('.bspline-grid');
+                var controlPoly = svg.querySelector('.bspline-control-poly');
+                var curve = svg.querySelector('.bspline-curve');
+                var controlLayer = svg.querySelector('.bspline-control-points');
+                var knotRail = svg.querySelector('.bspline-knot-rail');
+                var knotEnds = svg.querySelector('.bspline-knot-ends');
+                var knotLayer = svg.querySelector('.bspline-knots');
+                var reset = section.querySelector('.bspline-reset');
+
+                function cloneControls(points) {
+                    return points.map(function (p) { return { x: p.x, y: p.y }; });
+                }
+
+                function clamp(v, lo, hi) {
+                    return Math.max(lo, Math.min(hi, v));
+                }
+
+                function easeOutCubic(t) {
+                    return 1 - Math.pow(1 - t, 3);
+                }
+
+                function mapX(x) {
+                    return PAD.left + x * (VIEW_W - PAD.left - PAD.right);
+                }
+
+                function mapY(y) {
+                    return (VIEW_H - PAD.bottom) - y * (VIEW_H - PAD.top - PAD.bottom);
+                }
+
+                function unmapX(px) {
+                    return clamp((px - PAD.left) / (VIEW_W - PAD.left - PAD.right), 0, 1);
+                }
+
+                function unmapY(py) {
+                    return clamp(((VIEW_H - PAD.bottom) - py) / (VIEW_H - PAD.top - PAD.bottom), 0, 1);
+                }
+
+                function pointerToView(ev) {
+                    var rect = svg.getBoundingClientRect();
+                    return {
+                        x: (ev.clientX - rect.left) * (VIEW_W / rect.width),
+                        y: (ev.clientY - rect.top) * (VIEW_H / rect.height)
+                    };
+                }
+
+                function makeEl(name, attrs) {
+                    var el = document.createElementNS(SVG_NS, name);
+                    for (var key in attrs) el.setAttribute(key, attrs[key]);
+                    return el;
+                }
+
+                function clear(el) {
+                    while (el && el.firstChild) el.removeChild(el.firstChild);
+                }
+
+                function knotVector() {
+                    var knots = [];
+                    for (var i = 0; i <= DEGREE; i++) knots.push(0);
+                    for (var j = 0; j < internalKnots.length; j++) knots.push(internalKnots[j]);
+                    for (var k = 0; k <= DEGREE; k++) knots.push(1);
+                    return knots;
+                }
+
+                function basis(i, p, u, knots) {
+                    if (p === 0) {
+                        return (knots[i] <= u && u < knots[i + 1]) ? 1 : 0;
+                    }
+                    var left = 0;
+                    var leftDenom = knots[i + p] - knots[i];
+                    if (leftDenom > 0) {
+                        left = ((u - knots[i]) / leftDenom) * basis(i, p - 1, u, knots);
+                    }
+                    var right = 0;
+                    var rightDenom = knots[i + p + 1] - knots[i + 1];
+                    if (rightDenom > 0) {
+                        right = ((knots[i + p + 1] - u) / rightDenom) * basis(i + 1, p - 1, u, knots);
+                    }
+                    return left + right;
+                }
+
+                function curvePoint(u, knots) {
+                    if (u >= 1) return controls[controls.length - 1];
+                    var x = 0, y = 0;
+                    for (var i = 0; i < controls.length; i++) {
+                        var b = basis(i, DEGREE, u, knots);
+                        x += controls[i].x * b;
+                        y += controls[i].y * b;
+                    }
+                    return { x: x, y: y };
+                }
+
+                function renderGrid() {
+                    clear(grid);
+                    for (var i = 0; i <= 4; i++) {
+                        var y = PAD.top + (VIEW_H - PAD.top - PAD.bottom) * (i / 4);
+                        grid.appendChild(makeEl('line', {
+                            x1: PAD.left, x2: VIEW_W - PAD.right, y1: y, y2: y
+                        }));
+                    }
+                }
+
+                function render() {
+                    var knots = knotVector();
+                    var controlCoords = controls.map(function (p) {
+                        return mapX(p.x) + ',' + mapY(p.y);
+                    });
+                    controlPoly.setAttribute('points', controlCoords.join(' '));
+
+                    var curveCoords = [];
+                    for (var i = 0; i < CURVE_SAMPLES; i++) {
+                        var u = i / (CURVE_SAMPLES - 1);
+                        var p = curvePoint(u, knots);
+                        curveCoords.push(mapX(p.x) + ',' + mapY(p.y));
+                    }
+                    curve.setAttribute('points', curveCoords.join(' '));
+
+                    renderControlPoints();
+                    renderKnots();
+                }
+
+                function renderControlPoints() {
+                    clear(controlLayer);
+                    for (var i = 0; i < controls.length; i++) {
+                        var p = controls[i];
+                        var hit = makeEl('circle', {
+                            class: 'bspline-hit-target',
+                            cx: mapX(p.x),
+                            cy: mapY(p.y),
+                            r: 18,
+                            'data-index': String(i)
+                        });
+                        hit.addEventListener('pointerdown', startControlDrag);
+                        var c = makeEl('circle', {
+                            class: 'bspline-control-point' + (drag && drag.type === 'control' && drag.index === i ? ' is-dragging' : ''),
+                            cx: mapX(p.x),
+                            cy: mapY(p.y),
+                            r: 7,
+                            tabindex: '0',
+                            'data-index': String(i),
+                            'aria-label': 'Control point ' + (i + 1)
+                        });
+                        c.appendChild(makeEl('title', {}));
+                        c.firstChild.textContent = 'Control point ' + (i + 1);
+                        c.addEventListener('pointerdown', startControlDrag);
+                        controlLayer.appendChild(hit);
+                        controlLayer.appendChild(c);
+                    }
+                }
+
+                function renderKnots() {
+                    knotRail.setAttribute('x1', PAD.left);
+                    knotRail.setAttribute('x2', VIEW_W - PAD.right);
+                    knotRail.setAttribute('y1', RAIL_Y);
+                    knotRail.setAttribute('y2', RAIL_Y);
+
+                    clear(knotEnds);
+                    [0, 1].forEach(function (u) {
+                        knotEnds.appendChild(makeEl('circle', {
+                            class: 'bspline-knot-end',
+                            cx: mapX(u),
+                            cy: RAIL_Y,
+                            r: 4
+                        }));
+                    });
+
+                    clear(knotLayer);
+                    for (var i = 0; i < internalKnots.length; i++) {
+                        var u = internalKnots[i];
+                        var g = makeEl('g', {});
+                        var hit = makeEl('circle', {
+                            class: 'bspline-hit-target bspline-knot-hit',
+                            cx: mapX(u),
+                            cy: RAIL_Y,
+                            r: 18,
+                            'data-index': String(i)
+                        });
+                        hit.addEventListener('pointerdown', startKnotDrag);
+                        var k = makeEl('circle', {
+                            class: 'bspline-knot' + (drag && drag.type === 'knot' && drag.index === i ? ' is-dragging' : ''),
+                            cx: mapX(u),
+                            cy: RAIL_Y,
+                            r: 7,
+                            tabindex: '0',
+                            'data-index': String(i),
+                            'aria-label': 'Internal knot ' + (i + 1)
+                        });
+                        k.appendChild(makeEl('title', {}));
+                        k.firstChild.textContent = 'Internal knot ' + (i + 1);
+                        k.addEventListener('pointerdown', startKnotDrag);
+                        var label = makeEl('text', {
+                            class: 'bspline-knot-label',
+                            x: mapX(u),
+                            y: RAIL_Y + 24
+                        });
+                        label.textContent = u.toFixed(2);
+                        g.appendChild(hit);
+                        g.appendChild(k);
+                        g.appendChild(label);
+                        knotLayer.appendChild(g);
+                    }
+                }
+
+                function startControlDrag(ev) {
+                    ev.preventDefault();
+                    stopResetAnimation();
+                    drag = { type: 'control', index: parseInt(this.getAttribute('data-index'), 10) };
+                    svg.setPointerCapture(ev.pointerId);
+                    render();
+                }
+
+                function startKnotDrag(ev) {
+                    ev.preventDefault();
+                    stopResetAnimation();
+                    drag = { type: 'knot', index: parseInt(this.getAttribute('data-index'), 10) };
+                    svg.setPointerCapture(ev.pointerId);
+                    render();
+                }
+
+                function onPointerMove(ev) {
+                    if (!drag) return;
+                    var pt = pointerToView(ev);
+                    if (drag.type === 'control') {
+                        controls[drag.index] = { x: unmapX(pt.x), y: unmapY(pt.y) };
+                    } else {
+                        var idx = drag.index;
+                        var lower = idx === 0 ? MIN_KNOT_GAP : internalKnots[idx - 1] + MIN_KNOT_GAP;
+                        var upper = idx === internalKnots.length - 1 ? 1 - MIN_KNOT_GAP : internalKnots[idx + 1] - MIN_KNOT_GAP;
+                        internalKnots[idx] = clamp(unmapX(pt.x), lower, upper);
+                    }
+                    render();
+                }
+
+                function onPointerUp(ev) {
+                    if (!drag) return;
+                    try { svg.releasePointerCapture(ev.pointerId); } catch (e) {}
+                    drag = null;
+                    render();
+                }
+
+                function stopResetAnimation() {
+                    if (resetRaf && typeof cancelAnimationFrame === 'function') {
+                        cancelAnimationFrame(resetRaf);
+                    }
+                    resetRaf = null;
+                }
+
+                function resetScene() {
+                    stopResetAnimation();
+                    var fromControls = cloneControls(controls);
+                    var fromKnots = internalKnots.slice();
+                    if (typeof requestAnimationFrame !== 'function' || typeof performance === 'undefined') {
+                        controls = cloneControls(initialControls);
+                        internalKnots = initialKnots.slice();
+                        render();
+                        return;
+                    }
+                    var start = performance.now();
+                    function frame(now) {
+                        var t = Math.min(1, (now - start) / RESET_MS);
+                        var e = easeOutCubic(t);
+                        for (var i = 0; i < controls.length; i++) {
+                            controls[i].x = fromControls[i].x + (initialControls[i].x - fromControls[i].x) * e;
+                            controls[i].y = fromControls[i].y + (initialControls[i].y - fromControls[i].y) * e;
+                        }
+                        for (var k = 0; k < internalKnots.length; k++) {
+                            internalKnots[k] = fromKnots[k] + (initialKnots[k] - fromKnots[k]) * e;
+                        }
+                        render();
+                        if (t < 1) resetRaf = requestAnimationFrame(frame);
+                        else resetRaf = null;
+                    }
+                    resetRaf = requestAnimationFrame(frame);
+                }
+
+                svg.addEventListener('pointermove', onPointerMove);
+                svg.addEventListener('pointerup', onPointerUp);
+                svg.addEventListener('pointercancel', onPointerUp);
+                if (reset) reset.addEventListener('click', resetScene);
+
+                renderGrid();
+                render();
+            })();
+        </script>
+
+        <div class="row top30 bottom30" id="fit-section">
+            <div class="col-md-12">
+                <hr class="section-line">
+                <h2 id="adaptive-fitting">Fitting a B-spline to the Action Trajectory</h2>
+
+                <figure class="fit-figure" aria-label="Animated B-spline knot-insertion fitting loop">
+                    <svg class="fit-svg" viewBox="0 0 800 360" role="img"
+                         preserveAspectRatio="xMidYMid meet">
+                        <g class="fit-axis"></g>
+                        <g class="fit-residual"></g>
+                        <g class="fit-control"></g>
+                        <polyline class="fit-curve" fill="none"></polyline>
+                        <g class="fit-points"></g>
+                        <g class="fit-worst"></g>
+                        <g class="fit-knots"></g>
+                    </svg>
+                    <div class="fit-status">
+                        <span class="fit-threshold-label"></span>
+                        <span class="fit-error-label"></span>
+                        <span class="fit-knots-label"></span>
+                    </div>
+                    <div class="fit-empty" hidden>
+                        The fitting diagram could not load its data. The rest of the page is unaffected.
+                    </div>
+                </figure>
+
+                <div class="fit-control-block">
+                    <div class="fit-control-title">
+                        <span>Error threshold</span>
+                        <span class="fit-control-hint">stricter &rarr; more knots</span>
+                    </div>
+                    <input type="range" class="fit-slider" min="0" max="7" step="1" value="4"
+                           aria-label="Fitting error threshold" />
+                    <div class="fit-scale" aria-hidden="true"></div>
+                </div>
+
+                <p class="text-caption-small fit-caption">
+                    The policy starts with only the two boundary knots (endpoints) and a coarse
+                    least-squares B-spline. It measures the <span class="text-red">reconstruction
+                    error</span> against the target trajectory, drops a new <span class="text-blue">knot</span>
+                    where the error is worst, and refits. The loop repeats until the largest error
+                    falls at or below the selected threshold &mdash; then it starts over.
+                </p>
+            </div>
+        </div>
+
+        <script src="./data.js"></script>
+
+        <!-- Fitting_Diagram controller (data-driven, guarded, isolated IIFE) -->
+        <script>
+            (function () {
+                try {
+                    var SVG_NS = 'http://www.w3.org/2000/svg';
+                    var section = document.querySelector('#fit-section');
+                    var svg = section && section.querySelector('.fit-svg');
+                    if (!svg) return; // diagram absent -> no-op, no error (selector: #fit-section .fit-svg)
+
+                    // ---- Configuration ---------------------------------------
+                    var VIEW_W = 800, VIEW_H = 360;
+                    var PAD = { left: 44, right: 22, top: 24, bottom: 40 };
+                    var DEFAULT_TIER = 4;        // index 4 -> threshold 0.1
+                    var ITER_HOLD_MS = 1150;     // dwell per iteration
+                    var MORPH_MS = 380;          // curve morph duration
+
+                    // ---- Reduced-motion detection (guarded for jsdom) --------
+                    function prefersReducedMotion() {
+                        try {
+                            return !!(typeof window !== 'undefined' &&
+                                window.matchMedia &&
+                                window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+                        } catch (e) {
+                            return false;
+                        }
+                    }
+
+                    function logWarn(e) {
+                        if (typeof window !== 'undefined' && window.console) {
+                            console.warn('fitting-diagram:', e);
+                        }
+                    }
+
+                    // ---- DataStore: read-only view over the payload ----------
+                    function DataStore(payload) {
+                        this.payload = payload;
+                        this.tiers = payload.tiers;
+                        this.dataPoints = payload.data_points || { x: [], y: [] };
+                        this.sampling = payload.sampling || {};
+                        this.tierCount = payload.tiers.length;
+                        this.curveX = deriveCurveSamples(payload);
+                    }
+                    DataStore.prototype.tierAt = function (i) { return this.tiers[i]; };
+                    DataStore.prototype.thresholdAt = function (i) { return this.tiers[i].max_error; };
+                    DataStore.prototype.iterationsAt = function (i) { return this.tiers[i].iterations; };
+
+                    function deriveCurveSamples(payload) {
+                        var sampling = payload.sampling || {};
+                        var xr = sampling.x_range;
+                        var count = sampling.curve_sample_count;
+                        if (xr && xr.length === 2 && count > 1) {
+                            var xs = new Array(count);
+                            for (var i = 0; i < count; i++) {
+                                xs[i] = xr[0] + (xr[1] - xr[0]) * (i / (count - 1));
+                            }
+                            return xs;
+                        }
+
+                        var tiers = payload.tiers || [];
+                        for (var t = 0; t < tiers.length; t++) {
+                            var its = tiers[t].iterations || [];
+                            for (var j = 0; j < its.length; j++) {
+                                if (its[j].curve_x && its[j].curve_x.length) {
+                                    return its[j].curve_x;
+                                }
+                            }
+                        }
+                        return [];
+                    }
+
+                    function interpolateCurveY(x, curveX, curveY) {
+                        if (!curveX || !curveY || !curveX.length || !curveY.length) return bounds.yMin;
+                        var n = Math.min(curveX.length, curveY.length);
+                        if (x <= curveX[0]) return curveY[0];
+                        if (x >= curveX[n - 1]) return curveY[n - 1];
+                        for (var i = 1; i < n; i++) {
+                            if (x <= curveX[i]) {
+                                var x0 = curveX[i - 1], x1 = curveX[i];
+                                var y0 = curveY[i - 1], y1 = curveY[i];
+                                var ratio = x1 === x0 ? 0 : (x - x0) / (x1 - x0);
+                                return y0 + (y1 - y0) * ratio;
+                            }
+                        }
+                        return curveY[n - 1];
+                    }
+
+                    // ---- Bounds derivation -----------------------------------
+                    // xMin/xMax from sampling.x_range (fallback to data x extents);
+                    // yMin/yMax from data y AND every tier/iteration curve_y and
+                    // control_y, then padded ~10% vertically. Degenerate extents
+                    // are left for the mapping divide-by-zero guard to absorb.
+                    function deriveBounds(store) {
+                        var dp = store.dataPoints || { x: [], y: [] };
+                        var xs = dp.x || [], ys = dp.y || [];
+                        var xMin, xMax;
+                        var xr = store.sampling && store.sampling.x_range;
+                        if (xr && xr.length === 2 && isFinite(xr[0]) && isFinite(xr[1])) {
+                            xMin = xr[0]; xMax = xr[1];
+                        } else {
+                            xMin = Infinity; xMax = -Infinity;
+                            for (var i = 0; i < xs.length; i++) {
+                                if (xs[i] < xMin) xMin = xs[i];
+                                if (xs[i] > xMax) xMax = xs[i];
+                            }
+                        }
+                        var yMin = Infinity, yMax = -Infinity;
+                        function acc(arr) {
+                            if (!arr) return;
+                            for (var k = 0; k < arr.length; k++) {
+                                var v = arr[k];
+                                if (typeof v !== 'number' || !isFinite(v)) continue;
+                                if (v < yMin) yMin = v;
+                                if (v > yMax) yMax = v;
+                            }
+                        }
+                        acc(ys);
+                        var tiers = store.tiers || [];
+                        for (var t = 0; t < tiers.length; t++) {
+                            var its = tiers[t].iterations || [];
+                            for (var j = 0; j < its.length; j++) {
+                                acc(its[j].curve_y);
+                                acc(its[j].control_y);
+                            }
+                        }
+                        // Fallbacks for empty/degenerate inputs.
+                        if (!isFinite(xMin) || !isFinite(xMax)) { xMin = 0; xMax = 1; }
+                        if (!isFinite(yMin) || !isFinite(yMax)) { yMin = 0; yMax = 1; }
+                        // ~10% vertical margin.
+                        var span = yMax - yMin;
+                        var margin = span > 0 ? span * 0.1 : 0;
+                        yMin -= margin;
+                        yMax += margin;
+                        return { xMin: xMin, xMax: xMax, yMin: yMin, yMax: yMax };
+                    }
+
+                    // ---- Coordinate mapping (data -> viewBox) ----------------
+                    // Linear, padded, y-flipped. A degenerate (zero) extent treats
+                    // the normalized ratio as 0, so the result is never NaN and
+                    // stays inside the padded rect. Bound to `bounds` at init.
+                    var bounds = { xMin: 0, xMax: 1, yMin: 0, yMax: 1 };
+                    function mapX(x) {
+                        var innerW = VIEW_W - PAD.left - PAD.right;
+                        var ratio = bounds.xMax === bounds.xMin
+                            ? 0 : (x - bounds.xMin) / (bounds.xMax - bounds.xMin);
+                        return PAD.left + ratio * innerW;
+                    }
+                    function mapY(y) {
+                        var innerH = VIEW_H - PAD.top - PAD.bottom;
+                        var ratio = bounds.yMax === bounds.yMin
+                            ? 0 : (y - bounds.yMin) / (bounds.yMax - bounds.yMin);
+                        return (VIEW_H - PAD.bottom) - ratio * innerH;
+                    }
+
+                    function clearGroup(group) {
+                        if (!group) return;
+                        while (group.firstChild) group.removeChild(group.firstChild);
+                    }
+
+                    // ---- SvgRenderer -----------------------------------------
+                    function SvgRenderer(svgEl, store) {
+                        this.svg = svgEl;
+                        this.store = store;
+                        this.axis = svgEl.querySelector('.fit-axis');
+                        this.residual = svgEl.querySelector('.fit-residual');
+                        this.control = svgEl.querySelector('.fit-control');
+                        this.curve = svgEl.querySelector('.fit-curve');
+                        this.points = svgEl.querySelector('.fit-points');
+                        this.worst = svgEl.querySelector('.fit-worst');
+                        this.knots = svgEl.querySelector('.fit-knots');
+                        // Status labels live in the figure (svg's parent).
+                        var fig = svgEl.parentNode;
+                        this.thresholdLabel = fig && fig.querySelector('.fit-threshold-label');
+                        this.errorLabel = fig && fig.querySelector('.fit-error-label');
+                        this.knotsLabel = fig && fig.querySelector('.fit-knots-label');
+                        this._morphRaf = null;
+                    }
+
+                    // Faint axis gridlines + one grey circle per data sample.
+                    // Idempotent: clears its groups first.
+                    SvgRenderer.prototype.buildStatic = function () {
+                        // Axis frame: a baseline and a left edge.
+                        clearGroup(this.axis);
+                        if (this.axis) {
+                            var rows = 4;
+                            for (var r = 0; r <= rows; r++) {
+                                var gy = PAD.top + (VIEW_H - PAD.top - PAD.bottom) * (r / rows);
+                                var hLine = document.createElementNS(SVG_NS, 'line');
+                                hLine.setAttribute('x1', PAD.left);
+                                hLine.setAttribute('x2', VIEW_W - PAD.right);
+                                hLine.setAttribute('y1', gy);
+                                hLine.setAttribute('y2', gy);
+                                this.axis.appendChild(hLine);
+                            }
+                        }
+                        // Data points (static across all tiers/iterations).
+                        clearGroup(this.points);
+                        if (this.points) {
+                            var dp = this.store.dataPoints || { x: [], y: [] };
+                            var xs = dp.x || [], ys = dp.y || [];
+                            for (var i = 0; i < xs.length; i++) {
+                                var c = document.createElementNS(SVG_NS, 'circle');
+                                c.setAttribute('cx', mapX(xs[i]));
+                                c.setAttribute('cy', mapY(ys[i]));
+                                c.setAttribute('r', 3.4);
+                                this.points.appendChild(c);
+                            }
+                        }
+                    };
+
+                    SvgRenderer.prototype._setCurvePoints = function (curveX, curveY) {
+                        if (!this.curve) return;
+                        var coords = [];
+                        var n = Math.min(curveX.length, curveY.length);
+                        for (var i = 0; i < n; i++) {
+                            coords.push(mapX(curveX[i]) + ',' + mapY(curveY[i]));
+                        }
+                        this.curve.setAttribute('points', coords.join(' '));
+                    };
+
+                    function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+                    SvgRenderer.prototype._morphCurve = function (curveX, fromY, toY) {
+                        var self = this;
+                        if (this._morphRaf && typeof cancelAnimationFrame === 'function') {
+                            cancelAnimationFrame(this._morphRaf);
+                            this._morphRaf = null;
+                        }
+                        if (typeof requestAnimationFrame !== 'function' ||
+                            typeof performance === 'undefined') {
+                            this._setCurvePoints(curveX, toY);
+                            return;
+                        }
+                        var start = performance.now();
+                        var n = Math.min(fromY.length, toY.length);
+                        function frame(now) {
+                            var t = Math.min(1, (now - start) / MORPH_MS);
+                            var e = easeOutCubic(t);
+                            var blended = new Array(n);
+                            for (var i = 0; i < n; i++) {
+                                blended[i] = fromY[i] + (toY[i] - fromY[i]) * e;
+                            }
+                            self._setCurvePoints(curveX, blended);
+                            if (t < 1) {
+                                self._morphRaf = requestAnimationFrame(frame);
+                            } else {
+                                self._morphRaf = null;
+                            }
+                        }
+                        this._morphRaf = requestAnimationFrame(frame);
+                    };
+
+                    // Render one iteration. Each per-iteration layer is cleared
+                    // then repopulated (idempotent). Driven entirely by payload
+                    // fields; no curve synthesis.
+                    SvgRenderer.prototype.renderIteration = function (it, prevIt, animate, tier) {
+                        if (!it) return;
+                        var i;
+
+                        // --- CURVE (optionally morph from prev) ---------------
+                        var curveX = (it.curve_x && it.curve_x.length) ? it.curve_x : this.store.curveX;
+                        var curveY = it.curve_y || [];
+                        if (animate && prevIt && prevIt.curve_y &&
+                            prevIt.curve_y.length === curveY.length && curveY.length > 0) {
+                            this._morphCurve(curveX, prevIt.curve_y, curveY);
+                        } else {
+                            if (this._morphRaf && typeof cancelAnimationFrame === 'function') {
+                                cancelAnimationFrame(this._morphRaf);
+                                this._morphRaf = null;
+                            }
+                            this._setCurvePoints(curveX, curveY);
+                        }
+
+                        // --- CONTROL POLYGON (faint, decorative) --------------
+                        clearGroup(this.control);
+                        if (this.control && it.control_x && it.control_y) {
+                            var ctrlCoords = [];
+                            var cn = Math.min(it.control_x.length, it.control_y.length);
+                            for (i = 0; i < cn; i++) {
+                                ctrlCoords.push(mapX(it.control_x[i]) + ',' + mapY(it.control_y[i]));
+                            }
+                            if (cn > 0) {
+                                var poly = document.createElementNS(SVG_NS, 'polyline');
+                                poly.setAttribute('points', ctrlCoords.join(' '));
+                                this.control.appendChild(poly);
+                                for (i = 0; i < cn; i++) {
+                                    var cc = document.createElementNS(SVG_NS, 'circle');
+                                    cc.setAttribute('cx', mapX(it.control_x[i]));
+                                    cc.setAttribute('cy', mapY(it.control_y[i]));
+                                    cc.setAttribute('r', 2);
+                                    this.control.appendChild(cc);
+                                }
+                            }
+                        }
+
+                        // --- RESIDUAL STEMS (faint, decorative) ---------------
+                        clearGroup(this.residual);
+                        if (this.residual && it.pred_y) {
+                            var dp = this.store.dataPoints || { x: [], y: [] };
+                            var sampleX = (it.sample_x && it.sample_x.length) ? it.sample_x : dp.x || [];
+                            var dy = dp.y || [];
+                            var rn = Math.min(sampleX.length, it.pred_y.length, dy.length);
+                            for (i = 0; i < rn; i++) {
+                                var rLine = document.createElementNS(SVG_NS, 'line');
+                                rLine.setAttribute('x1', mapX(sampleX[i]));
+                                rLine.setAttribute('x2', mapX(sampleX[i]));
+                                rLine.setAttribute('y1', mapY(dy[i]));
+                                rLine.setAttribute('y2', mapY(it.pred_y[i]));
+                                this.residual.appendChild(rLine);
+                            }
+                        }
+
+                        // --- INTERIOR KNOTS (pop the newly inserted) ----------
+                        clearGroup(this.knots);
+                        if (this.knots && it.interior_knots_x) {
+                            var kx = it.interior_knots_x, ky = it.interior_knots_y || [];
+                            var newSet = {};
+                            if (animate && it.new_knots_x) {
+                                for (i = 0; i < it.new_knots_x.length; i++) {
+                                    newSet[it.new_knots_x[i]] = true;
+                                }
+                            } else if (animate && prevIt && prevIt.interior_knots_x) {
+                                var prevKnots = prevIt.interior_knots_x;
+                                for (i = 0; i < kx.length; i++) {
+                                    var isOld = false;
+                                    for (var p = 0; p < prevKnots.length; p++) {
+                                        if (Math.abs(kx[i] - prevKnots[p]) < 1e-6) {
+                                            isOld = true;
+                                            break;
+                                        }
+                                    }
+                                    if (!isOld) newSet[kx[i]] = true;
+                                }
+                            }
+                            for (i = 0; i < kx.length; i++) {
+                                var dot = document.createElementNS(SVG_NS, 'circle');
+                                dot.setAttribute('cx', mapX(kx[i]));
+                                var knotY = ky[i] != null
+                                    ? ky[i]
+                                    : interpolateCurveY(kx[i], curveX, curveY);
+                                dot.setAttribute('cy', mapY(knotY));
+                                dot.setAttribute('r', 4);
+                                if (newSet[kx[i]]) {
+                                    dot.setAttribute('class', 'fit-knot-pop');
+                                }
+                                this.knots.appendChild(dot);
+                            }
+                        }
+
+                        // --- WORST-ERROR INDICATOR (hidden when converged) ----
+                        clearGroup(this.worst);
+                        if (this.worst && !it.converged) {
+                            var wx = mapX(it.max_error_x);
+                            var wLine = document.createElementNS(SVG_NS, 'line');
+                            wLine.setAttribute('x1', wx);
+                            wLine.setAttribute('x2', wx);
+                            wLine.setAttribute('y1', mapY(it.max_error_data_y));
+                            wLine.setAttribute('y2', mapY(it.max_error_pred_y));
+                            this.worst.appendChild(wLine);
+                            var ring = document.createElementNS(SVG_NS, 'circle');
+                            ring.setAttribute('cx', wx);
+                            ring.setAttribute('cy', mapY(it.max_error_pred_y));
+                            ring.setAttribute('r', 7);
+                            this.worst.appendChild(ring);
+                        }
+
+                        // --- STATUS LABELS ------------------------------------
+                        if (this.thresholdLabel && tier) {
+                            this.thresholdLabel.textContent = 'threshold \u2264 ' + tier.max_error;
+                        }
+                        if (this.errorLabel) {
+                            var err = typeof it.max_error_achieved === 'number'
+                                ? it.max_error_achieved.toFixed(3) : '\u2014';
+                            this.errorLabel.textContent = 'max err ' + err;
+                        }
+                        if (this.knotsLabel) {
+                            var knotCount = typeof it.n_knots === 'number'
+                                ? it.n_knots
+                                : (it.interior_knots_x || []).length;
+                            this.knotsLabel.textContent = it.converged
+                                ? 'converged \u00b7 knots: ' + knotCount
+                                : 'knots: ' + knotCount;
+                        }
+                    };
+
+                    // ---- Pure cyclic advance ---------------------------------
+                    function advance(i, n) { return (i + 1) % n; }
+
+                    // ---- IterationController (auto-loop) ---------------------
+                    function IterationController(onFrame) {
+                        this.onFrame = onFrame;   // onFrame(idx, instant)
+                        this.iterations = [];
+                        this.idx = 0;
+                        this.timer = null;
+                    }
+                    IterationController.prototype.stop = function () {
+                        if (this.timer !== null) { clearTimeout(this.timer); this.timer = null; }
+                    };
+                    IterationController.prototype.loadTier = function (iterations) {
+                        this.stop();
+                        this.iterations = iterations || [];
+                        this.idx = 0;
+                        if (!this.iterations.length) return;
+                        this.onFrame(0, true);   // initial iteration, no morph
+                        this.play();
+                    };
+                    IterationController.prototype.play = function () {
+                        var self = this;
+                        this.stop();
+                        var n = this.iterations.length;
+                        if (!n) return;
+                        function tick() {
+                            var cur = self.iterations[self.idx];
+                            var converged = cur && cur.converged;
+                            var hold = converged ? (ITER_HOLD_MS + MORPH_MS) : ITER_HOLD_MS;
+                            self.timer = setTimeout(function () {
+                                self.idx = advance(self.idx, n);
+                                // instant when wrapping back to the initial frame.
+                                var instant = self.idx === 0;
+                                self.onFrame(self.idx, instant);
+                                tick();
+                            }, hold);
+                        }
+                        tick();
+                    };
+
+                    // ---- Module-scoped wiring state --------------------------
+                    var store = null;
+                    var renderer = null;
+                    var controller = null;
+                    var slider = null;
+                    var scaleEl = null;
+
+                    function renderFrame(idx, instant) {
+                        if (!store || !renderer || !controller) return;
+                        var its = controller.iterations;
+                        if (!its || !its.length) return;
+                        var it = its[idx];
+                        var prevIt = idx > 0 ? its[idx - 1] : null;
+                        var animate = !instant && !prefersReducedMotion();
+                        renderer.renderIteration(it, prevIt, animate, activeTier);
+                    }
+
+                    var activeTierIndex = DEFAULT_TIER;
+                    var activeTier = null;
+
+                    // ---- ThresholdControl (slider + scale) -------------------
+                    function buildScale() {
+                        if (!scaleEl || !store) return;
+                        clearGroup(scaleEl);
+                        for (var i = 0; i < store.tierCount; i++) {
+                            (function (idx) {
+                                var span = document.createElement('span');
+                                span.textContent = store.thresholdAt(idx);
+                                span.setAttribute('data-tier', String(idx));
+                                span.addEventListener('click', function () {
+                                    if (slider) slider.value = String(idx);
+                                    switchTier(idx);
+                                });
+                                scaleEl.appendChild(span);
+                            })(i);
+                        }
+                    }
+
+                    function markActiveScale(i) {
+                        if (!scaleEl) return;
+                        var spans = scaleEl.querySelectorAll('span');
+                        for (var k = 0; k < spans.length; k++) {
+                            if (k === i) spans[k].classList.add('fit-scale-active');
+                            else spans[k].classList.remove('fit-scale-active');
+                        }
+                    }
+
+                    function switchTier(i) {
+                        if (!store) return;
+                        if (i < 0) i = 0;
+                        if (i > store.tierCount - 1) i = store.tierCount - 1;
+                        activeTierIndex = i;
+                        activeTier = store.tierAt(i);
+                        markActiveScale(i);
+                        if (renderer && renderer.thresholdLabel && activeTier) {
+                            renderer.thresholdLabel.textContent = 'threshold \u2264 ' + activeTier.max_error;
+                        }
+                        controller.loadTier(store.iterationsAt(i)); // restarts at iteration 0
+                    }
+
+                    function wireSlider() {
+                        slider = section.querySelector('.fit-slider');
+                        scaleEl = section.querySelector('.fit-scale');
+                        if (slider) {
+                            slider.min = '0';
+                            slider.max = String(store.tierCount - 1);
+                            slider.step = '1';
+                            slider.addEventListener('input', function () {
+                                var v = parseInt(slider.value, 10);
+                                if (isNaN(v)) v = DEFAULT_TIER;
+                                switchTier(v);
+                            });
+                        }
+                        buildScale();
+                    }
+
+                    // ---- Empty_State -----------------------------------------
+                    function showEmptyState() {
+                        try {
+                            var box = section.querySelector('.fit-empty');
+                            if (box) box.hidden = false;
+                        } catch (e) { /* contained */ }
+                    }
+
+                    // ---- init ------------------------------------------------
+                    function init(payload) {
+                        if (!payload || !payload.tiers || !payload.tiers.length) {
+                            showEmptyState();
+                            return;
+                        }
+                        store = new DataStore(payload);
+                        bounds = deriveBounds(store);
+                        renderer = new SvgRenderer(svg, store);
+                        renderer.buildStatic();
+                        controller = new IterationController(renderFrame);
+                        wireSlider();
+                        var def = DEFAULT_TIER;
+                        if (def > store.tierCount - 1) def = store.tierCount - 1;
+                        if (slider) slider.value = String(def);
+                        switchTier(def);
+                    }
+
+                    // ---- Data-integrity / monotonicity helpers (pure) --------
+                    function dataIntegrityOk(payload) {
+                        if (!payload || !payload.tiers || !payload.tiers.length) return false;
+                        for (var t = 0; t < payload.tiers.length; t++) {
+                            var tier = payload.tiers[t];
+                            var its = tier.iterations;
+                            if (!its || !its.length) return false;
+                            for (var j = 0; j < its.length; j++) {
+                                var it = its[j];
+                                var isFinal = j === its.length - 1;
+                                if (isFinal) {
+                                    if (it.converged !== true) return false;
+                                    if (!(it.max_error_achieved <= tier.max_error)) return false;
+                                } else {
+                                    if (!(it.max_error_achieved > tier.max_error)) return false;
+                                }
+                            }
+                        }
+                        return true;
+                    }
+
+                    function convergedInteriorCount(tier) {
+                        var its = tier.iterations;
+                        var last = its[its.length - 1];
+                        return (last.interior_knots_x || []).length;
+                    }
+
+                    function tierMonotonicOk(payload) {
+                        if (!payload || !payload.tiers || !payload.tiers.length) return false;
+                        var tiers = payload.tiers;
+                        for (var a = 0; a < tiers.length; a++) {
+                            for (var b = 0; b < tiers.length; b++) {
+                                // a stricter (smaller max_error) than b -> count(a) >= count(b)
+                                if (tiers[a].max_error < tiers[b].max_error) {
+                                    if (convergedInteriorCount(tiers[a]) < convergedInteriorCount(tiers[b])) {
+                                        return false;
+                                    }
+                                }
+                            }
+                        }
+                        return true;
+                    }
+
+                    // ---- Async load (production only) ------------------------
+                    // The dev test harness sets window.__FIT_TEST__ before
+                    // evaluating and drives init via inject(payload), so skip the
+                    // auto-load there to keep tests deterministic (no network,
+                    // no hang). Production uses the JS payload because file://
+                    // pages cannot fetch sibling JSON in Chrome/Safari.
+                    if (!(typeof window !== 'undefined' && window.__FIT_TEST__)) {
+                        if (typeof window !== 'undefined' &&
+                            window.__FIT_DATA__ &&
+                            window.__FIT_DATA__.tiers &&
+                            window.__FIT_DATA__.tiers.length) {
+                            init(window.__FIT_DATA__);
+                        } else {
+                            showEmptyState();
+                        }
+                    }
+
+                    // ---- Dev-only test hook ----------------------------------
+                    if (typeof window !== 'undefined' && window.__FIT_TEST__) {
+                        window.__FIT_TEST__ = {
+                            mapX: mapX,
+                            mapY: mapY,
+                            advance: advance,
+                            deriveBounds: deriveBounds,
+                            dataIntegrityOk: dataIntegrityOk,
+                            tierMonotonicOk: tierMonotonicOk,
+                            inject: function (payload) { init(payload); },
+                            svg: svg,
+                            VIEW_W: VIEW_W,
+                            VIEW_H: VIEW_H,
+                            PAD: PAD,
+                            DEFAULT_TIER: DEFAULT_TIER
+                        };
+                    }
+                } catch (e) {
+                    // Error containment: keep existing page features working.
+                    if (typeof window !== 'undefined' && window.console) {
+                        console.warn('fitting-diagram disabled:', e);
+                    }
+                    try {
+                        var s = document.querySelector('#fit-section .fit-empty');
+                        if (s) s.hidden = false;
+                    } catch (e2) { /* contained */ }
+                }
+            })();
+        </script>
+
+        <div class="row top30 bottom30" id="citation-section">
+            <div class="col-md-12">
+                <hr class="section-line">
+                <h2 id="citation">Citation</h2>
+                <p>
+                    To cite this work, please use the following BibTeX entry:
+                </p>
+                <div style="position: relative;">
+                    <button type="button" onclick="copyCite(this)"
+                        style="position: absolute; top: 8px; right: 8px; padding: 4px 10px; font-size: 13px; background: #f5f5f5; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; color: #333;">
+                        Copy
+                    </button>
+                    <pre class="codebox-pre"><code id="cite-bibtex">@inproceedings{xiong2022b-spline-policy,
+  title={b-spline-policy: Learning Household Manipulation from Human Videos
+         with Simulated Twin Environments},
+  author={Haoyu Xiong and Haoyuan Fu and Jieyi Zhang and Chen Bao
+          and Qiang Zhang and Yongxi Huang and Wenqiang Xu
+          and Animesh Garg and Cewu Lu},
+  booktitle={6th Annual Conference on Robot Learning},
+  year={2022},
+  url={https://openreview.net/forum?id=VD0nXUG5Qk}
+}</code></pre>
+                </div>
+
+                <script>
+                    function copyCite(btn) {
+                        const text = document.getElementById('cite-bibtex').innerText;
+                        navigator.clipboard.writeText(text).then(() => {
+                            const original = btn.innerText;
+                            btn.innerText = 'Copied!';
+                            setTimeout(() => { btn.innerText = original; }, 1500);
+                        });
+                    }
+                </script>
             </div>
         </div>
 
