@@ -613,6 +613,30 @@
             .code-data-tile img { width: 37px; height: 37px; }
         }
 
+        .header-links a,
+        .header-links a:focus {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 16px;
+            border: 1px solid rgb(153, 51, 51);
+            border-radius: 999px;
+            background: #ffffff;
+            color: rgb(153, 51, 51);
+            font-family: 'Asap', roboto, sans-serif;
+            font-size: 0.82em;
+            font-weight: 500;
+            line-height: 1.2;
+            text-decoration: none;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        }
+        .header-links a:hover {
+            background: rgb(153, 51, 51);
+            color: #ffffff;
+            border-color: rgb(153, 51, 51);
+            text-decoration: none;
+        }
+
         .team-grid li { font-size: 0.95em; }
 
         .top0 { margin-top: 0px; }
@@ -914,12 +938,12 @@
         }
     </style>
 
-    <title>B-Spline Policy</title>
+    <title>B-spline Policy</title>
 
     <meta name="author" content="Haoyu Xiong">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description"
-        content="B-Spline Policy: Learning Household Manipulation from Human Videos with Simulated Twin Environments. A platform that lowers the barrier to robotics research.">
+        content="B-spline Policy: Learning Household Manipulation from Human Videos with Simulated Twin Environments. A platform that lowers the barrier to robotics research.">
 
     <base target="_blank">
 
@@ -929,11 +953,20 @@
 
 <body style="zoom: 1.15;">
     <div class="container" id="main">
-        <div class="row" style="margin-top: 110px; text-align: center;">
+        <div class="row" style="margin-top: 48px; text-align: center;">
+            <div class="col-md-12">
+                <div style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; column-gap: 40px; margin-bottom: 12px;">
+                    <img src="assets/logos/harvard-university.png" alt="Harvard" style="height: 100px; width: auto; justify-self: start;">
+                    <img src="assets/logos/csail.jpg" alt="MIT" style="height: 130px; width: auto; justify-self: center;">
+                    <img src="assets/logos/utaustin.svg" alt="UT Austin" style="height: 65px; width: auto; justify-self: end;">
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 0; text-align: center;">
             <div class="col-md-12">
                 <div class="text-large" style="color: rgb(153, 51, 51); font-size: 35px; line-height: 1.3;">
-                    <b style="font-size: 40px;">B-Spline Policy</b>: Fast Manipulation Policies via <br>
-                    B-Spline Action Representations
+                    <b style="font-size: 40px;">B-spline Policy</b>: Fast Manipulation Policies via <br>
+                    B-spline Action Representations
                 </div>
                 <ul class="list-inline" style="margin-top: 16px; margin-bottom: 0;">
                     <li><a href="https://xshan.site/">Xiaoshen Han</a><sup><span style="font-size: 20px;">*</span>1</sup></li>
@@ -945,12 +978,18 @@
                     <li><a href="https://yilundu.github.io/">Yilun Du</a><sup>1</sup></li>
                 </ul>
                 <div style="margin-top: 12px; font-size: 0.8em; color: #777777; line-height: 1.5;">
-                    <div><sup><span style="font-size: 20px;">*</span></sup>Equal contribution</div>
                     <div style="margin-top: 12px; margin-bottom: 28px;">
-                        <span style="display: inline-flex; align-items: center; vertical-align: middle; margin: 0 8px;"><img src="assets/logos/harvard.jpg" alt="Harvard logo" style="display: inline-block; height: 28px; width: auto; margin: 0 8px 0 0;"><sup>1</sup>Harvard</span>
-                        <span style="display: inline-flex; align-items: center; vertical-align: middle; margin: 0 8px;"><img src="assets/logos/mit.jpg" alt="MIT logo" style="display: inline-block; height: 28px; width: auto; margin: 0 8px 0 0;"><sup>2</sup>MIT</span>
-                        <span style="display: inline-flex; align-items: center; vertical-align: middle; margin: 0 8px;"><img src="assets/logos/utaustin.svg" alt="UT Austin logo" style="display: inline-block; height: 28px; width: auto; margin: 0 8px 0 0;"><sup>3</sup>UT Austin</span>
+                        <span style="margin: 0 8px;"><sup>1</sup>Harvard</span>
+                        <span style="margin: 0 8px;"><sup>2</sup>MIT</span>
+                        <span style="margin: 0 8px;"><sup>3</sup>UT Austin</span>
+                                        <div><sup><span style="font-size: 20px;">*</span></sup>Equal contribution</div>
+
                     </div>
+                </div>
+                <div class="header-links" style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 8px; margin-bottom: 28px;">
+                    <a href="#" target="_blank" rel="noopener">Paper</a>
+                    <a href="#" target="_blank" rel="noopener">Github</a>
+                    <a href="#" target="_blank" rel="noopener">Colab</a>
                 </div>
             </div>
         </div>
@@ -991,9 +1030,9 @@
                     <span style="color: rgb(153, 51, 51); font-weight: 700;">Abstract:</span>
                     In this work, we present B-spline Policy (BSP), an action representation designed for accelerating robot manipulation policies. Rather than predicting discrete-time action chunks, BSP parameterizes actions as continuous B-spline curves defined by a set of knots and control points. This representation yields smooth, time-continuous trajectories that can be temporally scaled and executed by low-level controllers at higher frequencies and speeds. We show that B-spline–parameterized actions can be seamlessly integrated into standard policy learning pipelines by directly predicting B-spline parameters. Experiments on simulated and real-world tasks demonstrate that BSP significantly reduces task completion time, achieving substantial improvements over baseline methods while maintaining strong success rates.
                 </p>
-                <p>
-                    <span style="color: rgb(153, 51, 51); font-weight: 700;">Paper and Code:</span>
-                </p>
+                <!-- <p> -->
+                    <!-- <span style="color: rgb(153, 51, 51); font-weight: 700;">Paper and Code:</span> -->
+                <!-- </p>
                 <div class="code-data-grid">
                     <a class="code-data-tile" href="#" target="_blank" rel="noopener">
                         <img src="assets/logos/paper.svg" alt="Paper" />
@@ -1007,14 +1046,23 @@
                         <img src="assets/logos/colab_logo.svg" alt="Google Colab" />
                         <span class="code-data-label">Quick Start</span>
                     </a>
-                </div>
+                </div> -->
 
                 <hr class="section-line">
                 <h2 id="dataset">Visuomotor policies were often slow</h2>
                 <p>
-                    write your motivation here.
-                </p>
+                Today's visuomotor policies predict action chunks, which becomes problematic when robots need to move faster:
+
+                <!-- Despite progress in visuomotor policy learning, robotic manipulation policy still remains slow at task execution. -->
+                <!-- Visuomotor polices were often slow.  -->
+                <!-- In everyday manipulation tasks such as folding a T-shirt, humans typically complete the task in roughly 10 seconds, whereas even state-of-the-art robotic systems often require close to a minute.  -->
+                <p>
                 
+                <!-- Action chunks are temporally uniform, treating all moments the same, even though some phases need precision and others could move quickly. Chunk boundaries also introduce discontinuities, making fast execution jerky and unstable. -->
+                <p>
+                To address these issues, we propose B-spline Policy, rather than predicting a chunk of discrete-time actions, we parameterize actions as continuous B-spline curves. 
+                This continuous representation enables temporal rescaling at execution time, allowing the policy to execute faster and more smoothly.
+
                 <!--
                   Scrubbable video player (kept from the reference layout).
                   To use it, replace a `.teleop-placeholder` with:
@@ -1165,12 +1213,16 @@
                 <div class="bspline-layout">
                     <div class="bspline-copy">
                         <p>
-                            A B-spline represents a continuous trajectory with a small set of
-                            <span style="color: #598be7; font-weight: 600;">control points</span> and a nondecreasing knot sequence.
-                            The curve blends nearby control points through local basis functions, so moving
-                            one point changes only a neighborhood of the trajectory. In BSP, the policy predicts
-                            these parameters instead of dense action sequences, then executes a smooth
-                            time-continuous action curve.
+                            A B-spline defines a smooth curve (<span style="color: rgb(153, 51, 51); font-weight: 600;">the red curve</span>) by a set of knots (<span style="color: #  ; font-weight: 600;">the grey diamonds</span>) and control points (<span style="color: #598be7; font-weight: 600;">the blue dots</span>). 
+                            Instead of drawing straight lines between waypoints, a B-spline creates a smooth path that follows their overall trend. Think of it like bending a flexible ruler near waypoints instead of connecting them with sharp corners.
+                            <br>
+                            <!-- The <span style="color: rgb(153, 51, 51); font-weight: 600;">red curve</span>
+                            is a cubic B-spline. <span style="color: #598be7; font-weight: 600;">Blue dots</span>
+                            are control points; <span style="color: #666666ff; font-weight: 600;">grey diamonds</span>
+                            are internal knots on the parameter axis.
+                            The endpoints are clamped.  -->
+
+                            <!-- B-spline Policy predicts B-spline parameters instead of discrete action chunks. -->
                         </p>
                     </div>
 
@@ -1195,11 +1247,7 @@
                             <text class="bspline-label bspline-knot-label-main" x="58" y="314">knot vector</text>
                         </svg>
                         <p class="text-caption-small bspline-caption">
-                            The <span style="color: rgb(153, 51, 51); font-weight: 600;">red curve</span>
-                            is a cubic B-spline. <span style="color: #598be7; font-weight: 600;">Blue dots</span>
-                            are control points; <span style="color: #666666ff; font-weight: 600;">grey diamonds</span>
-                            are internal knots on the parameter axis.
-                            The endpoints are clamped. Try dragging the
+                            Try dragging the
                             <span style="color: #598be7; font-weight: 600;">control points</span> and
                             <span style="color: #666666ff; font-weight: 600;">knots</span> yourself!
                         </p>
@@ -1612,7 +1660,8 @@
                 </figure>
 
                 <p class="text-caption-small fit-caption">
-                    The policy starts with only the two boundary knots (endpoints) and a coarse
+                    Given a set of waypoints from a trajectory ( <span style="color:#666666; font-weight: 600;">grey dots</span>), the diagram shows how a B-spline can be iteratively fitted to approximate it.
+                    It starts with only the two boundary knots (endpoints) and a coarse
                     least-squares B-spline. It measures the <span style="color: #f54254; font-weight: 600;">reconstruction
                     error</span> against the target trajectory, drops a new <span style="color: #598be7; font-weight: 600;">knot</span>
                     where the error is worst, and refits. The loop repeats until the largest error
