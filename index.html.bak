@@ -586,7 +586,7 @@
             flex-wrap: wrap;
             justify-content: flex-start;
             gap: 18px 8px;
-            margin: 0.8em 0 0.4em -20px;
+            margin: 0.8em 0 0.4em;
         }
         .code-data-tile {
             display: flex;
@@ -595,7 +595,7 @@
             justify-content: flex-start;
             gap: 10px;
             width: 130px;
-            color: rgb(153, 51, 51);
+            color: #333;
             text-decoration: none;
             text-align: center;
             transition: transform 0.15s, color 0.15s;
@@ -963,10 +963,10 @@
     <div class="container" id="main">
         <div class="row" style="margin-top: 48px; text-align: center;">
             <div class="col-md-12">
-                <div style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; column-gap: 40px; margin-bottom: 12px;">
-                    <img src="assets/logos/harvard-university.png" alt="Harvard" style="height: 100px; width: auto; justify-self: start;">
-                    <img src="assets/logos/csail.jpg" alt="MIT" style="height: 130px; width: auto; justify-self: center;">
-                    <img src="assets/logos/utaustin.svg" alt="UT Austin" style="height: 65px; width: auto; justify-self: end;">
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; width: 100%; max-width: 700px; margin: 0 auto 12px;">
+                    <img src="assets/logos/Harvard_University_shield.svg.png" alt="Harvard" style="height: 60px; width: auto; justify-self: start; margin: 0;">
+                    <img src="assets/logos/csail.jpg" alt="MIT" style="height: 60px; width: auto; justify-self: center; margin: 0;">
+                    <img src="assets/logos/utaustin.svg" alt="UT Austin" style="height: 60px; width: auto; justify-self: end; margin: 0;">
                 </div>
             </div>
         </div>
@@ -976,7 +976,7 @@
                     <b style="font-size: 40px;">B-spline Policy</b>: Fast Manipulation Policies via <br>
                     B-spline Action Representations
                 </div>
-                <ul class="list-inline" style="margin-top: 16px; margin-bottom: 0;">
+                <ul class="list-inline authors" style="margin-top: 16px; margin-bottom: 0;">
                     <li><a href="https://xshan.site/">Xiaoshen Han</a><sup><span style="font-size: 20px;">*</span>1</sup></li>
                     <li><a href="https://haoyu-x.github.io/">Haoyu Xiong</a><sup><span style="font-size: 20px;">*</span>2</sup></li>
                     <li><a href="https://haonan16.github.io/">Haonan Chen</a><sup>1</sup></li>
@@ -1039,7 +1039,7 @@
                     In this work, we present B-spline Policy (BSP), an action representation designed for accelerating robot manipulation policies. Rather than predicting discrete-time action chunks, BSP parameterizes actions as continuous B-spline curves defined by a set of knots and control points. This representation yields smooth, time-continuous trajectories that can be temporally scaled and executed by low-level controllers at higher frequencies and speeds. We show that B-spline–parameterized actions can be seamlessly integrated into standard policy learning pipelines by directly predicting B-spline parameters. Experiments on simulated and real-world tasks demonstrate that BSP significantly reduces task completion time, achieving substantial improvements over baseline methods while maintaining strong success rates.
                 </p>
                 <p>
-                    <span style="color: rgb(153, 51, 51); font-weight: 700;">Paper and Code:</span> Find the quick start Colab notebook, code, and hardware setups below.
+                    <span style="color: rgb(153, 51, 51); font-weight: 700;">Paper and Code:</span>
                 </p>
                 <div class="code-data-grid">
                     <a class="code-data-tile" href="#" target="_blank" rel="noopener">
