@@ -8,6 +8,15 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
 
+    <!-- MathJax for inline/display math -->
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" id="MathJax-script" async></script>
+
     <style>
         @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,600,600i,700,700i&display=swap");
         @import url("https://fonts.googleapis.com/css?family=Source+Code+Pro:300,300i,400,400i,600,600i,700,700i&display=swap");
@@ -578,7 +587,40 @@
         .section-line {
             border: none;
             border-top: 1px solid #e2d6d6;
-            margin: 36px 0 22px;
+            margin: 22px 0 22px;
+        }
+
+        /* ===== Policy figure ===== */
+        .policy-figure {
+            margin: 24px auto;
+            max-width: 920px;
+        }
+
+        /* ===== Experiment videos ===== */
+        .experiment-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .experiment-item {
+            margin: 0;
+        }
+        .experiment-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            aspect-ratio: 16 / 9;
+            width: 100%;
+            border-radius: 8px;
+            background: #f5f5f5;
+            border: 1px dashed #d9d9d9;
+            color: #aaa;
+            font-size: 0.9em;
+            font-style: italic;
+        }
+        @media (max-width: 700px) {
+            .experiment-grid { grid-template-columns: 1fr; }
         }
 
         /* ===== Code and Data tiles ===== */
@@ -587,7 +629,7 @@
             flex-wrap: wrap;
             justify-content: flex-start;
             gap: 18px 8px;
-            margin: 0.8em 0 0.4em -20px;
+            margin: 0.8em 0 0.4em;
         }
         .code-data-tile {
             display: flex;
@@ -1066,9 +1108,6 @@
                     <span style="color: rgb(153, 51, 51); font-weight: 700;">Abstract:</span>
                     In this work, we present B-spline Policy (BSP), an action representation designed for accelerating robot manipulation policies. Rather than predicting discrete-time action chunks, BSP parameterizes actions as continuous B-spline curves defined by a set of knots and control points. This representation yields smooth, time-continuous trajectories that can be temporally scaled and executed by low-level controllers at higher frequencies and speeds. We show that B-spline–parameterized actions can be seamlessly integrated into standard policy learning pipelines by directly predicting B-spline parameters. Experiments on simulated and real-world tasks demonstrate that BSP significantly reduces task completion time, achieving substantial improvements over baseline methods while maintaining strong success rates.
                 </p>
-                <p>
-                    <span style="color: rgb(153, 51, 51); font-weight: 700;">Paper and Code:</span> Find the quick start colab notebook, code, and hardware setups below.
-                </p>
                 <div class="code-data-grid">
                     <a class="code-data-tile" href="https://www.robotube.org/" target="_blank" rel="noopener">
                         <img src="assets/logos/paper.svg" alt="Paper" />
@@ -1089,14 +1128,11 @@
                 <p>
 
                 Speed remains a major bottleneck in visuomotor policies. 
-                
                 Consider loading an object into a dishwasher: humans typically complete the task in a few seconds, whereas most of today's robotic systems require close to a minute.
                 
-                The slow execution speed is often attributed to the "action chunking" strategy commonly used in visuomotor policy learning.
-                 <!-- where the policy predicts a chunk of discrete-time actions at a fixed temporal resolution. -->
+                              <p>
 
-                The chunk is usually represented as discrete waypoints at a fixed temporal resolution. When naively executed faster, these waypoints can become too sparse or discontinuous, causing jerky motion and poor tracking.
-
+                One reason of this slow execution is action chunking: policies output fixed-rate waypoints, treating every moment the same. But manipulation is not uniform: robots should move fast in free space and slow down near contact making. Naively speeding up these waypoints often makes motion sparse, jerky, and hard to track.
                 <!-- Despite progress in visuomotor policy learning, robotic manipulation policy still remains slow at task execution. -->
                 <!-- Visuomotor polices were often slow.  -->
                 <!-- In everyday manipulation tasks such as folding a T-shirt, humans typically complete the task in roughly 10 seconds, whereas even state-of-the-art robotic systems often require close to a minute.  -->
@@ -1104,7 +1140,7 @@
                 
                 <!-- Action chunks are temporally uniform, treating all moments the same, even though some phases need precision and others could move quickly. Chunk boundaries also introduce discontinuities, making fast execution jerky and unstable. -->
                 <p>
-                To address these issues, we propose B-spline Policy, rather than predicting a chunk of discrete-time actions, we parameterize actions as continuous B-spline curves. 
+                To address these issues, we propose B-spline Policy, rather than predicting a chunk of fixed-rate waypoints, we parameterize action trajectories as continuous B-spline curves. 
                 This continuous representation enables temporal rescaling at execution time, allowing the policy to execute faster and more smoothly.
 
                 <!--
@@ -2360,6 +2396,107 @@
                 }
             })();
         </script>
+
+        <div class="row top30 bottom30" id="policy-section">
+            <div class="col-md-12">
+                <hr class="section-line">
+                <h2 id="bspline-policy">B-spline Policy</h2>
+
+                <p>
+                    <span style="color: rgb(153, 51, 51); font-weight: 600;">How do you learn a B-spline policy?</span>
+                    Rather than predicting a fixed list of discrete-time waypoints, B-spline Policy parameterizes the
+                    action space as a continuous B-spline trajectory. Given a knot vector $U$ and a set of
+                    <span style="color: #598be7; font-weight: 600;">control points</span> $C = \{c_0, \dots, c_N\}$, the
+                    continuous action at normalized time $u$ is
+                </p>
+
+                <p style="text-align: center;">
+                    $$ \mathbf{a}(u) \;=\; \sum_{i=0}^{N} N_{i,p}(u)\, c_i, $$
+                </p>
+
+                <p>
+                    where $N_{i,p}(u)$ is the $i$-th basis function of degree $p$ (we use cubic B-splines, $p=3$). This
+                    turns the policy output from a list of sampled poses into the parameters of a smooth curve that can
+                    be sampled at any control frequency.
+                </p>
+
+                <p>
+                    <span style="color: rgb(153, 51, 51); font-weight: 600;">Training.</span>
+                    Each discrete demonstration is first converted into a continuous B-spline target. We fit a degree-$p$
+                    curve within an error tolerance, inserting knots adaptively into the regions of largest reconstruction
+                    error (see <a href="#adaptive-fitting">Fitting a B-spline</a>). Exploiting the local support of
+                    B-splines, the policy then predicts a near-future segment &mdash; both the control points and the knot
+                    values as one fixed-size vector $[U;\,C]$ &mdash; serving as a drop-in replacement for action-chunk
+                    prediction in backbones such as Diffusion Policy and ACT.
+                </p>
+
+                <figure class="policy-figure" aria-label="B-spline Policy inference overview">
+                    <img src="assets/method.svg" alt="B-spline Policy inference overview"
+                         style="width: 100%; height: auto; display: block;">
+                    <figcaption style="text-align: center; margin-top: 8px; font-size: 0.85em; color: #777; font-style: italic;">
+                        At each inference step, the policy takes images and proprioception as the input and outputs future
+                        B-spline segment parameters. At the low-level control stage, we align each successive B-spline
+                        segment with the prior one. The predicted B-spline segment can be temporally scaled to adjust
+                        execution speed. Actions are then sampled at a higher frequency and sent to the robot controller.
+                    </figcaption>
+                </figure>
+
+                <p>
+                    <span style="color: rgb(153, 51, 51); font-weight: 600;">Inference and Execution.</span>
+                    Because the output is a continuous curve, we decouple the policy rate from the control rate: the policy
+                    runs slowly while the controller samples the segment densely. Speed is set by rescaling time with a
+                    factor $n$, $\mathbf{a}_{\text{exec}}(t) = \mathbf{a}(n t)$, which preserves the trajectory's shape
+                    while traversing it faster &mdash; no retraining and none of the jerky motion of naively sped-up
+                    waypoints. For long-horizon tasks, a lightweight <em>segment alignment</em> step matches each new
+                    segment to the last executed action, keeping consecutive segments continuous at high speed.
+                </p>
+            </div>
+        </div>
+
+        <div class="row top30 bottom30" id="experiments-section">
+            <div class="col-md-12">
+                <hr class="section-line">
+                <h2 id="experiments">Experiments</h2>
+
+                <p>
+                    We integrate B-spline Policy into two imitation-learning backbones &mdash; Diffusion Policy
+                    (Diff.&#8202;+&#8202;BSP) and ACT (Reg.&#8202;+&#8202;BSP) &mdash; and evaluate it on three real-world tasks that span
+                    distinct challenges: <em>Cube Picking</em> (precise object manipulation), <em>Table Cleaning</em>
+                    (long-horizon rearrangement), and <em>Speed Stacking</em> (bimanual, contact-rich), along with the
+                    Push-T, RoboMimic, and RoboCasa simulation benchmarks. Across configurations BSP consistently
+                    reduces task completion time while preserving or improving success rate &mdash; for example, cutting
+                    Table Cleaning time roughly in half at a 4&#215; speedup &mdash; and produces visibly smoother motion.
+                </p>
+
+                <div class="experiment-grid">
+                    <figure class="experiment-item">
+                        <div class="experiment-placeholder">Video coming soon</div>
+                        <figcaption style="text-align: center; margin-top: 8px; font-size: 0.85em; color: #777; font-style: italic;">
+                            Placeholder
+                        </figcaption>
+                    </figure>
+
+                    <figure class="experiment-item">
+                        <div class="experiment-placeholder">Video coming soon</div>
+                        <figcaption style="text-align: center; margin-top: 8px; font-size: 0.85em; color: #777; font-style: italic;">
+                            Placeholder
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+
+        <div class="row top30 bottom30" id="ack-section">
+            <div class="col-md-12">
+                <hr class="section-line">
+                <h2 id="acknowledgements">Acknowledgements</h2>
+                <p>
+                    We thank Minghuan Liu for his helpful discussion, and we thank
+                    <a href="https://www.arx-x.com/" target="_blank" rel="noopener">ARX</a> and
+                    <a href="https://www.i2rt.com/" target="_blank" rel="noopener">I2RT</a> for the robot hardware support.
+                </p>
+            </div>
+        </div>
 
         <div class="row top30 bottom30" id="citation-section">
             <div class="col-md-12">
