@@ -832,16 +832,18 @@
         }
         .fit-header h2 { margin: 0; }
         .fit-toolbar {
-            display: flex;
-            justify-content: flex-end;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 280px;
+            align-items: start;
+            gap: 16px;
         }
+        .fit-status { min-width: 0; }
         .fit-overlay {
-            width: 360px;
-            max-width: 100%;
-            background: #ffffff;
-            border: 1px solid #e4d9d9;
-            border-radius: 6px;
-            padding: 10px 12px;
+            width: 100%;
+            margin-top: 16px;
+            background: transparent;
+            border: none;
+            padding: 0;
         }
         .fit-svg {
             width: 100%;
@@ -898,15 +900,13 @@
         .fit-worst line { stroke: #f54254; stroke-width: 1.5; }
 
         .fit-status {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px 14px;
             font-family: "Source Code Pro", monospace;
-            font-size: 12px;
+            font-size: 13px;
             color: #777777;
             margin: 0;
         }
-        .fit-threshold-label { color: rgb(153, 51, 51); font-weight: 600; }
+        .fit-status span + span::before { content: " \00b7 "; }
+        .fit-threshold-label { font-weight: 400; }
 
         .fit-empty {
             font-family: "Source Code Pro", monospace;
@@ -941,7 +941,7 @@
             .fit-knots circle.fit-knot-pop { animation: none; }
         }
         @media (max-width: 600px) {
-            .fit-toolbar { justify-content: stretch; }
+            .fit-toolbar { grid-template-columns: 1fr; }
             .fit-overlay { width: 100%; }
         }
     </style>
@@ -1039,7 +1039,7 @@
                     In this work, we present B-spline Policy (BSP), an action representation designed for accelerating robot manipulation policies. Rather than predicting discrete-time action chunks, BSP parameterizes actions as continuous B-spline curves defined by a set of knots and control points. This representation yields smooth, time-continuous trajectories that can be temporally scaled and executed by low-level controllers at higher frequencies and speeds. We show that B-spline–parameterized actions can be seamlessly integrated into standard policy learning pipelines by directly predicting B-spline parameters. Experiments on simulated and real-world tasks demonstrate that BSP significantly reduces task completion time, achieving substantial improvements over baseline methods while maintaining strong success rates.
                 </p>
                 <p>
-                    <span style="color: rgb(153, 51, 51); font-weight: 700;">Paper and Code:</span> Find the quick start Colab notebook, code, and hardware setups below.
+                    <span style="color: rgb(153, 51, 51); font-weight: 700;">Paper and Code:</span> Find the quick start colab notebook, code, and hardware setups below.
                 </p>
                 <div class="code-data-grid">
                     <a class="code-data-tile" href="#" target="_blank" rel="noopener">
@@ -1059,7 +1059,15 @@
                 <hr class="section-line">
                 <h2 id="dataset">Visuomotor policies were often slow</h2>
                 <p>
-                Today's visuomotor policies predict action chunks, which becomes problematic when robots need to move faster:
+
+                Speed remains a major bottleneck in visuomotor policies. 
+                
+                Consider loading an object into a dishwasher: humans typically complete the task in a few seconds, whereas most of today's robotic systems require close to a minute.
+                
+                The slow execution speed is often attributed to the "action chunking" strategy commonly used in visuomotor policy learning.
+                 <!-- where the policy predicts a chunk of discrete-time actions at a fixed temporal resolution. -->
+
+                The chunk is usually represented as discrete waypoints at a fixed temporal resolution. When naively executed faster, these waypoints can become too sparse or discontinuous, causing jerky motion and poor tracking.
 
                 <!-- Despite progress in visuomotor policy learning, robotic manipulation policy still remains slow at task execution. -->
                 <!-- Visuomotor polices were often slow.  -->
@@ -1631,22 +1639,19 @@
                 <hr class="section-line">
                 <div class="fit-header">
                     <h2 id="adaptive-fitting">Fitting a B-spline</h2>
+                    <p>
+                    The diagram illustrates the iterative fitting of a B-spline to approximate a trajectory.
+                    Given a set of waypoints from a trajectory ( <span style="color:#666666; font-weight: 600;">grey dots</span>), it starts with only the two boundary knots (endpoints) and a coarse
+                    least-squares B-spline. It measures the <span style="color: #f54254; font-weight: 600;">reconstruction
+                    error</span> against the target trajectory, drops a new <span style="color: #598be7; font-weight: 600;">knot</span>
+                    where the error is worst, and refits. The loop repeats until the largest error
+                    falls at or below the selected threshold &mdash; then it starts over.
+                    </p>
                     <div class="fit-toolbar">
-                        <div class="fit-overlay">
-                            <div class="fit-status">
-                                <span class="fit-threshold-label"></span>
-                                <span class="fit-error-label"></span>
-                                <span class="fit-knots-label"></span>
-                            </div>
-                            <div class="fit-control-block">
-                                <div class="fit-control-title">
-                                    <span>Error threshold</span>
-                                    <span class="fit-control-hint">stricter &rarr; more knots</span>
-                                </div>
-                                <input type="range" class="fit-slider" min="0" max="7" step="1" value="4"
-                                       aria-label="Fitting error threshold" />
-                                <div class="fit-scale" aria-hidden="true"></div>
-                            </div>
+                        <div class="fit-status">
+                            <span class="fit-threshold-label"></span>
+                            <span class="fit-error-label"></span>
+                            <span class="fit-knots-label"></span>
                         </div>
                     </div>
                 </div>
@@ -1667,13 +1672,20 @@
                     </div>
                 </figure>
 
+                <div class="fit-overlay">
+                    <div class="fit-control-block">
+                        <div class="fit-control-title">
+                            <span>Error threshold</span>
+                            <span class="fit-control-hint">stricter &rarr; more knots</span>
+                        </div>
+                        <input type="range" class="fit-slider" min="0" max="7" step="1" value="4"
+                               aria-label="Fitting error threshold" />
+                        <div class="fit-scale" aria-hidden="true"></div>
+                    </div>
+                </div>
+
                 <p class="text-caption-small fit-caption">
-                    Given a set of waypoints from a trajectory ( <span style="color:#666666; font-weight: 600;">grey dots</span>), the diagram shows how a B-spline can be iteratively fitted to approximate it.
-                    It starts with only the two boundary knots (endpoints) and a coarse
-                    least-squares B-spline. It measures the <span style="color: #f54254; font-weight: 600;">reconstruction
-                    error</span> against the target trajectory, drops a new <span style="color: #598be7; font-weight: 600;">knot</span>
-                    where the error is worst, and refits. The loop repeats until the largest error
-                    falls at or below the selected threshold &mdash; then it starts over.
+
                 </p>
             </div>
         </div>
