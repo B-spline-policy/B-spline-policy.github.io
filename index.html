@@ -703,11 +703,17 @@
         }
         .bspline-toolbar {
             display: flex;
-            align-items: center;
+            align-items: flex-end;
             justify-content: space-between;
             gap: 8px 12px;
             flex-wrap: wrap;
             margin: 6px 0 4px;
+        }
+        .bspline-toolbar-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
         }
         .bspline-status {
             font-family: "Source Code Pro", monospace;
@@ -717,6 +723,12 @@
         .bspline-buttons {
             display: flex;
             gap: 8px;
+        }
+        .bspline-caption-inline {
+            margin: 0;
+            font-size: 13px;
+            color: #777777;
+            text-align: right;
         }
         .bspline-reset,
         .bspline-play {
@@ -817,7 +829,6 @@
             stroke-width: 5px;
             stroke-linejoin: round;
         }
-        .bspline-caption { margin-top: 8px; }
         @media (min-width: 768px) {
             #bspline-section h2 { margin-bottom: 12px; }
         }
@@ -1262,9 +1273,16 @@
                     <figure class="bspline-figure" aria-label="Interactive cubic B-spline with draggable control points and knots">
                         <div class="bspline-toolbar">
                             <div class="bspline-status">degree 3 · 7 controls · 3 knots</div>
-                            <div class="bspline-buttons">
-                                <button type="button" class="bspline-play">Animate</button>
-                                <button type="button" class="bspline-reset">Reset</button>
+                            <div class="bspline-toolbar-right">
+                                <div class="bspline-buttons">
+                                    <button type="button" class="bspline-play">Animate</button>
+                                    <button type="button" class="bspline-reset">Reset</button>
+                                </div>
+                                <p class="bspline-caption-inline">
+                                    Try dragging the
+                                    <span style="color: #598be7; font-weight: 600;">control points</span> and
+                                    <span style="color: #666666ff; font-weight: 600;">knots</span> yourself!
+                                </p>
                             </div>
                         </div>
                         <svg class="bspline-svg" viewBox="0 0 800 320" role="img"
@@ -1279,11 +1297,6 @@
                             <text class="bspline-label bspline-control-label" x="58" y="24">control polygon</text>
                             <text class="bspline-label bspline-knot-label-main" x="58" y="314">knot vector</text>
                         </svg>
-                        <p class="text-caption-small bspline-caption">
-                            Try dragging the
-                            <span style="color: #598be7; font-weight: 600;">control points</span> and
-                            <span style="color: #666666ff; font-weight: 600;">knots</span> yourself!
-                        </p>
                     </figure>
                 </div>
             </div>
@@ -1648,6 +1661,28 @@
 
                 renderGrid();
                 render();
+
+                // Auto-animate: start playing when the figure scrolls into view,
+                // pause when it leaves (and respect reduced-motion preferences).
+                var prefersReduced = typeof matchMedia === 'function' &&
+                    matchMedia('(prefers-reduced-motion: reduce)').matches;
+                if (!prefersReduced) {
+                    if (typeof IntersectionObserver === 'function') {
+                        var io = new IntersectionObserver(function (entries) {
+                            entries.forEach(function (entry) {
+                                if (drag) return; // don't fight the user
+                                if (entry.isIntersecting) {
+                                    if (!playRaf) startPlay();
+                                } else {
+                                    if (playRaf) stopPlay();
+                                }
+                            });
+                        }, { threshold: 0.25 });
+                        io.observe(svg);
+                    } else {
+                        startPlay();
+                    }
+                }
             })();
         </script>
 
