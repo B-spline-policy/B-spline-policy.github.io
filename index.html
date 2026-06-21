@@ -26,6 +26,59 @@
             max-width: 810px;
         }
 
+        html { scroll-behavior: smooth; }
+
+        /* ===== Left-rail table of contents ===== */
+        .page-toc {
+            position: fixed;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            z-index: 60;
+            width: 165px;
+        }
+        .page-toc-title {
+            margin: 0 0 8px 10px;
+            color: #999999;
+            font-family: 'Asap', roboto, sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .page-toc ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .page-toc a {
+            display: block;
+            padding: 4px 10px;
+            border-left: 2px solid #e2d6d6;
+            color: #999999;
+            font-family: 'Asap', roboto, sans-serif;
+            font-size: 13px;
+            line-height: 1.3;
+            text-decoration: none;
+            transition: color 0.15s ease, border-color 0.15s ease;
+        }
+        .page-toc a:hover {
+            color: rgb(153, 51, 51);
+            text-decoration: none;
+        }
+        .page-toc a.is-active {
+            color: rgb(153, 51, 51);
+            border-left-color: rgb(153, 51, 51);
+            font-weight: 600;
+        }
+        .page-toc .toc-sub a {
+            padding-left: 22px;
+            font-size: 12px;
+        }
+        @media (max-width: 1380px) {
+            .page-toc { display: none; }
+        }
+
         .list-inline {
             list-style: none;
             margin-left: -0.5em;
@@ -535,7 +588,7 @@
         }
 
         .text-caption-xs {
-            font-size: 14px;
+            font-size: 16px;
             display: block;
         }
 
@@ -568,7 +621,7 @@
             border-radius: 6px;
             padding: 14px 16px;
             font-family: "Source Code Pro", monospace;
-            font-size: 13px;
+            font-size: 14px;
             line-height: 1.5;
             overflow-x: auto;
             color: #333;
@@ -581,6 +634,48 @@
             margin: 0.6em 0 0.2em;
             padding-left: 0;
             list-style: none;
+        }
+
+        /* ===== Collapsible abstract ===== */
+        .abstract-toggle {
+            margin-bottom: 10px;
+        }
+        .abstract-toggle > summary {
+            list-style: none;
+            cursor: pointer;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            user-select: none;
+        }
+        .abstract-toggle > summary::-webkit-details-marker {
+            display: none;
+        }
+        .abstract-toggle > summary::after {
+            content: '';
+            flex: 0 0 auto;
+            align-self: center;
+            width: 8px;
+            height: 8px;
+            border-right: 2px solid rgb(153, 51, 51);
+            border-bottom: 2px solid rgb(153, 51, 51);
+            transform: rotate(-45deg);
+            transition: transform 0.15s ease;
+        }
+        .abstract-toggle[open] > summary::after {
+            transform: rotate(45deg);
+        }
+        .abstract-line {
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .abstract-toggle[open] .abstract-preview {
+            display: none;
+        }
+        .abstract-toggle > p {
+            margin-top: 8px;
         }
 
         /* ===== Section divider line ===== */
@@ -606,6 +701,670 @@
         .experiment-item {
             margin: 0;
         }
+        .experiment-video {
+            display: block;
+            aspect-ratio: 16 / 9;
+            width: 100%;
+            border-radius: 8px;
+            background: #000;
+            object-fit: cover;
+        }
+        .real-results-title {
+            margin-top: 28px;
+            margin-bottom: 10px;
+        }
+        .real-results-wrap {
+            margin: 16px 0 22px;
+            overflow: hidden;
+            border: 1px solid #e8dede;
+            border-radius: 8px;
+            background: #ffffff;
+        }
+        .real-results-table {
+            width: 100%;
+            table-layout: fixed;
+            border-collapse: collapse;
+            color: #333333;
+            font-size: 14px;
+            line-height: 1.2;
+        }
+        .real-results-table caption {
+            padding: 10px 12px;
+            color: rgb(153, 51, 51);
+            font-family: 'Asap', roboto, sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: left;
+            caption-side: top;
+            background: #fbf8f8;
+            border-bottom: 1px solid #e8dede;
+        }
+        .real-results-table th,
+        .real-results-table td {
+            padding: 6px 5px;
+            border-bottom: 1px solid #eeeeee;
+            border-right: 1px solid #eeeeee;
+            vertical-align: middle;
+            text-align: center;
+            overflow-wrap: anywhere;
+        }
+        .real-results-table th:nth-child(1),
+        .real-results-table td:nth-child(1) {
+            width: 13%;
+        }
+        .real-results-table th:nth-child(2),
+        .real-results-table td:nth-child(2) {
+            width: 12%;
+        }
+        .real-results-table th:nth-child(n+3),
+        .real-results-table td:nth-child(n+3) {
+            width: 12.5%;
+        }
+        .real-results-table th:last-child,
+        .real-results-table td:last-child {
+            border-right: 0;
+        }
+        .real-results-table tbody tr:last-child td {
+            border-bottom: 0;
+        }
+        .real-results-table thead th {
+            color: #666666;
+            background: #fafafa;
+            font-size: 11px;
+            font-weight: 600;
+            white-space: normal;
+        }
+        .real-results-table .task-cell {
+            color: rgb(153, 51, 51);
+            font-family: 'Asap', roboto, sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            text-align: left;
+            white-space: normal;
+        }
+        .real-results-table .metric-cell {
+            color: #666666;
+            font-size: 11px;
+            text-align: left;
+            white-space: normal;
+        }
+        .real-results-table .result-cell {
+            font-family: "Source Code Pro", monospace;
+            font-size: 13px;
+            font-variant-numeric: tabular-nums;
+        }
+        .real-results-table .metric-cell span,
+        .real-results-table .result-cell span {
+            display: block;
+        }
+        .real-results-table .metric-cell span + span,
+        .real-results-table .result-cell span + span {
+            margin-top: 3px;
+        }
+        .real-results-table .bsp-cell {
+            background: #fbf7f7;
+        }
+        .real-results-table .metric-highlight {
+            color: rgb(153, 51, 51);
+            font-weight: 700;
+        }
+        .real-results-analysis {
+            margin: 8px 0 0;
+            color: #555555;
+            font-size: 0.96em;
+        }
+        /* ===== Combined real-world results (wide, scrollable) ===== */
+        .real-results-scroll {
+            margin: 16px 0 22px;
+            overflow-x: auto;
+            border: 1px solid #e8dede;
+            border-radius: 8px;
+            background: #ffffff;
+            -webkit-overflow-scrolling: touch;
+        }
+        .real-results-full {
+            border-collapse: collapse;
+            min-width: 940px;
+            width: 100%;
+            color: #333333;
+            font-variant-numeric: tabular-nums;
+        }
+        .real-results-full caption {
+            padding: 10px 12px;
+            color: rgb(153, 51, 51);
+            font-family: 'Asap', roboto, sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            text-align: left;
+            caption-side: top;
+            background: #fbf8f8;
+            border-bottom: 1px solid #e8dede;
+        }
+        .real-results-full th,
+        .real-results-full td {
+            padding: 5px 6px;
+            border-bottom: 1px solid #eeeeee;
+            border-right: 1px solid #eeeeee;
+            text-align: center;
+            vertical-align: middle;
+            white-space: nowrap;
+            font-size: 12px;
+            line-height: 1.2;
+        }
+        .real-results-full thead th {
+            color: #555555;
+            background: #ffffff;
+            font-family: 'Asap', roboto, sans-serif;
+            font-weight: 600;
+            font-size: 11px;
+        }
+        .real-results-full tbody tr:last-child td {
+            border-bottom: 0;
+        }
+        .real-results-full .task-cell {
+            color: rgb(153, 51, 51);
+            font-family: 'Asap', roboto, sans-serif;
+            font-weight: 600;
+            text-align: left;
+            white-space: nowrap;
+        }
+        .real-results-full .metric-cell {
+            color: #666666;
+            text-align: left;
+            white-space: nowrap;
+            font-size: 11px;
+        }
+        .real-results-full .metric-cell span,
+        .real-results-full .result-cell span {
+            display: block;
+        }
+        .real-results-full .metric-cell span + span,
+        .real-results-full .result-cell span + span {
+            margin-top: 3px;
+        }
+        .real-results-full .result-cell {
+            font-family: "Source Code Pro", monospace;
+            font-size: 12px;
+        }
+        .real-results-full .bsp-col {
+            background: #fbf7f7;
+        }
+        .real-results-full .group-end {
+            border-right: 2px solid #e0cccc;
+        }
+        .sr-win,
+        .time-win {
+            border-radius: 4px;
+            padding: 1px 4px;
+            font-weight: 700;
+            color: #333333;
+        }
+        .sr-win { background: #E6F2FF; }
+        .time-win { background: #F2E6FF; }
+        .real-results-caption {
+            margin: 0 0 14px;
+            color: #555555;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+        .real-results-legend {
+            display: inline-flex;
+            flex-wrap: wrap;
+            gap: 4px 14px;
+            margin-left: 4px;
+        }
+        .real-results-legend .sr-win,
+        .real-results-legend .time-win {
+            font-family: "Source Code Pro", monospace;
+        }
+        .real-results-findings {
+            margin: 8px 0 0;
+            padding-left: 0;
+            list-style: none;
+            color: #333333;
+            font-size: 0.96em;
+        }
+        .real-results-findings li {
+            margin-bottom: 6px;
+        }
+        .real-results-findings b {
+            color: rgb(153, 51, 51);
+            font-weight: 600;
+        }
+        .real-results-figure-item {
+            margin: 12px 0 10px;
+            list-style: none;
+        }
+        .real-results-figure {
+            margin: 0;
+        }
+        .real-results-figure img {
+            width: 100%;
+            height: auto;
+            border: 1px solid #e8dede;
+            border-radius: 6px;
+            background: #ffffff;
+        }
+        .real-results-figure-narrow img {
+            max-width: 520px;
+        }
+        .real-results-figure figcaption {
+            margin-top: 6px;
+            color: #666666;
+            font-size: 0.9em;
+            line-height: 1.3;
+        }
+        .real-results-split-finding {
+            display: grid;
+            grid-template-columns: minmax(0, 1.2fr) minmax(180px, 0.8fr);
+            gap: 14px;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+        .real-results-split-finding p {
+            margin: 0;
+        }
+        .real-results-split-finding .real-results-figure {
+            margin: 0;
+        }
+        .real-results-split-finding img {
+            width: 100%;
+            max-width: 320px;
+        }
+        @media screen and (max-width: 640px) {
+            .real-results-table {
+                font-size: 11px;
+                line-height: 1.15;
+            }
+            .real-results-table caption {
+                font-size: 13px;
+                padding: 8px 10px;
+            }
+            .real-results-table th,
+            .real-results-table td {
+                padding: 5px 3px;
+            }
+            .real-results-table thead th,
+            .real-results-table .task-cell {
+                font-size: 9px;
+            }
+            .real-results-table .metric-cell,
+            .real-results-table .result-cell {
+                font-size: 10px;
+            }
+            .real-results-split-finding {
+                grid-template-columns: 1fr;
+            }
+        }
+        .real-video-title {
+            margin-top: 30px;
+            margin-bottom: 8px;
+        }
+        .real-video-intro {
+            margin-bottom: 18px;
+            color: #555555;
+            font-size: 0.96em;
+        }
+        .real-video-task {
+            margin: 22px 0 28px;
+            padding-top: 16px;
+            border-top: 1px solid #e8dede;
+        }
+        .real-video-comparisons > .real-video-task:first-child {
+            padding-top: 0;
+            border-top: none;
+        }
+        .real-video-task h4 {
+            margin: 0;
+            font-size: 20px;
+        }
+        .real-video-head {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px 14px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+        .real-video-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .real-video-hint {
+            position: absolute;
+            left: calc(100% + 16px);
+            top: 50%;
+            transform: translateY(-50%);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: rgb(153, 51, 51);
+            font-family: 'Asap', roboto, sans-serif;
+            font-size: 0.82em;
+            font-weight: 600;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+        .real-video-hint svg {
+            width: 30px;
+            height: 14px;
+            animation: real-video-hint-nudge 1.1s ease-in-out infinite;
+        }
+        @keyframes real-video-hint-nudge {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(-6px); }
+        }
+        @media (max-width: 1380px) {
+            .real-video-hint { display: none; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .real-video-hint svg { animation: none; }
+        }
+        .real-video-control {
+            appearance: none;
+            -webkit-appearance: none;
+            padding: 5px 10px;
+            border: 1px solid rgb(153, 51, 51);
+            border-radius: 999px;
+            background: #ffffff;
+            color: rgb(153, 51, 51);
+            font-family: 'Asap', roboto, sans-serif;
+            font-size: 0.78em;
+            font-weight: 600;
+            line-height: 1.2;
+            cursor: pointer;
+        }
+        .real-video-control:hover,
+        .real-video-control:focus {
+            background: rgb(153, 51, 51);
+            color: #ffffff;
+            outline: none;
+        }
+        .real-video-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 0;
+        }
+        .real-video-grid + .real-video-grid {
+            margin-top: 0;
+        }
+        .real-video-cell {
+            overflow: hidden;
+            margin: 0;
+            border: none;
+            border-radius: 0;
+            background: #ffffff;
+        }
+        .real-video-grid .real-video-cell + .real-video-cell {
+            margin-left: -1px;
+        }
+        .real-video-grid .real-video-cell:first-child {
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
+        }
+        .real-video-grid .real-video-cell:last-child {
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+        .real-video-media {
+            position: relative;
+            background: #ffffff;
+        }
+        .real-video-media video {
+            display: block;
+            aspect-ratio: 16 / 9;
+            width: 100%;
+            background: #ffffff;
+            object-fit: cover;
+            cursor: pointer;
+        }
+        .real-video-speed {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            z-index: 2;
+            padding: 0;
+            border: none;
+            background: transparent;
+            color: #ffffff;
+            font-family: 'Asap', roboto, sans-serif;
+            font-size: 0.78em;
+            font-weight: 600;
+            line-height: 1.2;
+            pointer-events: none;
+        }
+        .real-video-done {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: rgba(26, 22, 18, 0.42);
+            color: #ffffff;
+            font-family: 'Asap', roboto, sans-serif;
+            font-size: 1em;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 200ms cubic-bezier(0.22, 1, 0.36, 1);
+            pointer-events: none;
+        }
+        .real-video-media.is-done .real-video-done {
+            opacity: 1;
+            visibility: visible;
+        }
+        .real-video-done::before {
+            content: '';
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background: #ffffff;
+            -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E") no-repeat center / contain;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M9 16.17 4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z'/%3E%3C/svg%3E") no-repeat center / contain;
+        }
+        .real-video-play {
+            appearance: none;
+            -webkit-appearance: none;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            padding: 0;
+            border: 1px solid rgba(153, 51, 51, 0.35);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.92);
+            color: rgb(153, 51, 51);
+            cursor: pointer;
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.96);
+            transition: opacity 140ms ease, transform 140ms ease, background-color 140ms ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+        }
+        .real-video-media:hover .real-video-play,
+        .real-video-play:focus {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .real-video-play:hover,
+        .real-video-play:focus {
+            background: #ffffff;
+            outline: none;
+        }
+        .real-video-play::before {
+            content: '';
+            display: block;
+            width: 0;
+            height: 0;
+            margin-left: 3px;
+            border-top: 9px solid transparent;
+            border-bottom: 9px solid transparent;
+            border-left: 14px solid currentColor;
+        }
+        .real-video-play.is-playing::before {
+            width: 14px;
+            height: 16px;
+            margin-left: 0;
+            border-top: 0;
+            border-bottom: 0;
+            border-left: 5px solid currentColor;
+            border-right: 5px solid currentColor;
+        }
+        .real-video-cell span {
+            display: block;
+            padding: 7px 9px;
+            border-top: 1px solid #ececec;
+            font-family: 'Asap', roboto, sans-serif;
+            color: #333;
+            font-weight: 400;
+            font-size: 0.85em;
+            line-height: 1.2;
+            text-align: center;
+        }
+        .sim-results-title {
+            margin-top: 34px;
+            margin-bottom: 8px;
+        }
+        .sim-results-intro,
+        .sim-results-note {
+            color: #333333;
+            font-size: 0.96em;
+        }
+        .sim-result-grid {
+            display: grid;
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+            gap: 3px;
+            margin: 18px 0 12px;
+        }
+        .sim-result-card {
+            min-width: 0;
+            overflow: hidden;
+            border: 1px solid #d9d9d9;
+            border-radius: 8px;
+            background: #ffffff;
+        }
+        .sim-result-card h4 {
+            margin: 0;
+            padding: 6px 4px;
+            border-bottom: 1px solid #ececec;
+            color: rgb(153, 51, 51);
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.15;
+            text-align: center;
+            white-space: normal;
+        }
+        .sim-result-card .real-video-media video {
+            aspect-ratio: 16 / 9;
+        }
+        .sim-result-table {
+            width: 100%;
+            table-layout: fixed;
+            border-collapse: collapse;
+            font-size: 13px;
+            line-height: 1.2;
+        }
+        .sim-result-table th,
+        .sim-result-table td {
+            padding: 5px 3px;
+            border-top: 1px solid #eeeeee;
+            border-right: 1px solid #eeeeee;
+            text-align: center;
+            overflow-wrap: anywhere;
+            white-space: normal;
+        }
+        .sim-result-table td {
+            font-size: 13px;
+        }
+        .sim-result-table th:last-child,
+        .sim-result-table td:last-child {
+            border-right: 0;
+        }
+        .sim-result-table thead th {
+            color: #666666;
+            background: #fafafa;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .sim-result-table tbody th {
+            color: #666666;
+            font-size: 12px;
+            font-weight: 600;
+            text-align: left;
+        }
+        .sim-result-table .success-highlight {
+            color: rgb(153, 51, 51);
+            font-weight: 700;
+        }
+        .pusht-speedup-panel {
+            margin: 18px 0 12px;
+            border: 1px solid #e8dede;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #ffffff;
+        }
+        .pusht-speedup-panel h4 {
+            margin: 0;
+            padding: 10px 12px;
+            border-bottom: 1px solid #e8dede;
+            color: rgb(153, 51, 51);
+            font-size: 18px;
+            font-weight: 500;
+        }
+        .pusht-speedup-table {
+            width: 100%;
+            table-layout: fixed;
+            border-collapse: collapse;
+        }
+        .pusht-speedup-table th,
+        .pusht-speedup-table td {
+            padding: 8px 7px;
+            border-right: 1px solid #eeeeee;
+            border-bottom: 1px solid #eeeeee;
+            color: #333333;
+            font-size: 13px;
+            line-height: 1.2;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .pusht-speedup-table th:last-child,
+        .pusht-speedup-table td:last-child {
+            border-right: 0;
+        }
+        .pusht-speedup-table tbody tr:last-child th,
+        .pusht-speedup-table tbody tr:last-child td {
+            border-bottom: 0;
+        }
+        .pusht-speedup-table thead th {
+            color: #666666;
+            background: #fafafa;
+            font-weight: 600;
+        }
+        .pusht-speedup-table tbody th {
+            color: rgb(153, 51, 51);
+            font-weight: 600;
+        }
+        .pusht-speedup-table .bsp-cell {
+            background: #fbf7f7;
+            color: rgb(153, 51, 51);
+            font-weight: 700;
+        }
+        .pusht-speedup-summary {
+            margin: 0;
+            padding: 10px 12px;
+            border-top: 1px solid #e8dede;
+            color: #555555;
+            font-size: 0.96em;
+            line-height: 1.35;
+        }
         .experiment-placeholder {
             display: flex;
             align-items: center;
@@ -621,6 +1380,35 @@
         }
         @media (max-width: 700px) {
             .experiment-grid { grid-template-columns: 1fr; }
+            .real-video-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .sim-result-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 6px;
+            }
+            .sim-result-card h4 { font-size: 15px; }
+            .sim-result-table,
+            .sim-result-table td { font-size: 13px; }
+            .sim-result-table thead th,
+            .sim-result-table tbody th { font-size: 12px; }
+            .pusht-speedup-table th,
+            .pusht-speedup-table td { font-size: 11px; }
+        }
+        @media (max-width: 480px) {
+            .real-video-grid { grid-template-columns: 1fr; }
+            .sim-result-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 3px;
+            }
+            .sim-result-card h4 { font-size: 14px; }
+            .sim-result-table,
+            .sim-result-table td { font-size: 12px; }
+            .sim-result-table thead th,
+            .sim-result-table tbody th { font-size: 11px; }
+            .pusht-speedup-table th,
+            .pusht-speedup-table td {
+                padding: 6px 4px;
+                font-size: 10px;
+            }
         }
 
         /* ===== Code and Data tiles ===== */
@@ -740,6 +1528,7 @@
             line-height: 1.42;
         }
         .bspline-figure {
+            position: relative;
             margin: 0;
             min-width: 0;
         }
@@ -772,18 +1561,63 @@
             color: #777777;
             text-align: right;
         }
-        .bspline-reset,
-        .bspline-play {
+        .bspline-caption-hint {
+            position: absolute;
+            left: calc(100% + 16px);
+            top: 50%;
+            transform: translateY(-50%);
+            width: 150px;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-align: left;
+            color: #777777;
+            pointer-events: none;
+        }
+        .bspline-caption-hint .bspline-hint-left {
+            flex: 0 0 auto;
+            width: 30px;
+            height: 14px;
+            color: rgb(153, 51, 51);
+            animation: real-video-hint-nudge 1.1s ease-in-out infinite;
+        }
+        @media (max-width: 1380px) {
+            .bspline-caption-hint { display: none; }
+        }
+        .bspline-knot-arrow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+            color: rgb(153, 51, 51);
+            pointer-events: none;
+        }
+        .bspline-knot-arrow path {
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        @media (max-width: 1380px) {
+            .bspline-knot-arrow { display: none; }
+        }
+        .bspline-play,
+        .bspline-reset {
             appearance: none;
             -webkit-appearance: none;
+            padding: 5px 10px;
             border: 1px solid rgb(153, 51, 51);
-            border-radius: 4px;
+            border-radius: 999px;
             background: #ffffff;
             color: rgb(153, 51, 51);
             font-family: 'Asap', roboto, sans-serif;
-            font-size: 13px;
+            font-size: 0.78em;
+            font-weight: 600;
             line-height: 1.2;
-            padding: 5px 12px;
             cursor: pointer;
         }
         .bspline-reset:hover,
@@ -825,7 +1659,7 @@
             stroke-linejoin: round;
         }
         .bspline-control-point {
-            fill: #598be7;
+            fill: rgb(238, 200, 176);
             stroke: #ffffff;
             stroke-width: 1.8;
             cursor: grab;
@@ -844,10 +1678,10 @@
             stroke-width: 2;
         }
         .bspline-knot-end {
-            fill: #cfcfcf;
+            fill: rgb(255, 181, 70);
         }
         .bspline-knot {
-            fill: #666666ff;
+            fill: rgb(255, 181, 70);
             stroke: #ffffff;
             stroke-width: 1.8;
             cursor: ew-resize;
@@ -914,12 +1748,12 @@
         /* Optional control polygon */
         .fit-control polyline {
             fill: none;
-            stroke: #cbbf9f;
+            stroke: rgb(238, 200, 176);
             stroke-width: 1.5;
             stroke-dasharray: 5 5;
             opacity: 0.9;
         }
-        .fit-control circle { fill: #cbbf9f; }
+        .fit-control circle { fill: rgb(238, 200, 176); }
 
         .fit-curve {
             stroke: rgb(153, 51, 51);     /* MIT red — primary themed element */
@@ -928,16 +1762,20 @@
             stroke-linecap: round;
         }
 
-        .fit-points circle { fill: #999999; }
+        .fit-points circle { fill: rgb(64, 99, 150); }
 
-        .fit-knots circle {
-            fill: #598be7;                /* .text-blue accent */
+        .fit-knot-rail {
+            stroke: #cfcfcf;
+            stroke-width: 2;
+        }
+        .fit-knots polygon {
+            fill: rgb(255, 181, 70);
             stroke: #ffffff;
             stroke-width: 1.5;
             transform-box: fill-box;
             transform-origin: center;
         }
-        .fit-knots circle.fit-knot-pop {        /* knot insertion "pop" */
+        .fit-knots .fit-knot-pop {        /* knot insertion "pop" */
             animation: fit-pop 520ms cubic-bezier(0.22, 1, 0.36, 1);
         }
         @keyframes fit-pop {
@@ -992,7 +1830,7 @@
         .fit-scale span.fit-scale-active { color: rgb(153, 51, 51); font-weight: 700; }
 
         @media (prefers-reduced-motion: reduce) {
-            .fit-knots circle.fit-knot-pop { animation: none; }
+            .fit-knots .fit-knot-pop { animation: none; }
         }
         @media (max-width: 600px) {
             .fit-toolbar { grid-template-columns: 1fr; }
@@ -1014,6 +1852,20 @@
 </head>
 
 <body style="zoom: 1.15;">
+    <nav class="page-toc" aria-label="Page sections">
+        <div class="page-toc-title">Contents</div>
+        <ul>
+            <li><a href="#dataset" target="_self">Motivation</a></li>
+            <li><a href="#what-are-b-splines" target="_self">What are B-splines?</a></li>
+            <li><a href="#adaptive-fitting" target="_self">Fitting a B-spline</a></li>
+            <li><a href="#bspline-policy" target="_self">B-spline Policy</a></li>
+            <li><a href="#experiments" target="_self">Experiments</a></li>
+            <li class="toc-sub"><a href="#real-video-details" target="_self">Video Comparisons</a></li>
+            <li class="toc-sub"><a href="#simulation" target="_self">Simulation</a></li>
+            <li><a href="#acknowledgements" target="_self">Acknowledgements</a></li>
+            <li><a href="#citation" target="_self">Citation</a></li>
+        </ul>
+    </nav>
     <div class="container" id="main">
         <div class="row" style="margin-top: 50px; text-align: center;">
             <div class="col-md-12">
@@ -1104,10 +1956,17 @@
                     Replace discrete action chunks with B-spline curves,
                     for faster visuomotor policy.
                 </p> 
-                <p>
-                    <span style="color: rgb(153, 51, 51); font-weight: 700;">Abstract:</span>
-                    In this work, we present B-spline Policy (BSP), an action representation designed for accelerating robot manipulation policies. Rather than predicting discrete-time action chunks, BSP parameterizes actions as continuous B-spline curves defined by a set of knots and control points. This representation yields smooth, time-continuous trajectories that can be temporally scaled and executed by low-level controllers at higher frequencies and speeds. We show that B-spline–parameterized actions can be seamlessly integrated into standard policy learning pipelines by directly predicting B-spline parameters. Experiments on simulated and real-world tasks demonstrate that BSP significantly reduces task completion time, achieving substantial improvements over baseline methods while maintaining strong success rates.
-                </p>
+                <details class="abstract-toggle">
+                    <summary>
+                        <span class="abstract-line">
+                            <span style="color: rgb(153, 51, 51); font-weight: 700;">Abstract:</span>
+                            <span class="abstract-preview">In this work, we present B-spline Policy (BSP), an action representation designed for accelerating robot manipulation policies, and [...]</span>
+                        </span>
+                    </summary>
+                    <p>
+                        In this work, we present B-spline Policy (BSP), an action representation designed for accelerating robot manipulation policies. Rather than predicting discrete-time action chunks, BSP parameterizes actions as continuous B-spline curves defined by a set of knots and control points. This representation yields smooth, time-continuous trajectories that can be temporally scaled and executed by low-level controllers at higher frequencies and speeds. We show that B-spline–parameterized actions can be seamlessly integrated into standard policy learning pipelines by directly predicting B-spline parameters. Experiments on simulated and real-world tasks demonstrate that BSP significantly reduces task completion time, achieving substantial improvements over baseline methods while maintaining strong success rates.
+                    </p>
+                </details>
                 <div class="code-data-grid">
                     <a class="code-data-tile" href="https://www.robotube.org/" target="_blank" rel="noopener">
                         <img src="assets/logos/paper.svg" alt="Paper" />
@@ -1127,12 +1986,11 @@
                 <h2 id="dataset">Visuomotor policies were often slow</h2>
                 <p>
 
-                <span style="color: rgb(153, 51, 51); font-weight: 600;">Speed remains a major bottleneck in visuomotor policies.</span>
-                Consider loading an object into a dishwasher: humans typically complete the task in a few seconds, whereas most of today's robotic systems require close to a minute.
-                
-                              <p>
+                <span style="color: rgb(153, 51, 51); font-weight: 600;">Speed remains a bottleneck in visuomotor policies.</span>
+                <!-- Consider loading an object into a dishwasher: humans typically complete the task in a few seconds, whereas most of today's robotic systems require close to a minute. -->
+                              <!-- <p> -->
 
-                One reason of this slow execution is action chunking: policies output fixed-rate waypoints, treating every moment the same. But manipulation is not uniform: robots should move fast in free space and slow down near contact making. Naively speeding up these waypoints often makes motion sparse, jerky, and hard to track.
+                A key reason is action chunking: policies predict fixed-rate waypoints, treating every moment the same. Manipulation is not uniform: robots should move fast in free space and slow down near contact making. Simply speeding up these waypoints can make motion jerky, and hard to track.
                 <!-- Despite progress in visuomotor policy learning, robotic manipulation policy still remains slow at task execution. -->
                 <!-- Visuomotor polices were often slow.  -->
                 <!-- In everyday manipulation tasks such as folding a T-shirt, humans typically complete the task in roughly 10 seconds, whereas even state-of-the-art robotic systems often require close to a minute.  -->
@@ -1148,7 +2006,7 @@
                   To use it, replace a `.teleop-placeholder` with:
                     <div class="rollout-video-wrap">
                       <video class="rollout-video" muted loop playsinline preload="metadata">
-                        <source src="assets/your_clip.mp4" type="video/mp4">
+                        <source src="path/to/clip.mp4" type="video/mp4">
                       </video>
                     </div>
                   and add the card's id to the `roots` list below.
@@ -1293,7 +2151,7 @@
                 <div class="bspline-layout">
                     <div class="bspline-copy">
                         <p>
-                            A B-spline defines a smooth curve (<span style="color: rgb(153, 51, 51); font-weight: 600;">the red curve</span>) by a set of knots (<span style="color: #  ; font-weight: 600;">the grey diamonds</span>) and control points (<span style="color: #598be7; font-weight: 600;">the blue dots</span>). 
+                            A B-spline defines a <span style="color: rgb(153, 51, 51); font-weight: 600;">smooth curve</span> by a set of <span style="color: rgb(255, 181, 70); font-weight: 600;">knots</span> and <span style="color: rgb(238, 200, 176); font-weight: 600;">control points</span>. 
                             Instead of drawing straight lines between waypoints, a B-spline creates a smooth path that follows their overall trend. Think of it like bending a flexible ruler near waypoints instead of connecting them with sharp corners.
                             <br>
                             <!-- The <span style="color: rgb(153, 51, 51); font-weight: 600;">red curve</span>
@@ -1314,10 +2172,15 @@
                                     <button type="button" class="bspline-play">Animate</button>
                                     <button type="button" class="bspline-reset">Reset</button>
                                 </div>
-                                <p class="bspline-caption-inline">
-                                    Try dragging the
-                                    <span style="color: #598be7; font-weight: 600;">control points</span> and
-                                    <span style="color: #666666ff; font-weight: 600;">knots</span> yourself!
+                                <p class="bspline-caption-inline bspline-caption-hint">
+                                    <svg class="bspline-hint-left" viewBox="0 0 30 14" fill="none" aria-hidden="true">
+                                        <path d="M3 7h26" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                        <path d="M9 2L3 7l6 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                    <span>Try dragging the
+                                        <span style="color: rgb(238, 200, 176); font-weight: 600;">control points</span> and
+                                        <span id="bspline-knots-word" style="color: rgb(255, 181, 70); font-weight: 600;">knots</span> yourself!
+                                    </span>
                                 </p>
                             </div>
                         </div>
@@ -1330,7 +2193,7 @@
                             <line class="bspline-knot-rail"></line>
                             <g class="bspline-knot-ends"></g>
                             <g class="bspline-knots"></g>
-                            <text class="bspline-label bspline-control-label" x="58" y="24">control polygon</text>
+                            <!-- <text class="bspline-label bspline-control-label" x="58" y="24">control polygon</text> -->
                             <text class="bspline-label bspline-knot-label-main" x="58" y="314">knot vector</text>
                         </svg>
                     </figure>
@@ -1513,7 +2376,7 @@
                             class: 'bspline-control-point' + (drag && drag.type === 'control' && drag.index === i ? ' is-dragging' : ''),
                             cx: mapX(p.x),
                             cy: mapY(p.y),
-                            r: 7,
+                            r: 6,
                             tabindex: '0',
                             'data-index': String(i),
                             'aria-label': 'Control point ' + (i + 1)
@@ -1533,14 +2396,6 @@
                     knotRail.setAttribute('y2', RAIL_Y);
 
                     clear(knotEnds);
-                    [0, 1].forEach(function (u) {
-                        knotEnds.appendChild(makeEl('circle', {
-                            class: 'bspline-knot-end',
-                            cx: mapX(u),
-                            cy: RAIL_Y,
-                            r: 4
-                        }));
-                    });
 
                     clear(knotLayer);
                     for (var i = 0; i < internalKnots.length; i++) {
@@ -1554,7 +2409,7 @@
                             'data-index': String(i)
                         });
                         hit.addEventListener('pointerdown', startKnotDrag);
-                        var kx = mapX(u), ks = 8;
+                        var kx = mapX(u), ks = 6;
                         var k = makeEl('polygon', {
                             class: 'bspline-knot' + (drag && drag.type === 'knot' && drag.index === i ? ' is-dragging' : ''),
                             points: kx + ',' + (RAIL_Y - ks) + ' ' + (kx + ks) + ',' + RAIL_Y + ' ' +
@@ -1728,10 +2583,10 @@
                 <div class="fit-header">
                     <h2 id="adaptive-fitting">Fitting a B-spline</h2>
                     <p>
-                    The diagram illustrates the iterative fitting of a B-spline to approximate a trajectory.
-                    Given a set of waypoints from a trajectory ( <span style="color:#666666; font-weight: 600;">grey dots</span>), it starts with only the two boundary knots (endpoints) and a coarse
+                    The animation shows the iterative fitting of a B-spline to approximate a trajectory.
+                    Given a set of <span style="color: rgb(64, 99, 150); font-weight: 600;">discrete waypoints</span> from a trajectory, it starts with only the two boundary knots and a coarse
                     least-squares B-spline. It measures the <span style="color: #f54254; font-weight: 600;">reconstruction
-                    error</span> against the target trajectory, drops a new <span style="color: #598be7; font-weight: 600;">knot</span>
+                    error</span> against the target trajectory, drops a new <span style="color: rgb(255, 181, 70); font-weight: 600;">knot</span>
                     where the error is worst, and refits. The loop repeats until the largest error
                     falls at or below the selected threshold &mdash; then it starts over.
                     </p>
@@ -1753,6 +2608,7 @@
                         <polyline class="fit-curve" fill="none"></polyline>
                         <g class="fit-points"></g>
                         <g class="fit-worst"></g>
+                        <line class="fit-knot-rail"></line>
                         <g class="fit-knots"></g>
                     </svg>
                     <div class="fit-empty" hidden>
@@ -1795,6 +2651,8 @@
                     var DEFAULT_TIER = 4;        // index 4 -> threshold 0.1
                     var ITER_HOLD_MS = 1150;     // dwell per iteration
                     var MORPH_MS = 380;          // curve morph duration
+                    var KNOT_RAIL_Y = VIEW_H - 18;
+                    var KNOT_MARKER_SIZE = 6;
 
                     // ---- Reduced-motion detection (guarded for jsdom) --------
                     function prefersReducedMotion() {
@@ -1848,22 +2706,6 @@
                             }
                         }
                         return [];
-                    }
-
-                    function interpolateCurveY(x, curveX, curveY) {
-                        if (!curveX || !curveY || !curveX.length || !curveY.length) return bounds.yMin;
-                        var n = Math.min(curveX.length, curveY.length);
-                        if (x <= curveX[0]) return curveY[0];
-                        if (x >= curveX[n - 1]) return curveY[n - 1];
-                        for (var i = 1; i < n; i++) {
-                            if (x <= curveX[i]) {
-                                var x0 = curveX[i - 1], x1 = curveX[i];
-                                var y0 = curveY[i - 1], y1 = curveY[i];
-                                var ratio = x1 === x0 ? 0 : (x - x0) / (x1 - x0);
-                                return y0 + (y1 - y0) * ratio;
-                            }
-                        }
-                        return curveY[n - 1];
                     }
 
                     // ---- Bounds derivation -----------------------------------
@@ -1948,6 +2790,7 @@
                         this.curve = svgEl.querySelector('.fit-curve');
                         this.points = svgEl.querySelector('.fit-points');
                         this.worst = svgEl.querySelector('.fit-worst');
+                        this.knotRail = svgEl.querySelector('.fit-knot-rail');
                         this.knots = svgEl.querySelector('.fit-knots');
                         // Status labels live in the section header (outside the figure).
                         var root = svgEl.closest('#fit-section') || svgEl.parentNode;
@@ -1986,6 +2829,12 @@
                                 c.setAttribute('r', 3.4);
                                 this.points.appendChild(c);
                             }
+                        }
+                        if (this.knotRail) {
+                            this.knotRail.setAttribute('x1', PAD.left);
+                            this.knotRail.setAttribute('x2', VIEW_W - 12);
+                            this.knotRail.setAttribute('y1', KNOT_RAIL_Y);
+                            this.knotRail.setAttribute('y2', KNOT_RAIL_Y);
                         }
                     };
 
@@ -2068,7 +2917,7 @@
                                     var cc = document.createElementNS(SVG_NS, 'circle');
                                     cc.setAttribute('cx', mapX(it.control_x[i]));
                                     cc.setAttribute('cy', mapY(it.control_y[i]));
-                                    cc.setAttribute('r', 2);
+                                    cc.setAttribute('r', 6);
                                     this.control.appendChild(cc);
                                 }
                             }
@@ -2091,10 +2940,10 @@
                             }
                         }
 
-                        // --- INTERIOR KNOTS (pop the newly inserted) ----------
+                        // --- INTERIOR KNOTS ON A SEPARATE KNOT AXIS -----------
                         clearGroup(this.knots);
                         if (this.knots && it.interior_knots_x) {
-                            var kx = it.interior_knots_x, ky = it.interior_knots_y || [];
+                            var kx = it.interior_knots_x;
                             var newSet = {};
                             if (animate && it.new_knots_x) {
                                 for (i = 0; i < it.new_knots_x.length; i++) {
@@ -2114,17 +2963,18 @@
                                 }
                             }
                             for (i = 0; i < kx.length; i++) {
-                                var dot = document.createElementNS(SVG_NS, 'circle');
-                                dot.setAttribute('cx', mapX(kx[i]));
-                                var knotY = ky[i] != null
-                                    ? ky[i]
-                                    : interpolateCurveY(kx[i], curveX, curveY);
-                                dot.setAttribute('cy', mapY(knotY));
-                                dot.setAttribute('r', 4);
+                                var knotX = mapX(kx[i]);
+                                var ks = KNOT_MARKER_SIZE;
+                                var diamond = document.createElementNS(SVG_NS, 'polygon');
+                                diamond.setAttribute('points',
+                                    knotX + ',' + (KNOT_RAIL_Y - ks) + ' ' +
+                                    (knotX + ks) + ',' + KNOT_RAIL_Y + ' ' +
+                                    knotX + ',' + (KNOT_RAIL_Y + ks) + ' ' +
+                                    (knotX - ks) + ',' + KNOT_RAIL_Y);
                                 if (newSet[kx[i]]) {
-                                    dot.setAttribute('class', 'fit-knot-pop');
+                                    diamond.setAttribute('class', 'fit-knot-pop');
                                 }
-                                this.knots.appendChild(dot);
+                                this.knots.appendChild(diamond);
                             }
                         }
 
@@ -2404,9 +3254,11 @@
 
                 <p>
                     <span style="color: rgb(153, 51, 51); font-weight: 600;">How do you learn a B-spline policy?</span>
-                    Rather than predicting a fixed list of discrete-time waypoints, B-spline Policy parameterizes the
-                    action space as a continuous B-spline trajectory. Given a knot vector $U$ and a set of
-                    <span style="color: #598be7; font-weight: 600;">control points</span> $C = \{c_0, \dots, c_N\}$, the
+                    Rather than predicting a set of fixed-rate waypoints, B-spline Policy parameterizes the
+                    action space as a continuous B-spline trajectory. 
+<!--                     
+                    Given a knot vector $U$ and a set of
+                    control points $C = \{c_0, \dots, c_N\}$, the
                     continuous action at normalized time $u$ is
                 </p>
 
@@ -2418,37 +3270,40 @@
                     where $N_{i,p}(u)$ is the $i$-th basis function of degree $p$ (we use cubic B-splines, $p=3$). This
                     turns the policy output from a list of sampled poses into the parameters of a smooth curve that can
                     be sampled at any control frequency.
-                </p>
+                </p> -->
 
                 <p>
                     <span style="color: rgb(153, 51, 51); font-weight: 600;">Training.</span>
-                    Each discrete demonstration is first converted into a continuous B-spline target. We fit a degree-$p$
-                    curve within an error tolerance, inserting knots adaptively into the regions of largest reconstruction
-                    error (see <a href="#adaptive-fitting">Fitting a B-spline</a>). Exploiting the local support of
-                    B-splines, the policy then predicts a near-future segment &mdash; both the control points and the knot
-                    values as one fixed-size vector $[U;\,C]$ &mdash; serving as a drop-in replacement for action-chunk
-                    prediction in backbones such as Diffusion Policy and ACT.
+                    Each demonstration is first converted into a B-spline (see <a href="#adaptive-fitting">Fitting a B-spline</a>). Exploiting the local support of
+                    B-splines, the policy predicts a near-future B-spline segment &mdash; both the control points and the knot
+                    values as one fixed-size vector; serving as a drop-in replacement for action-chunk
+                    policies such as Diffusion Policy and ACT.
                 </p>
 
                 <figure class="policy-figure" aria-label="B-spline Policy inference overview">
                     <img src="assets/method.svg" alt="B-spline Policy inference overview"
                          style="width: 100%; height: auto; display: block;">
-                    <figcaption style="text-align: center; margin-top: 8px; font-size: 0.85em; color: #777; font-style: italic;">
+                    <!-- <figcaption style="text-align: center; margin-top: 8px; font-size: 0.85em; color: #777; font-style: italic;">
                         At each inference step, the policy takes images and proprioception as the input and outputs future
                         B-spline segment parameters. At the low-level control stage, we align each successive B-spline
                         segment with the prior one. The predicted B-spline segment can be temporally scaled to adjust
                         execution speed. Actions are then sampled at a higher frequency and sent to the robot controller.
-                    </figcaption>
+                    </figcaption> -->
                 </figure>
 
                 <p>
                     <span style="color: rgb(153, 51, 51); font-weight: 600;">Inference and Execution.</span>
-                    Because the output is a continuous curve, we decouple the policy rate from the control rate: the policy
+                    At each inference step, the policy takes images and proprioception as the input and outputs future
+                    B-spline segment parameters. At the low-level control stage, we align each successive B-spline
+                    segment with the prior one. The predicted B-spline segment can be temporally scaled to adjust
+                    execution speed. Actions are then sampled at a higher frequency and sent to the robot controller.
+
+                    <!-- Because the output is a continuous curve, we decouple the policy rate from the control rate: the policy
                     runs slowly while the controller samples the segment densely. Speed is set by rescaling time with a
                     factor $n$, $\mathbf{a}_{\text{exec}}(t) = \mathbf{a}(n t)$, which preserves the trajectory's shape
                     while traversing it faster &mdash; no retraining and none of the jerky motion of naively sped-up
                     waypoints. For long-horizon tasks, a lightweight <em>segment alignment</em> step matches each new
-                    segment to the last executed action, keeping consecutive segments continuous at high speed.
+                    segment to the last executed action, keeping consecutive segments continuous at high speed. -->
                 </p>
             </div>
         </div>
@@ -2459,30 +3314,644 @@
                 <h2 id="experiments">Experiments</h2>
 
                 <p>
-                    We integrate B-spline Policy into two imitation-learning backbones &mdash; Diffusion Policy
-                    (Diff.&#8202;+&#8202;BSP) and ACT (Reg.&#8202;+&#8202;BSP) &mdash; and evaluate it on three real-world tasks that span
-                    distinct challenges: <em>Cube Picking</em> (precise object manipulation), <em>Table Cleaning</em>
+                    We integrate B-spline Policy into two imitation-learning backbones, Diffusion Policy
+                    and ACT; and evaluate it on three real-world tasks. 
+                    <!-- that span distinct challenges: <em>Cube Picking</em> (precise object manipulation), <em>Table Cleaning</em>
                     (long-horizon rearrangement), and <em>Speed Stacking</em> (bimanual, contact-rich), along with the
                     Push-T, RoboMimic, and RoboCasa simulation benchmarks. Across configurations BSP consistently
                     reduces task completion time while preserving or improving success rate &mdash; for example, cutting
-                    Table Cleaning time roughly in half at a 4&#215; speedup &mdash; and produces visibly smoother motion.
-                </p>
-
+                    Table Cleaning time roughly in half at a 4&#215; speedup &mdash; and produces visibly smoother motion. -->
+                <!-- </p> -->
+<!-- 
                 <div class="experiment-grid">
                     <figure class="experiment-item">
-                        <div class="experiment-placeholder">Video coming soon</div>
+                        <video class="experiment-video" controls muted loop playsinline preload="metadata">
+                            <source src="assets/real-world-demo-raw/table-cleaning/clean-table-act-1-1.mp4" type="video/mp4">
+                        </video>
                         <figcaption style="text-align: center; margin-top: 8px; font-size: 0.85em; color: #777; font-style: italic;">
-                            Placeholder
+                            ACT
                         </figcaption>
                     </figure>
 
                     <figure class="experiment-item">
-                        <div class="experiment-placeholder">Video coming soon</div>
+                        <video class="experiment-video" controls muted loop playsinline preload="metadata">
+                            <source src="assets/real-world-demo-raw/table-cleaning/clean-table-act-bspline-4x.mp4" type="video/mp4">
+                        </video>
                         <figcaption style="text-align: center; margin-top: 8px; font-size: 0.85em; color: #777; font-style: italic;">
-                            Placeholder
+                            ACT B-spline 4x
                         </figcaption>
                     </figure>
+                </div> -->
+
+                <!-- <h3 id="real-video-details" class="real-video-title">Detailed Video Comparisons</h3>
+                <p class="real-video-intro">
+                    The rollouts below show the same real-world tasks across the base policy and BSP variants at
+                    increasing execution speeds.
+                </p> -->
+
+                <div class="real-video-comparisons" aria-label="Detailed real-world video comparisons">
+                    <section class="real-video-task">
+                        <div class="real-video-head">
+                            <h4>Speed Stacking</h4>
+                            <span class="real-video-hint">
+                                <svg viewBox="0 0 30 14" fill="none" aria-hidden="true">
+                                    <path d="M3 7h26" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                    <path d="M9 2L3 7l6 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                Click to play
+                            </span>
+                            <div class="real-video-controls">
+                                <button class="real-video-control" type="button" data-real-video-action="reset">Reset</button>
+                                <button class="real-video-control" type="button" data-real-video-action="play">Play all</button>
+                            </div>
+                        </div>
+
+                        <div class="real-video-grid">
+                            <figure class="real-video-cell">
+                                <div class="real-video-media">
+                                    <video src="assets/real-experiments/videos/dp-speed-stacking.mp4" poster="assets/real-experiments/posters/dp-speed-stacking.jpg" muted playsinline preload="metadata"></video>
+                                </div>
+                                <span>Diffusion Policy</span>
+                            </figure>
+                            <figure class="real-video-cell">
+                                <div class="real-video-media">
+                                    <video src="assets/real-experiments/videos/dp-bspline-speed-stacking-1x.mp4" poster="assets/real-experiments/posters/dp-bspline-speed-stacking-1x.jpg" muted playsinline preload="metadata"></video>
+                                </div>
+                                <span>DP B-spline 1x</span>
+                            </figure>
+                            <figure class="real-video-cell">
+                                <div class="real-video-media">
+                                    <video src="assets/real-experiments/videos/dp-bspline-speed-stacking-2x.mp4" poster="assets/real-experiments/posters/dp-bspline-speed-stacking-2x.jpg" muted playsinline preload="metadata"></video>
+                                </div>
+                                <span>DP B-spline 2x</span>
+                            </figure>
+                            <figure class="real-video-cell">
+                                <div class="real-video-media">
+                                    <video src="assets/real-experiments/videos/dp-bspline-speed-stacking-4x.mp4" poster="assets/real-experiments/posters/dp-bspline-speed-stacking-4x.jpg" muted playsinline preload="metadata"></video>
+                                </div>
+                                <span>DP B-spline 4x</span>
+                            </figure>
+                        </div>
+
+                        <div class="real-video-grid">
+                            <figure class="real-video-cell">
+                                <div class="real-video-media">
+                                    <video src="assets/real-experiments/videos/act-speed-stacking-1.mp4" poster="assets/real-experiments/posters/act-speed-stacking-1.jpg" muted playsinline preload="metadata"></video>
+                                </div>
+                                <span>ACT</span>
+                            </figure>
+                            <figure class="real-video-cell">
+                                <div class="real-video-media">
+                                    <video src="assets/real-experiments/videos/act-bspline-speed-stacking-1x.mp4" poster="assets/real-experiments/posters/act-bspline-speed-stacking-1x.jpg" muted playsinline preload="metadata"></video>
+                                </div>
+                                <span>ACT B-spline 1x</span>
+                            </figure>
+                            <figure class="real-video-cell">
+                                <div class="real-video-media">
+                                    <video src="assets/real-experiments/videos/act-bspline-speed-stacking-2x.mp4" poster="assets/real-experiments/posters/act-bspline-speed-stacking-2x.jpg" muted playsinline preload="metadata"></video>
+                                </div>
+                                <span>ACT B-spline 2x</span>
+                            </figure>
+                            <figure class="real-video-cell">
+                                <div class="real-video-media">
+                                    <video src="assets/real-experiments/videos/act-bspline-speed-stacking-3x.mp4" poster="assets/real-experiments/posters/act-bspline-speed-stacking-3x.jpg" muted playsinline preload="metadata"></video>
+                                </div>
+                                <span>ACT B-spline 3x</span>
+                            </figure>
+                        </div>
+                    </section>
+
+                    <section class="real-video-task">
+                        <div class="real-video-head">
+                            <h4>Table Cleaning</h4>
+                            <span class="real-video-hint">
+                                <svg viewBox="0 0 30 14" fill="none" aria-hidden="true">
+                                    <path d="M3 7h26" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                    <path d="M9 2L3 7l6 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                Click to play
+                            </span>
+                            <div class="real-video-controls">
+                                <button class="real-video-control" type="button" data-real-video-action="reset">Reset</button>
+                                <button class="real-video-control" type="button" data-real-video-action="play">Play all</button>
+                            </div>
+                        </div>
+
+                        <div class="real-video-grid">
+                            <figure class="real-video-cell">
+                                <div class="real-video-media">
+                                    <video src="assets/real-experiments/videos/clean-table-dp-1.mp4" poster="assets/real-experiments/posters/clean-table-dp-1.jpg" muted playsinline preload="metadata"></video>
+                                </div>
+                                <span>Diffusion Policy</span>
+                            </figure>
+                            <figure class="real-video-cell">
+                                <div class="real-video-media">
+                                    <video src="assets/real-experiments/videos/clean-table-dp-bspline-1x-1.mp4" poster="assets/real-experiments/posters/clean-table-dp-bspline-1x-1.jpg" muted playsinline preload="metadata"></video>
+                                </div>
+                                <span>DP B-spline 1x</span>
+                            </figure>
+                            <figure class="real-video-cell">
+                                <div class="real-video-media">
+                                    <video src="assets/real-experiments/videos/clean-table-dp-bspline-2x-1.mp4" poster="assets/real-experiments/posters/clean-table-dp-bspline-2x-1.jpg" muted playsinline preload="metadata"></video>
+                                </div>
+                                <span>DP B-spline 2x</span>
+                            </figure>
+                            <figure class="real-video-cell">
+                                <div class="real-video-media">
+                                    <video src="assets/real-experiments/videos/clean-table-dp-bspline-4x-1.mp4" poster="assets/real-experiments/posters/clean-table-dp-bspline-4x-1.jpg" muted playsinline preload="metadata"></video>
+                                </div>
+                                <span>DP B-spline 4x</span>
+                            </figure>
+                        </div>
+
+                        <div class="real-video-grid">
+                            <figure class="real-video-cell">
+                                <div class="real-video-media">
+                                    <video src="assets/real-experiments/videos/clean-table-act-1-2.mp4" poster="assets/real-experiments/posters/clean-table-act-1-2.jpg" muted playsinline preload="metadata"></video>
+                                </div>
+                                <span>ACT</span>
+                            </figure>
+                            <figure class="real-video-cell">
+                                <div class="real-video-media">
+                                    <video src="assets/real-experiments/videos/clean-table-act-bspline-1x.mp4" poster="assets/real-experiments/posters/clean-table-act-bspline-1x.jpg" muted playsinline preload="metadata"></video>
+                                </div>
+                                <span>ACT B-spline 1x</span>
+                            </figure>
+                            <figure class="real-video-cell">
+                                <div class="real-video-media">
+                                    <video src="assets/real-experiments/videos/clean-table-act-bspline-2x.mp4" poster="assets/real-experiments/posters/clean-table-act-bspline-2x.jpg" muted playsinline preload="metadata"></video>
+                                </div>
+                                <span>ACT B-spline 2x</span>
+                            </figure>
+                            <figure class="real-video-cell">
+                                <div class="real-video-media">
+                                    <video src="assets/real-experiments/videos/clean-table-act-bspline-4x.mp4" poster="assets/real-experiments/posters/clean-table-act-bspline-4x.jpg" muted playsinline preload="metadata"></video>
+                                </div>
+                                <span>ACT B-spline 4x</span>
+                            </figure>
+                        </div>
+                    </section>
+
+                    <section class="real-video-task">
+                        <div class="real-video-head">
+                            <h4>Cube Picking</h4>
+                            <span class="real-video-hint">
+                                <svg viewBox="0 0 30 14" fill="none" aria-hidden="true">
+                                    <path d="M3 7h26" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                    <path d="M9 2L3 7l6 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                Click to play
+                            </span>
+                            <div class="real-video-controls">
+                                <button class="real-video-control" type="button" data-real-video-action="reset">Reset</button>
+                                <button class="real-video-control" type="button" data-real-video-action="play">Play all</button>
+                            </div>
+                        </div>
+
+                        <div class="real-video-grid">
+                            <figure class="real-video-cell">
+                                <div class="real-video-media">
+                                    <video src="assets/real-experiments/videos/pick-cube-dp-1.mp4" poster="assets/real-experiments/posters/pick-cube-dp-1.jpg" muted playsinline preload="metadata"></video>
+                                </div>
+                                <span>Diffusion Policy</span>
+                            </figure>
+                            <figure class="real-video-cell">
+                                <div class="real-video-media">
+                                    <video src="assets/real-experiments/videos/pick-cube-dp-bspline-1x-1.mp4" poster="assets/real-experiments/posters/pick-cube-dp-bspline-1x-1.jpg" muted playsinline preload="metadata"></video>
+                                </div>
+                                <span>DP B-spline 1x</span>
+                            </figure>
+                            <figure class="real-video-cell">
+                                <div class="real-video-media">
+                                    <video src="assets/real-experiments/videos/pick-cube-dp-bspline-2x-1.mp4" poster="assets/real-experiments/posters/pick-cube-dp-bspline-2x-1.jpg" muted playsinline preload="metadata"></video>
+                                </div>
+                                <span>DP B-spline 2x</span>
+                            </figure>
+                            <figure class="real-video-cell">
+                                <div class="real-video-media">
+                                    <video src="assets/real-experiments/videos/pick-cube-dp-bspline-4x-1.mp4" poster="assets/real-experiments/posters/pick-cube-dp-bspline-4x-1.jpg" muted playsinline preload="metadata"></video>
+                                </div>
+                                <span>DP B-spline 4x</span>
+                            </figure>
+                        </div>
+
+                        <div class="real-video-grid">
+                            <figure class="real-video-cell">
+                                <div class="real-video-media">
+                                    <video src="assets/real-experiments/videos/pick-cube-act-1.mp4" poster="assets/real-experiments/posters/pick-cube-act-1.jpg" muted playsinline preload="metadata"></video>
+                                </div>
+                                <span>ACT</span>
+                            </figure>
+                            <figure class="real-video-cell">
+                                <div class="real-video-media">
+                                    <video src="assets/real-experiments/videos/pick-cube-act-bspline-1x-1.mp4" poster="assets/real-experiments/posters/pick-cube-act-bspline-1x-1.jpg" muted playsinline preload="metadata"></video>
+                                </div>
+                                <span>ACT B-spline 1x</span>
+                            </figure>
+                            <figure class="real-video-cell">
+                                <div class="real-video-media">
+                                    <video src="assets/real-experiments/videos/pick-cube-act-bspline-2x-1.mp4" poster="assets/real-experiments/posters/pick-cube-act-bspline-2x-1.jpg" muted playsinline preload="metadata"></video>
+                                </div>
+                                <span>ACT B-spline 2x</span>
+                            </figure>
+                            <figure class="real-video-cell">
+                                <div class="real-video-media">
+                                    <video src="assets/real-experiments/videos/pick-cube-act-bspline-4x-2.mp4" poster="assets/real-experiments/posters/pick-cube-act-bspline-4x-2.jpg" muted playsinline preload="metadata"></video>
+                                </div>
+                                <span>ACT B-spline 4x</span>
+                            </figure>
+                        </div>
+                    </section>
                 </div>
+                <h3 class="real-results-title">Real-World Results</h3>
+
+                <figure class="real-results-figure">
+                <div class="real-results-scroll" role="region" aria-label="Real-world success rate and average completion time" tabindex="0">
+                    <table class="real-results-full">
+                        <thead>
+                            <tr>
+                                <th rowspan="3">Task</th>
+                                <th rowspan="3">Metric</th>
+                                <th colspan="6">Diffusion Policy</th>
+                                <th colspan="6" class="group-end">Regression Policy</th>
+                                <th colspan="3">DemoSpeedUp Comparison</th>
+                            </tr>
+                            <tr>
+                                <th colspan="2">1X</th>
+                                <th colspan="2">2X</th>
+                                <th colspan="2">4X</th>
+                                <th colspan="2">1X</th>
+                                <th colspan="2">2X</th>
+                                <th colspan="2" class="group-end">4X</th>
+                                <th rowspan="2">DemoSpeedUp</th>
+                                <th rowspan="2">Diff.&nbsp;+ BSP&nbsp;4X</th>
+                                <th rowspan="2">Reg.&nbsp;+ BSP&nbsp;4X</th>
+                            </tr>
+                            <tr>
+                                <th>Diff.</th>
+                                <th class="bsp-col">Diff.&nbsp;+ BSP</th>
+                                <th>Diff.</th>
+                                <th class="bsp-col">Diff.&nbsp;+ BSP</th>
+                                <th>Diff.</th>
+                                <th class="bsp-col group-end">Diff.&nbsp;+ BSP</th>
+                                <th>Reg.</th>
+                                <th class="bsp-col">Reg.&nbsp;+ BSP</th>
+                                <th>Reg.</th>
+                                <th class="bsp-col">Reg.&nbsp;+ BSP</th>
+                                <th>Reg.</th>
+                                <th class="bsp-col group-end">Reg.&nbsp;+ BSP</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="task-cell">Cube Picking</td>
+                                <td class="metric-cell"><span>Success rate</span><span>Avg. time</span></td>
+                                <td class="result-cell"><span>19/20</span><span>6.48s</span></td>
+                                <td class="result-cell bsp-col"><span class="sr-win">20/20</span><span class="time-win">6.31s</span></td>
+                                <td class="result-cell"><span>20/20</span><span>4.58s</span></td>
+                                <td class="result-cell bsp-col"><span class="sr-win">20/20</span><span class="time-win">3.43s</span></td>
+                                <td class="result-cell"><span>20/20</span><span>3.52s</span></td>
+                                <td class="result-cell bsp-col group-end"><span class="sr-win">20/20</span><span class="time-win">2.45s</span></td>
+                                <td class="result-cell"><span>18/20</span><span>9.84s</span></td>
+                                <td class="result-cell bsp-col"><span class="sr-win">19/20</span><span class="time-win">7.92s</span></td>
+                                <td class="result-cell"><span>15/20</span><span>5.55s</span></td>
+                                <td class="result-cell bsp-col"><span class="sr-win">19/20</span><span class="time-win">3.36s</span></td>
+                                <td class="result-cell"><span>19/20</span><span>3.74s</span></td>
+                                <td class="result-cell bsp-col group-end"><span class="sr-win">19/20</span><span class="time-win">2.08s</span></td>
+                                <td class="result-cell"><span>18/20</span><span>6.66s</span></td>
+                                <td class="result-cell"><span class="sr-win">20/20</span><span>2.45s</span></td>
+                                <td class="result-cell"><span>19/20</span><span class="time-win">2.08s</span></td>
+                            </tr>
+                            <tr>
+                                <td class="task-cell">Table Cleaning</td>
+                                <td class="metric-cell"><span>Success rate</span><span>Avg. time</span></td>
+                                <td class="result-cell"><span>11/20</span><span>41.40s</span></td>
+                                <td class="result-cell bsp-col"><span class="sr-win">15/20</span><span class="time-win">36.97s</span></td>
+                                <td class="result-cell"><span class="sr-win">15/20</span><span>28.87s</span></td>
+                                <td class="result-cell bsp-col"><span>14/20</span><span class="time-win">20.81s</span></td>
+                                <td class="result-cell"><span class="sr-win">12/20</span><span>23.31s</span></td>
+                                <td class="result-cell bsp-col group-end"><span>11/20</span><span class="time-win">18.05s</span></td>
+                                <td class="result-cell"><span>13/20</span><span>49.70s</span></td>
+                                <td class="result-cell bsp-col"><span class="sr-win">18/20</span><span class="time-win">38.47s</span></td>
+                                <td class="result-cell"><span>13/20</span><span>34.48s</span></td>
+                                <td class="result-cell bsp-col"><span class="sr-win">18/20</span><span class="time-win">19.11s</span></td>
+                                <td class="result-cell"><span>13/20</span><span>23.57s</span></td>
+                                <td class="result-cell bsp-col group-end"><span class="sr-win">14/20</span><span class="time-win">11.80s</span></td>
+                                <td class="result-cell"><span>3/20</span><span>49.47s</span></td>
+                                <td class="result-cell"><span>11/20</span><span>18.05s</span></td>
+                                <td class="result-cell"><span class="sr-win">14/20</span><span class="time-win">11.80s</span></td>
+                            </tr>
+                            <tr>
+                                <td class="task-cell">Speed Stacking</td>
+                                <td class="metric-cell"><span>Success rate</span><span>Avg. time</span></td>
+                                <td class="result-cell"><span>14/20</span><span>20.47s</span></td>
+                                <td class="result-cell bsp-col"><span class="sr-win">14/20</span><span class="time-win">18.13s</span></td>
+                                <td class="result-cell"><span>15/20</span><span>13.66s</span></td>
+                                <td class="result-cell bsp-col"><span class="sr-win">15/20</span><span class="time-win">11.45s</span></td>
+                                <td class="result-cell"><span class="sr-win">9/20</span><span>10.49s</span></td>
+                                <td class="result-cell bsp-col group-end"><span>7/20</span><span class="time-win">9.62s</span></td>
+                                <td class="result-cell"><span>8/20</span><span>19.75s</span></td>
+                                <td class="result-cell bsp-col"><span class="sr-win">16/20</span><span class="time-win">17.61s</span></td>
+                                <td class="result-cell"><span>4/20</span><span>13.49s</span></td>
+                                <td class="result-cell bsp-col"><span class="sr-win">13/20</span><span class="time-win">10.98s</span></td>
+                                <td class="result-cell"><span class="sr-win">8/20</span><span class="time-win">10.42s</span></td>
+                                <td class="result-cell bsp-col group-end"><span>0/20</span><span>NA</span></td>
+                                <td class="result-cell"><span>3/20</span><span>18.57s</span></td>
+                                <td class="result-cell"><span class="sr-win">7/20</span><span class="time-win">9.62s</span></td>
+                                <td class="result-cell"><span>0/20</span><span>NA</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <figcaption class="real-results-caption">
+                    Success rate and average completion time (over successful
+                    rollouts) on the real-world tasks. In each comparison we highlight the
+                    <span class="sr-win">higher success rate</span> and <span class="time-win">shorter completion time</span>.
+                </figcaption>
+                </figure>
+                <h3 class="real-results-title">Findings</h3>
+
+                <ul class="real-results-findings">
+                    <li><b>BSP consistently shortens completion time.</b> Across every real-world setting, BSP reduces average completion time whether paired with a Diffusion or Regression policy. 
+                        <!-- The effect is largest on long-horizon Table Cleaning: at 4&times; speedup, Regression&nbsp;+&nbsp;BSP cuts completion time from 23.57s to 11.80s (a 50% reduction) while preserving success (13/20 vs.&nbsp;14/20).</li> -->
+                    <!-- <li class="real-results-figure-item">
+                        <figure class="real-results-figure">
+                            <img src="assets/smoothness-3.png" alt="Speed stacking rollout comparison showing jerky Diffusion Policy trajectories and smoother, faster Diffusion plus B-spline trajectories.">
+                            <figcaption>More smoothness examples are shown in the <a href="#real-video-details">detailed video comparisons</a> below.</figcaption>
+                        </figure>
+                    </li> -->
+                    <li><b>Success is preserved, but aggressive speedup has limits.</b> BSP matches or improves success rate in 14 of 18 comparisons. 
+                        <!-- For the Regression backbone it lifts Table Cleaning from 13/20 to 18/20 (at 1&times; and 2&times;) and Speed Stacking from 8/20 to 16/20 (1&times;) and 4/20 to 13/20 (2&times;).  -->
+                        The trade-off appears at the extreme: Speed Stacking Regression&nbsp;+&nbsp;BSP drops to zero at 4&times;, where aggressive temporal scaling pushes the robot past its low-level controller's tracking limits.</li>
+                    <li><b>Smoother execution.</b> B-spline actions produce smoother trajectories than discrete action chunks, avoiding the jerky motion that chunk-boundary discontinuities cause at higher speeds (<a href="#experiments" target="_self">see the videos</a>).</li>
+                    <li class="real-results-split-finding">
+                        <p><b>Segment alignment is critical.</b> Inference-time segment alignment keeps consecutive spline segments continuous, which is critical for stable high-speed execution. Without it, success becomes highly sensitive to speed as discontinuities push the policy out of distribution.</p>
+                        <figure class="real-results-figure">
+                            <img src="assets/table5-combined-1.png" alt="Alignment ablation showing higher achieved speedup and success rate with segment alignment than without alignment." style="border: none; border-radius: 0;">
+                        </figure>
+                    </li>
+                </ul>
+
+                <h3 id="simulation" class="sim-results-title">Simulation Benchmarks</h3>
+                <p class="sim-results-intro">
+                    We also evaluate BSP on Push-T, RoboMimic, and RoboCasa simulation tasks.
+                     <!-- to check whether the -->
+                    <!-- continuous B-spline action representation preserves imitation-learning performance across simulated -->
+                    <!-- manipulation settings. -->
+                </p>
+
+                <div class="sim-result-grid" aria-label="Simulation benchmark videos and success rates">
+                    <article class="sim-result-card">
+                        <h4>Push-T</h4>
+                        <div class="real-video-media">
+                            <video src="assets/sim-experiments/videos/pusht_4k.mp4" poster="assets/sim-experiments/posters/pusht_4k.jpg" muted autoplay loop playsinline preload="metadata"></video>
+                        </div>
+                        <table class="sim-result-table">
+                            <thead>
+                                <tr><th></th><th>DP</th><th>Reg.</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><th>Base</th><td>72%</td><td>63%</td></tr>
+                                <tr><th>+BSP</th><td class="success-highlight">75%</td><td class="success-highlight">66%</td></tr>
+                            </tbody>
+                        </table>
+                    </article>
+
+                    <article class="sim-result-card">
+                        <h4>Lift</h4>
+                        <div class="real-video-media">
+                            <video src="assets/sim-experiments/videos/lift_fixed_1080p.mp4" poster="assets/sim-experiments/posters/lift_fixed_1080p.jpg" muted autoplay loop playsinline preload="metadata"></video>
+                        </div>
+                        <table class="sim-result-table">
+                            <thead>
+                                <tr><th></th><th>DP</th><th>Reg.</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><th>Base</th><td>100%</td><td class="success-highlight">99%</td></tr>
+                                <tr><th>+BSP</th><td>100%</td><td>91%</td></tr>
+                            </tbody>
+                        </table>
+                    </article>
+
+                    <article class="sim-result-card">
+                        <h4>Sink Faucet</h4>
+                        <div class="real-video-media">
+                            <video src="assets/sim-experiments/videos/TurnOffSinkFaucet_4k.mp4" poster="assets/sim-experiments/posters/TurnOffSinkFaucet_4k.jpg" muted autoplay loop playsinline preload="metadata"></video>
+                        </div>
+                        <table class="sim-result-table">
+                            <thead>
+                                <tr><th></th><th>DP</th><th>Reg.</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><th>Base</th><td>79%</td><td>84%</td></tr>
+                                <tr><th>+BSP</th><td class="success-highlight">85%</td><td class="success-highlight">94%</td></tr>
+                            </tbody>
+                        </table>
+                    </article>
+
+                    <article class="sim-result-card">
+                        <h4>Coffee Button</h4>
+                        <div class="real-video-media">
+                            <video src="assets/sim-experiments/videos/CoffeePressButton_4k.mp4" poster="assets/sim-experiments/posters/CoffeePressButton_4k.jpg" muted autoplay loop playsinline preload="metadata"></video>
+                        </div>
+                        <table class="sim-result-table">
+                            <thead>
+                                <tr><th></th><th>DP</th><th>Reg.</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><th>Base</th><td>93%</td><td>89%</td></tr>
+                                <tr><th>+BSP</th><td class="success-highlight">94%</td><td class="success-highlight">93%</td></tr>
+                            </tbody>
+                        </table>
+                    </article>
+
+                    <article class="sim-result-card">
+                        <h4>Microwave</h4>
+                        <div class="real-video-media">
+                            <video src="assets/sim-experiments/videos/TurnOffMicrowave_4k.mp4" poster="assets/sim-experiments/posters/TurnOffMicrowave_4k.jpg" muted autoplay loop playsinline preload="metadata"></video>
+                        </div>
+                        <table class="sim-result-table">
+                            <thead>
+                                <tr><th></th><th>DP</th><th>Reg.</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><th>Base</th><td>77%</td><td>93%</td></tr>
+                                <tr><th>+BSP</th><td class="success-highlight">89%</td><td class="success-highlight">97%</td></tr>
+                            </tbody>
+                        </table>
+                    </article>
+
+                    <article class="sim-result-card">
+                        <h4>Close Door</h4>
+                        <div class="real-video-media">
+                            <video src="assets/sim-experiments/videos/CloseSingleDoor_4k.mp4" poster="assets/sim-experiments/posters/CloseSingleDoor_4k.jpg" muted autoplay loop playsinline preload="metadata"></video>
+                        </div>
+                        <table class="sim-result-table">
+                            <thead>
+                                <tr><th></th><th>DP</th><th>Reg.</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><th>Base</th><td>27%</td><td>40%</td></tr>
+                                <tr><th>+BSP</th><td class="success-highlight">46%</td><td class="success-highlight">60%</td></tr>
+                            </tbody>
+                        </table>
+                    </article>
+                </div>
+
+                <p class="sim-results-note">
+                    We find that BSP generally matches or improves baseline success rates across these
+                    simulation benchmarks, with the largest gains on the RoboCasa tasks.
+                </p>
+<!-- 
+                <div class="pusht-speedup-panel" aria-label="Push-T speedup results">
+                    <h4>Push-T Speedup</h4>
+                    <table class="pusht-speedup-table">
+                        <thead>
+                            <tr>
+                                <th>Target</th>
+                                <th>Score<br>Diff.</th>
+                                <th>Score<br>+BSP</th>
+                                <th>Time<br>Diff.</th>
+                                <th>Time<br>+BSP</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>1X</th>
+                                <td>0.47</td>
+                                <td class="bsp-cell">0.65</td>
+                                <td>12.24s</td>
+                                <td class="bsp-cell">7.20s</td>
+                            </tr>
+                            <tr>
+                                <th>2X</th>
+                                <td>0.57</td>
+                                <td class="bsp-cell">0.71</td>
+                                <td>9.22s</td>
+                                <td class="bsp-cell">4.89s</td>
+                            </tr>
+                            <tr>
+                                <th>4X</th>
+                                <td>0.59</td>
+                                <td class="bsp-cell">0.73</td>
+                                <td>7.19s</td>
+                                <td class="bsp-cell">2.87s</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p class="pusht-speedup-summary">
+                        BSP improves both score and completion time at every target speedup; at 4X, it raises score from 0.59 to 0.73 while cutting time from 7.19s to 2.87s.
+                    </p>
+                </div> -->
+                <script>
+                    (function () {
+                        var mediaVideos = Array.prototype.slice.call(document.querySelectorAll('.real-video-media video'));
+                        var rows = document.querySelectorAll('.real-video-task');
+                        function setButtonState(video, button) {
+                            if (!button) return;
+                            var isPlaying = !video.paused && !video.ended;
+                            button.classList.toggle('is-playing', isPlaying);
+                            button.setAttribute('aria-label', isPlaying ? 'Pause video' : 'Play video');
+                        }
+
+                        function toggleVideo(video, button) {
+                            if (video.paused || video.ended) {
+                                video.muted = true;
+                                video.play().catch(function () {});
+                            } else {
+                                video.pause();
+                            }
+                            setButtonState(video, button);
+                        }
+
+                        function setDone(video, isDone) {
+                            var media = video.closest('.real-video-media');
+                            if (media) media.classList.toggle('is-done', isDone);
+                        }
+
+                        mediaVideos.forEach(function (video) {
+                            var media = video.closest('.real-video-media');
+                            var button = document.createElement('button');
+                            button.className = 'real-video-play';
+                            button.type = 'button';
+                            button.setAttribute('aria-label', 'Play video');
+
+                            if (media) {
+                                if (!video.closest('.sim-result-card')) {
+                                    var speed = document.createElement('div');
+                                    speed.className = 'real-video-speed';
+                                    speed.textContent = 'real-time';
+                                    media.appendChild(speed);
+                                }
+                                media.appendChild(button);
+                                var done = document.createElement('div');
+                                done.className = 'real-video-done';
+                                done.textContent = 'Done';
+                                media.appendChild(done);
+                            }
+
+                            button.addEventListener('click', function (ev) {
+                                ev.stopPropagation();
+                                toggleVideo(video, button);
+                            });
+                            video.addEventListener('click', function () {
+                                toggleVideo(video, button);
+                            });
+                            video.addEventListener('play', function () {
+                                setDone(video, false);
+                                setButtonState(video, button);
+                            });
+                            video.addEventListener('pause', function () {
+                                setButtonState(video, button);
+                            });
+                            video.addEventListener('ended', function () {
+                                setDone(video, true);
+                                setButtonState(video, button);
+                            });
+                        });
+
+                        rows.forEach(function (row) {
+                            var videos = Array.prototype.slice.call(row.querySelectorAll('video'));
+                            var reset = row.querySelector('[data-real-video-action="reset"]');
+                            var play = row.querySelector('[data-real-video-action="play"]');
+
+                            function resetVideos() {
+                                videos.forEach(function (video) {
+                                    video.pause();
+                                    try { video.currentTime = 0; } catch (e) {}
+                                    video.load();
+                                    setDone(video, false);
+                                    setButtonState(video, video.parentElement && video.parentElement.querySelector('.real-video-play'));
+                                });
+                            }
+
+                            function playVideos() {
+                                videos.forEach(function (video) {
+                                    video.pause();
+                                    try { video.currentTime = 0; } catch (e) {}
+                                    setDone(video, false);
+                                });
+
+                                window.requestAnimationFrame(function () {
+                                    videos.forEach(function (video) {
+                                        video.muted = true;
+                                        video.play().catch(function () {});
+                                        setButtonState(video, video.parentElement && video.parentElement.querySelector('.real-video-play'));
+                                    });
+                                });
+                            }
+
+                            if (reset) reset.addEventListener('click', resetVideos);
+                            if (play) play.addEventListener('click', playVideos);
+                        });
+
+                        document.querySelectorAll('.sim-result-card video').forEach(function (video) {
+                            video.muted = true;
+                            video.loop = true;
+                            video.play().catch(function () {});
+                        });
+                    })();
+                </script>
             </div>
         </div>
 
@@ -2528,6 +3997,33 @@
 
         <div style="height: 40px;"></div>
     </div>
+
+    <script>
+        (function () {
+            var links = Array.prototype.slice.call(document.querySelectorAll('.page-toc a'));
+            if (!links.length || !('IntersectionObserver' in window)) return;
+            var map = {};
+            var targets = [];
+            links.forEach(function (a) {
+                var id = a.getAttribute('href').slice(1);
+                var el = document.getElementById(id);
+                if (el) { map[id] = a; targets.push(el); }
+            });
+
+            function setActive(id) {
+                links.forEach(function (a) { a.classList.remove('is-active'); });
+                if (map[id]) map[id].classList.add('is-active');
+            }
+
+            var io = new IntersectionObserver(function (entries) {
+                entries.forEach(function (e) {
+                    if (e.isIntersecting) setActive(e.target.id);
+                });
+            }, { rootMargin: '0px 0px -85% 0px', threshold: 0 });
+
+            targets.forEach(function (el) { io.observe(el); });
+        })();
+    </script>
 </body>
 
 </html>
