@@ -1008,6 +1008,21 @@
             color: #555555;
             font-size: 0.96em;
         }
+        .real-video-comparisons {
+            position: relative;
+            width: 160%;
+            max-width: 96vw;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        @media (max-width: 991px) {
+            .real-video-comparisons {
+                width: 100%;
+                max-width: none;
+                left: 0;
+                transform: none;
+            }
+        }
         .real-video-task {
             margin: 22px 0 28px;
             padding-top: 16px;
