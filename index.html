@@ -683,7 +683,7 @@
         /* ===== Section divider line ===== */
         .section-line {
             border: none;
-            border-top: 1px solid #626a73;
+            border-top: 1px solid #e2d6d6;
             margin: 22px 0 22px;
         }
 
@@ -968,10 +968,12 @@
         }
         .real-results-split-finding .real-results-figure {
             margin: 0;
+            align-self: start;
+            margin-top: 24px;
         }
         .real-results-split-finding img {
             width: 100%;
-            max-width: 320px;
+            max-width: 240px;
         }
         @media screen and (max-width: 640px) {
             .real-results-table {
@@ -1772,7 +1774,7 @@
             stroke-dasharray: 5 5;
             opacity: 0.9;
         }
-        .fit-control circle { fill: rgb(238, 200, 176); }
+        .fit-control circle { fill: rgb(238, 200, 176); stroke: #ffffff; stroke-width: 1.8; }
 
         .fit-curve {
             stroke: #750014;     /* MIT red — primary themed element */
@@ -1893,7 +1895,7 @@
             <div class="col-md-12">
                 <div class="text-large" style="color: #750014; font-size: 35px; line-height: 1.3; width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw;">
                     <b style="font-size: 60px;">B-spline Policy</b><br>
-                    Fast Manipulation Policies via B-spline Action Representations
+                    <span id="subtitle-line" style="white-space: nowrap;">Fast Manipulation Policies via B-spline Action Representations</span>
                 </div>
                 <ul class="list-inline" style="margin-top: 16px; margin-bottom: 0;">
                     <li><a href="https://xshan.site/">Xiaoshen Han</a><sup><span style="font-size: 20px;">*</span>1</sup></li>
@@ -1932,9 +1934,7 @@
         </div>
         </div>
 
-        <hr style="border: none; border-top: 1px solid #626a73; width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; margin-top: 0; margin-bottom: 20px;">
-
-        <div class="row" style="margin-top: 48px;">
+        <div class="row" style="margin-top: 4px;">
             <div class="col-md-12">
                 <video id="main-demo-video" controls autoplay loop muted playsinline
                     style="width: 100%; border-radius: 8px; display: block; background: #777777;">
@@ -3826,7 +3826,8 @@
 
                 <p class="sim-results-note">
                     We find that BSP generally matches or improves baseline success rates across these
-                    simulation benchmarks, with the largest gains on the RoboCasa tasks.
+                    simulation benchmarks.
+                     <!-- with the largest gains on the RoboCasa tasks. -->
                 </p>
 <!-- 
                 <div class="pusht-speedup-panel" aria-label="Push-T speedup results">
@@ -3986,7 +3987,7 @@
                 <hr class="section-line">
                 <h2 id="acknowledgements">Acknowledgements</h2>
                 <p>
-                    We thank Minghuan Liu for his helpful discussion, and we thank
+                    We thank Minghuan Liu for his helpful discussion, and
                     <a href="https://www.arx-x.com/" target="_blank" rel="noopener">ARX</a> and
                     <a href="https://www.i2rt.com/" target="_blank" rel="noopener">I2RT</a> for the robot hardware support.
                 </p>
@@ -3995,7 +3996,7 @@
 
         <div class="row top30 bottom30" id="citation-section">
             <div class="col-md-12">
-                <hr class="section-line" style="width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw;">
+                <hr class="section-line">
                 <h2 id="citation">Citation</h2>
                 <p>
                     To cite this work, please use the following BibTeX entry:
@@ -4048,6 +4049,44 @@
             }, { rootMargin: '0px 0px -85% 0px', threshold: 0 });
 
             targets.forEach(function (el) { io.observe(el); });
+        })();
+    </script>
+    <script>
+        // Align the left-rail Contents bar with the top of the teaser video,
+        // which sits just below the full-width divider line. Computed because
+        // the header height is variable and the body is zoomed.
+        (function () {
+            var ZOOM = 1.15;
+            function alignToc() {
+                var toc = document.querySelector('.page-toc');
+                var video = document.getElementById('main-demo-video');
+                if (!toc || !video) return;
+                var rect = video.getBoundingClientRect();
+                var docTop = rect.top + window.pageYOffset;
+                toc.style.top = (docTop / ZOOM) + 'px';
+            }
+            window.addEventListener('load', alignToc);
+            window.addEventListener('resize', alignToc);
+            alignToc();
+        })();
+    </script>
+    <script>
+        // Make the main content column as wide as the subtitle line.
+        (function () {
+            var ZOOM = 1.15;
+            function sizeContainers() {
+                var sub = document.getElementById('subtitle-line');
+                if (!sub) return;
+                var w = sub.getBoundingClientRect().width / ZOOM;
+                document.querySelectorAll('.container').forEach(function (c) {
+                    c.style.maxWidth = w + 'px';
+                });
+            }
+            sizeContainers();
+            if (document.fonts && document.fonts.ready) {
+                document.fonts.ready.then(sizeContainers);
+            }
+            window.addEventListener('load', sizeContainers);
         })();
     </script>
 </body>
