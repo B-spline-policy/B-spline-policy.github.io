@@ -1947,29 +1947,9 @@
                 <script>
                     (function () {
                         var v = document.getElementById('main-demo-video');
-
-                        // First try to autoplay WITH sound. Browsers only allow this when
-                        // the site already has enough media-engagement / a prior gesture.
-                        v.muted = false;
-                        v.volume = 1;
-                        v.play().catch(function () {
-                            // Blocked: fall back to muted autoplay (always allowed), then
-                            // unmute on the first user interaction.
-                            v.muted = true;
-                            v.play().catch(function () {});
-
-                            function unmute() {
-                                v.muted = false;
-                                v.volume = 1;
-                                v.play().catch(function () {});
-                                ['click', 'keydown', 'touchstart', 'pointerdown', 'scroll'].forEach(function (ev) {
-                                    window.removeEventListener(ev, unmute);
-                                });
-                            }
-                            ['click', 'keydown', 'touchstart', 'pointerdown', 'scroll'].forEach(function (ev) {
-                                window.addEventListener(ev, unmute, { once: false, passive: true });
-                            });
-                        });
+                        // Autoplay muted; the user can unmute via the video controls.
+                        v.muted = true;
+                        v.play().catch(function () {});
                     })();
                 </script>
             </div>
@@ -1990,7 +1970,7 @@
                         </span>
                     </summary>
                     <p>
-                        In this work, we present B-spline Policy (BSP), an action representation designed for accelerating robot manipulation policies. Rather than predicting discrete-time action chunks, BSP parameterizes actions as continuous B-spline curves defined by a set of knots and control points. This representation yields smooth, time-continuous trajectories that can be temporally scaled and executed by low-level controllers at higher frequencies and speeds. We show that B-spline–parameterized actions can be seamlessly integrated into standard policy learning pipelines by directly predicting B-spline parameters. Experiments on simulated and real-world tasks demonstrate that BSP significantly reduces task completion time, achieving substantial improvements over baseline methods while maintaining strong success rates.
+                        In this work, we present B-spline Policy (BSP), an action representation designed for accelerating robot manipulation policies. Instead of predicting fixed-rate action chunks, BSP parameterizes actions as continuous B-spline curves defined by a set of knots and control points. This representation yields smooth, time-continuous trajectories that can be temporally scaled and executed by low-level controllers at higher frequencies and speeds. We show that B-spline–parameterized actions can be seamlessly integrated into standard policy learning pipelines by directly predicting B-spline parameters. Experiments on simulated and real-world tasks demonstrate that BSP significantly reduces task completion time, achieving substantial improvements over baseline methods while maintaining strong success rates.
                     </p>
                 </details>
                 <div class="code-data-grid">
@@ -2024,8 +2004,8 @@
                 
                 <!-- Action chunks are temporally uniform, treating all moments the same, even though some phases need precision and others could move quickly. Chunk boundaries also introduce discontinuities, making fast execution jerky and unstable. -->
                 <p>
-                To address these issues, we propose B-spline Policy, rather than predicting a chunk of fixed-rate waypoints, we parameterize action trajectories as continuous B-spline curves. 
-                This continuous representation enables temporal rescaling at execution time, allowing the policy to execute faster and more smoothly.
+            To address these issues, we propose B-spline Policy. Instead of predicting fixed-rate waypoint chunks, it represents action trajectories as continuous B-spline curves.
+            At execution time, the continuous curves can be sampled at any desired control frequency and temporally rescaled to traverse the same trajectory in less time, enabling faster and smoother motion.
 
                 <!--
                   Scrubbable video player (kept from the reference layout).
