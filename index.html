@@ -3744,7 +3744,7 @@
                     <li><b>Success is preserved, but aggressive speedup has limits.</b> BSP matches or improves success rate in 14 of 18 comparisons. 
                         <!-- For the Regression backbone it lifts Table Cleaning from 13/20 to 18/20 (at 1&times; and 2&times;) and Speed Stacking from 8/20 to 16/20 (1&times;) and 4/20 to 13/20 (2&times;).  -->
                         The trade-off appears at the extreme: Speed Stacking Regression&nbsp;+&nbsp;BSP drops to zero at 4&times;, where aggressive temporal scaling pushes the robot past its low-level controller's tracking limits.</li>
-                    <li><b>Smoother execution.</b> B-spline actions produce smoother trajectories than discrete action chunks, avoiding the jerky motion that chunk-boundary discontinuities cause at higher speeds (<a href="assets/bsp.mp4" target="_self">see the videos</a>).</li>
+                    <li><b>Smoother execution.</b> B-spline actions produce smoother trajectories than discrete action chunks, avoiding the jerky motion that chunk-boundary discontinuities (<a href="assets/bsp.mp4" target="_self">see the videos</a>).</li>
                     <li class="real-results-split-finding">
                         <p><b>Segment alignment is critical.</b> Inference-time segment alignment keeps consecutive spline segments continuous, which is critical for stable high-speed execution. Without it, success becomes highly sensitive to speed as discontinuities push the policy out of distribution.</p>
                         <figure class="real-results-figure">
