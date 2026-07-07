@@ -638,46 +638,12 @@
             list-style: none;
         }
 
-        /* ===== Collapsible abstract ===== */
-        .abstract-toggle {
+        /* ===== Abstract ===== */
+        .abstract-block {
             margin-bottom: 10px;
         }
-        .abstract-toggle > summary {
-            list-style: none;
-            cursor: pointer;
-            display: flex;
-            align-items: baseline;
-            gap: 8px;
-            user-select: none;
-        }
-        .abstract-toggle > summary::-webkit-details-marker {
-            display: none;
-        }
-        .abstract-toggle > summary::after {
-            content: '';
-            flex: 0 0 auto;
-            align-self: center;
-            width: 8px;
-            height: 8px;
-            border-right: 2px solid #750014;
-            border-bottom: 2px solid #750014;
-            transform: rotate(-45deg);
-            transition: transform 0.15s ease;
-        }
-        .abstract-toggle[open] > summary::after {
-            transform: rotate(45deg);
-        }
-        .abstract-line {
-            min-width: 0;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        .abstract-toggle[open] .abstract-preview {
-            display: none;
-        }
-        .abstract-toggle > p {
-            margin-top: 8px;
+        .abstract-block > p {
+            margin: 0;
         }
 
         /* ===== Section divider line ===== */
@@ -1950,7 +1916,7 @@
                     </div>
                     <div style="margin-top: 10px; font-size: 0.9em; color: #626a73;"><sup><span style="font-size: 20px;">*</span></sup>Equal contribution</div>
                 </div>
-                <div class="header-links" style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 8px; margin-bottom: 28px;">
+                <div class="header-links" style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 8px; margin-bottom: 0px;">
                     <a href="#" target="_blank" rel="noopener">Paper</a>
                     <a href="#" target="_blank" rel="noopener">Github</a>
                     <a href="#" target="_blank" rel="noopener">Colab</a>
@@ -1960,9 +1926,9 @@
         </div>
         </div>
 
-        <div class="row" style="margin-top: 4px;">
+        <div class="row" style="margin-top: 0px;">
             <div class="col-md-12">
-                <p style="margin-bottom: 12px;">
+                <p style="margin-bottom: 12px; text-align: center;">
                     <span style="color: #750014; font-weight: 700;">TL;DR:</span>
                     Replace discrete action chunks with B-spline curves,
                     for faster visuomotor policy.
@@ -2006,17 +1972,12 @@
 
         <div class="row top20 bottom30">
             <div class="col-md-12">
-                <details class="abstract-toggle">
-                    <summary>
-                        <span class="abstract-line">
-                            <span style="color: #750014; font-weight: 700;">Abstract:</span>
-                            <span class="abstract-preview">In this work, we present B-spline Policy (BSP), an action representation designed for accelerating robot manipulation policies, and [...]</span>
-                        </span>
-                    </summary>
+                <div class="abstract-block">
                     <p>
+                        <span style="color: #750014; font-weight: 700;">Abstract:</span>
                         In this work, we present B-spline Policy (BSP), an action representation designed for accelerating robot manipulation policies. Instead of predicting fixed-rate action chunks, BSP parameterizes actions as continuous B-spline curves defined by a set of knots and control points. This representation yields smooth, time-continuous trajectories that can be temporally scaled and executed by low-level controllers at higher frequencies and speeds. We show that B-spline–parameterized actions can be seamlessly integrated into standard policy learning pipelines by directly predicting B-spline parameters. Experiments on simulated and real-world tasks demonstrate that BSP significantly reduces task completion time, achieving substantial improvements over baseline methods while maintaining strong success rates.
                     </p>
-                </details>
+                </div>
                 <div class="code-data-grid">
                     <a class="code-data-tile" href="https://www.robotube.org/" target="_blank" rel="noopener">
                         <img src="assets/logos/paper.svg" alt="Paper" />
