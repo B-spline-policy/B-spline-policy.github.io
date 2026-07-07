@@ -3346,7 +3346,9 @@
                     At each inference step, the policy takes images and proprioception as the input and outputs future
                     B-spline segment parameters. At the low-level control stage, we align each successive B-spline
                     segment with the prior one. The predicted B-spline segment can be temporally scaled to adjust
-                    execution speed. Actions are then sampled at a higher frequency and sent to the robot controller.
+                    execution speed. Importantly, because B-splines are differentiable, the controller can obtain desired position, velocity, and acceleration directly from the B-spline curve and its derivatives, enabling velocity-aware control or PD control with feedforward terms before sending commands to the robot.
+
+                    <!-- Actions are then sampled at a higher frequency and sent to the robot controller. -->
 
                     <!-- Because the output is a continuous curve, we decouple the policy rate from the control rate: the policy
                     runs slowly while the controller samples the segment densely. Speed is set by rescaling time with a
@@ -4027,9 +4029,7 @@
                 <hr class="section-line">
                 <h2 id="acknowledgements">Acknowledgements</h2>
                 <p>
-                    We thank Minghuan Liu for his helpful discussion, and
-                    <a href="https://www.arx-x.com/" target="_blank" rel="noopener">ARX</a> and
-                    <a href="https://www.i2rt.com/" target="_blank" rel="noopener">I2RT</a> for the robot hardware support.
+                    We thank Minghuan Liu for the helpful discussion.      
                 </p>
             </div>
         </div>
