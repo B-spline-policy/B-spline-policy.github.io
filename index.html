@@ -930,6 +930,10 @@
             align-items: center;
             margin-bottom: 6px;
         }
+        .real-results-findings li.real-results-split-finding {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
         .real-results-split-finding p {
             margin: 0;
         }
@@ -1110,6 +1114,20 @@
             font-family: 'Asap', roboto, sans-serif;
             font-size: 0.78em;
             font-weight: 600;
+            line-height: 1.2;
+            pointer-events: none;
+        }
+        .real-video-timer {
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            z-index: 2;
+            padding: 2px 7px;
+            border-radius: 999px;
+            background: rgba(117, 0, 20, 0.9);
+            color: #ffffff;
+            font-family: "Source Code Pro", monospace;
+            font-size: 0.72em;
             line-height: 1.2;
             pointer-events: none;
         }
@@ -1420,6 +1438,21 @@
             height: 45px;
             object-fit: contain;
         }
+        .code-data-icon {
+            width: 45px;
+            height: 45px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            color: #111111;
+        }
+        .code-data-icon svg {
+            width: 36px;
+            height: 36px;
+            display: block;
+            fill: currentColor;
+        }
         .code-data-label {
             font-family: 'Asap', roboto, sans-serif;
             font-weight: 400;
@@ -1428,6 +1461,8 @@
         @media screen and (max-width: 575px) {
             .code-data-tile { width: 120px; }
             .code-data-tile img { width: 37px; height: 37px; }
+            .code-data-icon { width: 37px; height: 37px; }
+            .code-data-icon svg { width: 30px; height: 30px; }
         }
 
         .header-links a,
@@ -1618,6 +1653,20 @@
             height: 14px;
             color: #750014;
             animation: real-video-hint-nudge 1.1s ease-in-out infinite;
+        }
+        .hero-video-timer {
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            z-index: 2;
+            padding: 2px 7px;
+            border-radius: 999px;
+            background: rgba(117, 0, 20, 0.9);
+            color: #ffffff;
+            font-family: "Source Code Pro", monospace;
+            font-size: 0.72em;
+            line-height: 1.2;
+            pointer-events: none;
         }
         @media (max-width: 1380px) {
             .hero-video-side {
@@ -1956,6 +2005,7 @@
                     <a href="https://arxiv.org/abs/2607.09648" target="_blank" rel="noopener">Paper</a>
                     <a href="https://github.com/B-spline-policy/bspline-policy" target="_blank" rel="noopener">Github</a>
                     <a href="https://colab.research.google.com/drive/1MzbUGoL9r5J144sn0jVOqA6yHd6ma5iS?usp=sharing" target="_blank" rel="noopener">Colab</a>
+                    <a href="https://x.com/Haoyu_Xiong_/status/2077401731206631483">TL;DR</a>
                 </div>
             </div>
         </div>
@@ -1974,12 +2024,14 @@
                         <figure class="real-video-cell">
                             <div class="real-video-media">
                                 <video id="hero-demo-dp" src="assets/dp.mp4" autoplay muted playsinline preload="auto"></video>
+                                <div class="hero-video-timer" data-hero-timer-for="hero-demo-dp">0.00s</div>
                             </div>
                             <span>Diffusion Policy</span>
                         </figure>
                         <figure class="real-video-cell">
                             <div class="real-video-media">
                                 <video id="hero-demo-bsp" src="assets/bsp_fast.mp4" autoplay muted playsinline preload="auto"></video>
+                                <div class="hero-video-timer" data-hero-timer-for="hero-demo-bsp">0.00s</div>
                             </div>
                             <span>B-spline Policy</span>
                         </figure>
@@ -2000,6 +2052,58 @@
                 <script>
                     (function () {
                         var ids = ['hero-demo-dp', 'hero-demo-bsp'];
+                        var timerRafs = {};
+                        function formatSeconds(t) {
+                            if (!isFinite(t) || t < 0) return '0.00s';
+                            return t.toFixed(2) + 's';
+                        }
+                        function updateTimer(id) {
+                            var v = document.getElementById(id);
+                            var timer = document.querySelector('[data-hero-timer-for="' + id + '"]');
+                            if (!v || !timer) return;
+                            timer.textContent = formatSeconds(v.currentTime || 0);
+                        }
+                        function stopTimerLoop(id) {
+                            if (timerRafs[id] && typeof cancelAnimationFrame === 'function') {
+                                cancelAnimationFrame(timerRafs[id]);
+                            }
+                            timerRafs[id] = null;
+                        }
+                        function startTimerLoop(id) {
+                            var v = document.getElementById(id);
+                            if (!v) return;
+                            stopTimerLoop(id);
+                            if (typeof requestAnimationFrame !== 'function') {
+                                updateTimer(id);
+                                return;
+                            }
+                            function tick() {
+                                updateTimer(id);
+                                if (!v.paused && !v.ended) {
+                                    timerRafs[id] = requestAnimationFrame(tick);
+                                } else {
+                                    timerRafs[id] = null;
+                                }
+                            }
+                            timerRafs[id] = requestAnimationFrame(tick);
+                        }
+                        function bindTimer(id) {
+                            var v = document.getElementById(id);
+                            if (!v) return;
+                            ['loadedmetadata', 'seeked'].forEach(function (evt) {
+                                v.addEventListener(evt, function () { updateTimer(id); });
+                            });
+                            v.addEventListener('play', function () { startTimerLoop(id); });
+                            v.addEventListener('pause', function () {
+                                stopTimerLoop(id);
+                                updateTimer(id);
+                            });
+                            v.addEventListener('ended', function () {
+                                stopTimerLoop(id);
+                                updateTimer(id);
+                            });
+                            updateTimer(id);
+                        }
                         function playAll() {
                             ids.forEach(function (id) {
                                 var v = document.getElementById(id);
@@ -2014,9 +2118,11 @@
                                 if (!v) return;
                                 v.muted = true;
                                 v.currentTime = 0;
+                                updateTimer(id);
                                 v.play().catch(function () {});
                             });
                         }
+                        ids.forEach(bindTimer);
                         playAll();
                         var btn = document.getElementById('hero-demo-replay');
                         if (btn) btn.addEventListener('click', replayAll);
@@ -2045,6 +2151,14 @@
                     <a class="code-data-tile" href="https://colab.research.google.com/drive/1MzbUGoL9r5J144sn0jVOqA6yHd6ma5iS?usp=sharing" target="_blank" rel="noopener">
                         <img src="assets/logos/colab_logo.svg" alt="Google Colab" />
                         <span class="code-data-label">Quick Start</span>
+                    </a>
+                    <a class="code-data-tile" href="https://x.com/Haoyu_Xiong_/status/2077401731206631483" target="_blank" rel="noopener">
+                        <span class="code-data-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" role="img" focusable="false">
+                                <path d="M18.9 2h3.68l-8.04 9.19L24 22h-7.41l-5.8-6.95L4.72 22H1.03l8.6-9.83L0 2h7.59l5.24 6.3L18.9 2Zm-1.29 17.8h2.04L6.48 4.09H4.29L17.61 19.8Z"></path>
+                            </svg>
+                        </span>
+                        <span class="code-data-label">TL;DR</span>
                     </a>
                 </div>
 
@@ -3914,12 +4028,61 @@
                 </div> -->
                 <script>
                     (function () {
-                        var mediaVideos = Array.prototype.slice.call(document.querySelectorAll('.real-video-media video'));
-                        var rows = document.querySelectorAll('.real-video-task');
+                        var experimentsRoot = document.getElementById('experiments-section');
+                        if (!experimentsRoot) return;
+                        var mediaVideos = Array.prototype.slice.call(experimentsRoot.querySelectorAll('.real-video-media video'));
+                        var rows = experimentsRoot.querySelectorAll('.real-video-task');
                         // Click-to-play videos are exclusive: only one session plays at a time.
                         // Starting a single video (session = that video) or a row's "Play all"
                         // (session = that row) pauses everything else currently playing.
-                        var exclusiveVideos = Array.prototype.slice.call(document.querySelectorAll('.real-video-task video'));
+                        var exclusiveVideos = Array.prototype.slice.call(experimentsRoot.querySelectorAll('.real-video-task video'));
+                        var timerRafs = new WeakMap();
+
+                        function formatTimerSeconds(t) {
+                            if (!isFinite(t) || t < 0) return '0.00s';
+                            return t.toFixed(2) + 's';
+                        }
+                        function ensureTimer(video) {
+                            if (video.closest('.sim-result-card')) return null;
+                            var media = video.closest('.real-video-media');
+                            if (!media) return null;
+                            var timer = media.querySelector('.real-video-timer');
+                            if (!timer) {
+                                timer = document.createElement('div');
+                                timer.className = 'real-video-timer';
+                                timer.textContent = '0.00s';
+                                media.appendChild(timer);
+                            }
+                            return timer;
+                        }
+                        function updateTimer(video) {
+                            var timer = ensureTimer(video);
+                            if (!timer) return;
+                            timer.textContent = formatTimerSeconds(video.currentTime || 0);
+                        }
+                        function stopTimerLoop(video) {
+                            if (typeof cancelAnimationFrame !== 'function') return;
+                            var raf = timerRafs.get(video);
+                            if (raf) cancelAnimationFrame(raf);
+                            timerRafs.delete(video);
+                        }
+                        function startTimerLoop(video) {
+                            stopTimerLoop(video);
+                            if (typeof requestAnimationFrame !== 'function') {
+                                updateTimer(video);
+                                return;
+                            }
+                            function tick() {
+                                updateTimer(video);
+                                if (!video.paused && !video.ended) {
+                                    timerRafs.set(video, requestAnimationFrame(tick));
+                                } else {
+                                    timerRafs.delete(video);
+                                }
+                            }
+                            timerRafs.set(video, requestAnimationFrame(tick));
+                        }
+
                         function isExclusive(video) {
                             return exclusiveVideos.indexOf(video) !== -1;
                         }
@@ -3961,6 +4124,7 @@
                             button.setAttribute('aria-label', 'Play video');
 
                             if (media) {
+                                ensureTimer(video);
                                 if (!video.closest('.sim-result-card')) {
                                     var speed = document.createElement('div');
                                     speed.className = 'real-video-speed';
@@ -3982,16 +4146,28 @@
                                 toggleVideo(video, button);
                             });
                             video.addEventListener('play', function () {
+                                startTimerLoop(video);
                                 setDone(video, false);
                                 setButtonState(video, button);
                             });
                             video.addEventListener('pause', function () {
+                                stopTimerLoop(video);
+                                updateTimer(video);
                                 setButtonState(video, button);
                             });
                             video.addEventListener('ended', function () {
+                                stopTimerLoop(video);
+                                updateTimer(video);
                                 setDone(video, true);
                                 setButtonState(video, button);
                             });
+                            video.addEventListener('loadedmetadata', function () {
+                                updateTimer(video);
+                            });
+                            video.addEventListener('seeked', function () {
+                                updateTimer(video);
+                            });
+                            updateTimer(video);
                         });
 
                         rows.forEach(function (row) {
@@ -4002,8 +4178,10 @@
                             function resetVideos() {
                                 videos.forEach(function (video) {
                                     video.pause();
+                                    stopTimerLoop(video);
                                     try { video.currentTime = 0; } catch (e) {}
                                     video.load();
+                                    updateTimer(video);
                                     setDone(video, false);
                                     setButtonState(video, video.parentElement && video.parentElement.querySelector('.real-video-play'));
                                 });
